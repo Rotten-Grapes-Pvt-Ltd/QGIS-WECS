@@ -1,0 +1,91 @@
+[project]
+site_name = "Hydrological Modelling Training Plan"
+site_description = "5-Day Training Plan for Hydrological Modelling using Geospatial and Remote Sensing Data"
+site_author = "WECS"
+docs_dir = "docs"
+site_dir = "site"
+extra_javascript = [
+    "javascripts/mathjax.js",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"
+]
+
+nav = [
+    { "Overview" = "index.md" },
+    { "Spatial Thinking & GIS" = [
+        "day1/index.md",
+        "day1/01_intro_gis.md",
+        "day1/02_role_geospatial.md",
+        "day1/03_spatial_data_models.md",
+        "day1/04_understanding_datasets.md",
+        "day1/05_crs_projections.md",
+        "day1/06_map_scale.md",
+        "day1/07_open_geospatial.md",
+        "day1/08_geospatial_formats.md",
+        "day1/09_practical_session.md",
+        "day1/10_mini_assignment.md"
+    ]},
+    { "Remote Sensing & EO" = [
+        "day2/index.md",
+        "day2/01_intro_remote_sensing.md",
+        "day2/02_eo_missions.md",
+        "day2/03_satellite_characteristics.md",
+        "day2/04_bands_composites.md",
+        "day2/05_accessing_data.md",
+        "day2/06_preparation_workflows.md",
+        "day2/07_dem_terrain.md",
+        "day2/08_applications_hydrology.md",
+        "day2/09_practical_session.md",
+        "day2/10_mini_assignment.md"
+    ]},
+    { "QGIS & Data Management" = [
+        "day3/index.md",
+        "day3/01_intro_qgis.md",
+        "day3/02_layer_styling.md",
+        "day3/03_attribute_tables.md",
+        "day3/04_vector_geoprocessing.md",
+        "day3/05_raster_processing.md",
+        "day3/06_spatial_queries.md",
+        "day3/07_geospatial_data_management.md",
+        "day3/08_web_gis_ogc.md",
+        "day3/09_intro_spatial_databases.md",
+        "day3/10_plugins_extensions.md",
+        "day3/11_practical_session.md",
+        "day3/12_mini_assignment.md"
+    ]},
+    { "Terrain & Hydrological Analysis" = [
+        "day4/index.md",
+        "day4/01_intro_terrain_analysis.md",
+        "day4/02_dem_processing.md",
+        "day4/03_terrain_derivatives.md",
+        "day4/04_hydrological_analysis.md",
+        "day4/05_river_basin_watershed.md",
+        "day4/06_raster_modelling.md",
+        "day4/07_rainfall_environmental.md",
+        "day4/08_flood_water_resources.md",
+        "day4/09_practical_session.md",
+        "day4/10_mini_assignment.md"
+    ]},
+    { "Time Series & Decision Support" = [
+        "day5/index.md",
+        "day5/01_intro_time_series.md",
+        "day5/02_spectral_indices.md",
+        "day5/03_environmental_monitoring.md",
+        "day5/04_multi_temporal_workflows.md",
+        "day5/05_decision_support.md",
+        "day5/06_cartography_reporting.md",
+        "day5/07_workflow_automation.md",
+        "day5/08_ai_assisted_gis.md",
+        "day5/09_final_practical.md",
+        "day5/10_presentations.md",
+        "day5/11_closing_session.md"
+    ]}
+]
+
+[project.markdown_extensions."pymdownx.arithmatex"]
+generic = true
+
+[project.markdown_extensions."pymdownx.superfences"]
+custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
+]
+
