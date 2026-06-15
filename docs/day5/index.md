@@ -1,18 +1,37 @@
-# Time Series Analysis, Spectral Indices & Decision Support
+# Day 5: Time Series Analysis, Spectral Indices & Decision Support
 
-## Theme
-Using temporal satellite analysis and geospatial outputs for environmental monitoring and decision support.
+Welcome to the final day of the training program. Today we bring together everything we have learned. We will focus on **Time-Series Analysis** (tracking changes over years and seasons), generating **Spectral Indices** (NDVI, NDWI, NDBI, SAVI), automating our tasks with the QGIS **Model Builder**, and compiling map layouts to support environmental decision-making.
 
-## Topics Covered
+The day concludes with an integrated Capstone Practical and group presentations.
 
-* **[Topic 1: Introduction to Time-Series Analysis](01_intro_time_series.md)**
-* **[Topic 2: Spectral Indices](02_spectral_indices.md)**
-* **[Topic 3: Environmental Monitoring Applications](03_environmental_monitoring.md)**
-* **[Topic 4: Multi-Temporal Analysis Workflows](04_multi_temporal_workflows.md)**
-* **[Topic 5: Geospatial Decision Support Concepts](05_decision_support.md)**
-* **[Topic 6: Cartography and Reporting](06_cartography_reporting.md)**
-* **[Topic 7: Workflow Automation Concepts](07_workflow_automation.md)**
-* **[Topic 8: AI-Assisted GIS Workflows](08_ai_assisted_gis.md)**
-* **[Topic 9: Final Integrated Practical](09_final_practical.md)**
-* **[Topic 10: Participant Presentation and Discussion](10_presentations.md)**
-* **[Topic 11: Closing Session](11_closing_session.md)**
+---
+
+## Learning Objectives
+By the end of today's sessions, you will be able to:
+
+* **Execute** time-series analysis on multi-temporal satellite images to track river migrations or reservoir changes.
+
+* **Generate** diverse indices (NDVI, NDWI, NDBI, SAVI) to model vegetation, water, and built-up areas.
+
+* **Delineate** drought indices and monitor agricultural water stress.
+
+* **Automate** repeatable spatial analyses using the QGIS Graphical Model Builder.
+
+* **Apply** AI assistants to troubleshoot Python scripts and QGIS expression formats.
+
+* **Produce** print-ready map booklets and interactive reports for executive policy reviews.
+
+---
+
+## Day 5 Learning Roadmap
+
+```mermaid
+graph TD
+    A["1. Time-Series & Indices<br/>(NDVI/NDWI/SAVI)"] --> B["2. Automation Workflows<br/>(Model Builder)"]
+    B --> C["3. Cartography & AI<br/>(Print Layouts & scripts)"]
+    C --> D["4. Capstone Project<br/>(Integrated Modeling)"]
+    D --> E["5. Wrap-up & Roadmap"]
+    
+    style A fill:#f9f9f9,stroke:#333
+    style E fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px
+```

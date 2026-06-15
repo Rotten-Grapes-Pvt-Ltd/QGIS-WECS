@@ -1,6 +1,6 @@
-# Day 1: Spatial Thinking, GIS Foundations & Hydrological Context
+# Spatial Thinking, GIS Foundations & Hydrological Context
 
-Welcome to the first day of the **Hydrological Modelling using Geospatial and Remote Sensing Data** training program. Today's sessions lay the essential groundwork for all spatial analysis, mapping, and watershed modeling workflows that you will build throughout the week.
+Welcome to the first module of the **Hydrological Modelling using Geospatial and Remote Sensing Data** training program. This module lays the essential groundwork for all spatial analysis, mapping, and watershed modeling workflows that you will build throughout the week.
 
 We will transition from understanding how spatial data represents the physical environment to working hands-on inside a Geographic Information System (GIS) to process layers and compile professional map layouts.
 
@@ -23,15 +23,15 @@ By the end of today's sessions, you will be able to:
 
 ---
 
-## Day 1 Learning Roadmap
+## Learning Roadmap
 Below is the progression of topics for today, moving from core theoretical concepts to practical, independent map compilation:
 
 ```mermaid
 graph TD
-    A["1. Spatial Thinking & GIS Foundations<br/>(Core Concepts & McHarg Overlays)"] --> B["2. Data Models & Coordinate Systems<br/>(Vector/Raster & UTM Zones 44N/45N)"]
-    B --> C["3. Open Ecosystem & File Formats<br/>(QGIS Stack & GPKG/GeoTIFF/JSON)"]
-    C --> D["4. Guided Hands-on Laboratory<br/>(QGIS Navigation, Queries & Symbology)"]
-    D --> E["5. Capstone Mini-Assignment<br/>(Delineated Watershed Layout & Export)"]
+    A["1. Spatial Thinking &<br/>GIS Foundations<br/>(McHarg Overlays)"] --> B["2. Data Models &<br/>Coordinate Systems<br/>(Vector/Raster/UTM)"]
+    B --> C["3. Open Ecosystem &<br/>File Formats<br/>(QGIS & GPKG/GeoTIFF)"]
+    C --> D["4. Guided Laboratory<br/>(Queries & Symbology)"]
+    D --> E["5. Mini-Assignment<br/>(Watershed Layout)"]
     
     style A fill:#f9f9f9,stroke:#333
     style E fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px

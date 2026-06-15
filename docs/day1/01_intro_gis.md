@@ -109,13 +109,18 @@ Geospatial data is divided into two primary types, which will be covered in deta
 
 * **Vector Data:** Uses coordinates ($X, Y$ and sometimes $Z$) to define points, lines, and polygons.
 
-  * *Points:* Coordinate pairs representing zero-dimensional features (e.g., rain gauges, spring locations).
+    * *Points:* Coordinate pairs representing zero-dimensional features (e.g., rain gauges, spring locations).
+    ![](images/points.png)
 
-  * *Lines:* Connected sequences of points representing one-dimensional features (e.g., streams, roads).
+    * *Lines:* Connected sequences of points representing one-dimensional features (e.g., streams, roads).
+    ![](images/lines.png)
 
-  * *Polygons:* Closed loops representing two-dimensional areas (e.g., reservoirs, soil zones, watersheds).
+    * *Polygons:* Closed loops representing two-dimensional areas (e.g., reservoirs, soil zones, watersheds).
+    ![](images/polygon.png)
 
 * **Raster Data:** Consists of a matrix of cells (or pixels) organized into a grid. Each cell contains a value representing the phenomenon at that location (e.g., elevation, land cover class, daily rainfall in millimeters).
+
+![Raster Data](images/raster.png)
 
 ### 4. Methods and Workflows
 The analytical workflows, equations, and steps applied to solve spatial problems. For example:
@@ -262,8 +267,4 @@ GIS intersects physical flood hazard zones with demographic datasets:
 
 * **Risk Mapping:** By intersecting these layers, GIS identifies high-risk zones, helping planners design flood warning systems and select evacuation routes.
 
----
-
-### Visual Demonstration
-*(Placeholder: Insert GIS elevation overlay and river basin mapping graphic here)*
-`![GIS River Basin Delineation Concept](images/gis_layers.png)`
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FRnpau-iD7g?si=AmXonunjpF4ulETy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
