@@ -16,9 +16,9 @@ Spatial resolution is the ground size represented by a single pixel in a raster 
     +---+---+---+      banks clearly.        +-------+     adjacent land.
 ```
 
-* **The Mixed Pixel Problem:** If a river channel is 15 meters wide and is imaged by a $30	ext{ m}$ Landsat sensor, the pixels along the channel will contain a mixture of water and land signatures. This makes it difficult to extract precise water edges.
+* **The Mixed Pixel Problem:** If a river channel is 15 meters wide and is imaged by a $30\text{ m}$ Landsat sensor, the pixels along the channel will contain a mixture of water and land signatures. This makes it difficult to extract precise water edges.
 
-* **Implications:** While higher spatial resolution (e.g., $10	ext{ m}$) provides more detail, it increases file sizes and processing times.
+* **Implications:** While higher spatial resolution (e.g., $10\text{ m}$) provides more detail, it increases file sizes and processing times.
 
 ---
 

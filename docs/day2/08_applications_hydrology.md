@@ -36,7 +36,7 @@ Synthetic Aperture Radar (SAR) sensors emit microwave pulses and measure the str
 
   2. Apply a log-transform to calculate backscatter values in decibels (dB).
 
-  3. Inspect the histogram to identify a threshold value (typically between $-15	ext{ dB}$ and $-18	ext{ dB}$ for VH polarization).
+  3. Inspect the histogram to identify a threshold value (typically between $-15\text{ dB}$ and $-18\text{ dB}$ for VH polarization).
 
   4. Classify all pixels with backscatter values below this threshold as floodwater.
 

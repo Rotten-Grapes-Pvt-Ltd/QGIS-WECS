@@ -30,7 +30,7 @@ Raw downloads contain multiple metadata files, xml structures, and separate sing
 ---
 
 ## 3. Clipping to Area of Interest (AOI)
-Satellite scenes are large, covering areas up to $100	ext{ km} 	imes 100	ext{ km}$.
+Satellite scenes are large, covering areas up to $100\text{ km} 	imes 100\text{ km}$.
 
 * **Method:** Use the **Clip Raster by Mask Layer** tool in QGIS to cut the satellite image to the exact boundary of your study watershed. This reduces file sizes and speeds up subsequent analysis.
 
@@ -49,6 +49,6 @@ Satellite data is typically downloaded in a Geographic CRS (e.g., EPSG:4326). Be
 
 ## 5. Resampling and Raster Alignment
 
-* **Resampling:** When combining bands with different resolutions (e.g., Sentinel-2 Band 8 at $10	ext{ m}$ and Band 11 at $20	ext{ m}$), you must resample them to a common grid size using the **Resample** tool.
+* **Resampling:** When combining bands with different resolutions (e.g., Sentinel-2 Band 8 at $10\text{ m}$ and Band 11 at $20\text{ m}$), you must resample them to a common grid size using the **Resample** tool.
 
 * **Raster Alignment:** Even if two rasters share the same cell size and CRS, their cell edges may not align perfectly. If you run cell-by-cell math on misaligned rasters, the GIS will interpolate values, leading to coordinate drift. Use the **Align Rasters** tool in QGIS to snap the grids together.

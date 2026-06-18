@@ -11,13 +11,13 @@ Remote sensing relies on measuring **Electromagnetic Radiation (EMR)** that inte
                Incoming Radiation (Sun)
                      \      /
                       \    /
-                       \  /  反射 (Reflection) - Detected by Satellites
+                       \  / (Reflection) - Detected by Satellites
                         \/
                +------------------+
-               |  Earth Feature   |  <-- 吸收 (Absorption) - Energy is converted to heat
+               |  Earth Feature   |  <-- (Absorption) - Energy is converted to heat
                +------------------+
                         |
-                        v  透射 (Transmission) - Passes through feature
+                        v  (Transmission) - Passes through feature
 ```
 
 * **Reflection:** Radiation bounces off the surface. Satellites measure this reflected energy.
@@ -36,16 +36,16 @@ graph TD
     EM["Electromagnetic Spectrum"] --> UV["Ultraviolet<br/>(0.01 - 0.4 µm)"]
     EM --> VIS["Visible Light<br/>(0.4 - 0.7 µm)"]
     EM --> IR["Infrared (IR)<br/>(0.7 - 1000 µm)"]
-    EM --> MW["Microwaves / Radar<br/>(1 mm - 1 m)"]
+    EM --> MW["Microwaves/Radar<br/>(1 mm - 1 m)"]
 
-    VIS --> VIS_D["Blue, Green, Red<br/>Used for mapping water color & sedimentation"]
-    IR --> NIR["Near Infrared (NIR)<br/>(0.7 - 1.1 µm)<br/>Reflected by vegetation cells"]
-    IR --> SWIR["Shortwave Infrared (SWIR)<br/>(1.1 - 3.0 µm)<br/>Absorbed by water and moisture"]
-    IR --> TIR["Thermal Infrared (TIR)<br/>(3.0 - 15 µm)<br/>Used to map temperature gradients"]
+    VIS --> VIS_D["Blue, Green, Red<br/>(Water mapping and<br/>sedimentation)"]
+    IR --> NIR["Near Infrared (NIR)<br/>(0.7 - 1.1 µm)<br/>(Reflected by<br/>vegetation cells)"]
+    IR --> SWIR["Shortwave IR (SWIR)<br/>(1.1 - 3.0 µm)<br/>(Absorbed by water<br/>and moisture)"]
+    IR --> TIR["Thermal IR (TIR)<br/>(3.0 - 15 µm)<br/>(Temperature<br/>gradients)"]
     
-    MW --> MW_D["Penetrates clouds & rain<br/>Used by SAR sensors for flood mapping"]
+    MW --> MW_D["Microwaves<br/>(Penetrates clouds/rain;<br/>SAR flood mapping)"]
 
-    style EM fill:#003366,color:#fff
+    style EM fill:#fffecd,color:#fff
 ```
 
 ---
@@ -68,15 +68,22 @@ Understanding the differences between optical and SAR datasets is critical for s
 
 ```mermaid
 graph TD
-    Opt["Optical Imagery"] --> Opt_F["Passive sensor measures reflected sunlight"]
-    Opt --> Opt_L["Blocked by monsoon clouds"]
-    Opt --> Opt_A["Excellent for water quality and vegetation index mapping"]
+    Opt["Optical Imagery"] --> Opt_F["Passive sensor<br/>measures reflected sunlight"]
+    Opt --> Opt_L["Blocked by<br/>monsoon clouds"]
+    Opt --> Opt_A["Excellent for water quality<br/>and vegetation index mapping"]
 
-    SAR["SAR (Radar) Imagery"] --> SAR_F["Active sensor measures backscattered pulses"]
-    SAR --> SAR_L["Penetrates clouds, fog, and rain"]
-    SAR --> SAR_A["Excellent for flood inundation mapping & soil roughness"]
 
     style Opt fill:#fffecd,stroke:#fcb045
+   
+```
+
+```mermaid
+graph TD
+
+    SAR["SAR (Radar) Imagery"] --> SAR_F["Active sensor<br/>measures backscattered pulses"]
+    SAR --> SAR_L["Penetrates clouds,<br/>fog, and rain"]
+    SAR --> SAR_A["Excellent for flood inundation<br/>mapping and soil roughness"]
+
     style SAR fill:#d2f8d2,stroke:#2b8a2b
 ```
 

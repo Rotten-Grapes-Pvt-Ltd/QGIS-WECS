@@ -47,11 +47,11 @@ A DEM represents the terrain elevation above a datum (like sea level).
 
 * **Common Elevation Sources:**
 
-  * **SRTM (Shuttle Radar Topography Mission):** $30	ext{ m}$ global resolution. Reliable but can have voids in mountainous areas.
+  * **SRTM (Shuttle Radar Topography Mission):** $30\text{ m}$ global resolution. Reliable but can have voids in mountainous areas.
 
-  * **ALOS PALSAR:** $12.5	ext{ m}$ high-resolution terrain product. Very popular for slope analysis.
+  * **ALOS PALSAR:** $12.5\text{ m}$ high-resolution terrain product. Very popular for slope analysis.
 
-  * **Copernicus DEM (CopDEM):** $30	ext{ m}$ modern global standard with high vertical accuracy.
+  * **Copernicus DEM (CopDEM):** $30\text{ m}$ modern global standard with high vertical accuracy.
 
 ---
 
@@ -88,7 +88,7 @@ Rainfall data provides the input for water balance and runoff models.
 
 * **Satellite Precipitation Estimates:**
 
-  * **CHIRPS (Climate Hazards Group InfraRed Precipitation with Station data):** $5	ext{ km}$ resolution, optimized for long-term trend analysis.
+  * **CHIRPS (Climate Hazards Group InfraRed Precipitation with Station data):** $5\text{ km}$ resolution, optimized for long-term trend analysis.
 
   * **GPM (Global Precipitation Measurement):** High temporal resolution (half-hourly), useful for flood event modeling.
 

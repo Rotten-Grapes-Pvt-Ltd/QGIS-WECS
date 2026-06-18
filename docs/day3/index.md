@@ -1,6 +1,6 @@
-# Day 3: QGIS Workflows & Spatial Data Management
+# QGIS Workflows & Spatial Data Management
 
-Welcome to Day 3. Today we transition from concepts and satellite imagery to operational data manipulation using **QGIS Desktop**. We will focus on geoprocessing, attribute querying, database modeling, and styling data for professional cartographic presentations.
+In this module we will transition from concepts and satellite imagery to operational data manipulation using **QGIS Desktop**. We will focus on geoprocessing, attribute querying, database modeling, and styling data for professional cartographic presentations.
 
 ---
 
@@ -21,7 +21,7 @@ By the end of today's sessions, you will be able to:
 
 ---
 
-## Day 3 Learning Roadmap
+## Learning Roadmap
 
 ```mermaid
 graph TD

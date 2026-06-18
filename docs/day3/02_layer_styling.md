@@ -1,35 +1,182 @@
-# Layer Symbology and Styling
+# Layer Symbology, Styling, and Labeling
 
-Symbology is the visual representation of geographic features. Proper styling is crucial for making maps legible and communicating analytical results.
-
----
-
-## 1. Vector Symbology Types
-
-* **Single Symbol:** Renders all features in the layer using the same style (e.g., all river lines drawn in the same shade of blue).
-
-* **Categorized:** Styles features based on a nominal or qualitative attribute field (e.g., styling land use polygons based on their classification value: forest is green, urban is red, water is blue).
-
-* **Graduated:** Styles features based on a continuous quantitative attribute field (e.g., styling sub-districts from light yellow to dark red based on population density).
+This section guides you through the principles of cartographic design and layer styling in QGIS. You will learn how to transform raw vector coordinates into thematic maps using **Natural Earth** vector datasets (representing global administrative boundaries, hydrology systems, and cities).
 
 ---
 
-## 2. Advanced Rule-Based Styling
-Rule-based symbology uses expressions to define complex styling conditions:
+## 1. Cartographic Design Principles and Natural Earth
 
-* **Example:**
-  ```text
-  Rule 1: "Elevation" > 3000 AND "Slopes" > 25  --> Draw in Red (High Landslide Risk)
-  Rule 2: "Elevation" <= 3000 OR "Slopes" <= 25  --> Draw in Green (Low Landslide Risk)
-  ```
+Before applying color or line styles, it is essential to understand visual variables and hierarchy:
+
+```text
+    VISUAL VARIABLES
+    +---------+  +---------+  +---------+  +---------+
+    |  Color  |  |  Size   |  | Texture |  |  Shape  |
+    | (Hue)   |  | (Width) |  | (Fill)  |  | (Point) |
+    +---------+  +---------+  +---------+  +---------+
+```
+
+* **Color Hues:** Represent qualitative data categories (e.g., green for forest, red for urban, blue for water).
+
+* **Color Value / Saturation:** Represents quantitative data ordering (e.g., light blue for shallow water, dark blue for deep ocean channels).
+
+* **Visual Hierarchy:** Major rivers must stand out more than minor tributaries; country capitals must be visually distinct from minor villages.
+
+### Introducing Natural Earth Data
+
+**Natural Earth** is a public domain map dataset available at three coordinate scales: 1:10m (high resolution), 1:50m (medium resolution), and 1:110m (coarse resolution). 
+
+You can browse and download datasets from the official [Natural Earth Downloads Portal](https://www.naturalearthdata.com/downloads/). We will refer to the following standard datasets in our exercises:
+
+*   **Global Countries:** `ne_110m_admin_0_countries` (Global political land boundaries)
+
+    *   **Direct Download (.zip):** [ne_110m_admin_0_countries.zip](https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip)
+
+    *   **Information Page:** [1:110m Cultural Vectors](https://www.naturalearthdata.com/downloads/110m-cultural-vectors/)
+
+*   **Rivers & Lake Centerlines:** `ne_10m_rivers_lake_centerlines` (Stream centerlines and drainage networks)
+
+    *   **Direct Download (.zip):** [ne_10m_rivers_lake_centerlines.zip](https://naciscdn.org/naturalearth/10m/physical/ne_10m_rivers_lake_centerlines.zip)
+
+    *   **Information Page:** [1:10m Rivers & Lake Centerlines](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-rivers-lake-centerlines/)
+
+*   **Populated Places:** `ne_10m_populated_places` (Point markers for global cities and capitals)
+
+    *   **Direct Download (.zip):** [ne_10m_populated_places.zip](https://naciscdn.org/naturalearth/10m/cultural/ne_10m_populated_places.zip)
+
+    *   **Information Page:** [1:10m Populated Places](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-populated-places/)
 
 ---
 
-## 3. Dynamic Labels
-Labels display text attributes directly on the map canvas.
+## 2. Core Symbology Types in QGIS
 
-* **Formatting:** You can set fonts, colors, and sizes.
+QGIS supports several styling engines for vector layers, accessible by right-clicking a layer and selecting **Properties** > **Symbology** or using the **Layer Styling Panel** (`F7`).
 
-* **Placement Rules:** Enforce rules to prevent text overlapping (e.g., labels along river lines should curve to match the path of the stream).
+### Single Symbol (Qualitative Representation)
 
-* **Halo / Buffer:** Adding a semi-transparent text buffer around labels to make them readable when drawn on top of complex backgrounds (like satellite images).
+Renders all features in the layer using the exact same symbol properties (fill color, border stroke, transparency).
+
+* **Application:** Styling landmasses or waterbodies uniformly.
+
+* *Exercise:* Load `ne_110m_admin_0_countries`. Set the symbol type to **Simple Fill**. Change the fill color to a neutral pastel sand color (e.g., Hex `#ebdcb9`) and the stroke color to a dark gray (`#4a4a4a`) with a line width of $0.2\text{ mm}$. This creates a clean base map layer.
+
+### Categorized Symbology (Qualitative Classification)
+
+Splits features into separate color bins based on unique nominal or text values in an attribute column.
+
+* **Application:** Styling land cover maps or geological zones.
+
+* *Exercise:* In the Layer Styling panel, change the styling dropdown from **Single Symbol** to **Categorized**. Set the **Value** column to `CONTINENT`. Under the color ramp menu, select a qualitative ramp (e.g., *Pastel* or *Spectral*). Click **Classify** at the bottom. QGIS will generate a distinct fill color for each continent.
+
+### Graduated Symbology (Quantitative Classification)
+
+Styles features using a color ramp based on numeric values. You must select a classification method to bin the continuous data:
+
+```text
+    CLASSIFICATION METHOD COMPARISON
+    Equal Interval : [=== 0-25 ===][=== 25-50 ===][=== 50-75 ===] (Equal ranges)
+    Quantiles      : [= 0-10 =][=== 10-35 ===][====== 35-100 ======] (Equal count per bin)
+    Jenks (Natural): [== 0-15 ==][==== 15-60 ====][=== 60-100 ===] (Breaks at natural gaps)
+```
+
+* **Equal Interval:** Divides the range of attribute values into equal-sized sub-ranges. Best for showing absolute thresholds, but can result in empty classes if data is clustered.
+
+* **Quantiles:** Places an equal number of features in each class bin. Excellent for highlighting rankings or relative differences, but can distort data spreads.
+
+* **Natural Breaks (Jenks):** Computes class boundaries based on natural groupings and variances inherent in the dataset. Minimizes variance within classes while maximizing difference between classes. This is the standard method for thematic maps.
+
+* *Exercise:* Load `ne_110m_admin_0_countries`. Change the symbology type to **Graduated**. Set **Value** to the country population field `POP_EST`. Select a sequential color ramp (e.g., *YlOrRd* - Yellow to Red). Set the **Mode** to **Natural Breaks (Jenks)** and **Classes** to `5`. Click **Classify** to visualize global population density.
+
+---
+
+## 3. Advanced Rule-Based Symbology
+
+Rule-based symbology uses SQL-like expressions to filter features, allowing you to define distinct symbols for different subsets of data within a single layer.
+
+* **Application:** Styling river networks so that stroke thickness increases dynamically with river discharge or scale hierarchy.
+
+### Exercise: Styling Rivers by Scalerank
+
+Natural Earth river layers (`ne_10m_rivers_lake_centerlines`) include a `scalerank` attribute (where $0$ represents major continental rivers and larger values represent smaller tributaries). We will write rules to scale line widths based on this rank:
+
+1. Right-click the river layer and open the **Symbology** properties.
+
+2. Change the styling dropdown to **Rule-based**.
+
+3. Create three distinct styling rules:
+
+   * **Rule 1: Major Rivers**
+     * *Double-click the rule list item.*
+     * *Label:* Major Rivers
+     * *Filter expression:* `"scalerank" <= 3`
+     * *Symbol:* Stroke Width $= 0.8\text{ mm}$, color $= \text{Dark Blue } (\text{Hex } \#0a3b6c)$
+
+   * **Rule 2: Medium Rivers**
+     * *Click the green '+' to add a rule.*
+     * *Label:* Medium Rivers
+     * *Filter expression:* `"scalerank" > 3 AND "scalerank" <= 6`
+     * *Symbol:* Stroke Width $= 0.4\text{ mm}$, color $= \text{Medium Blue } (\text{Hex } \#2268a6)$
+
+   * **Rule 3: Minor Streams**
+     * *Add another rule.*
+     * *Label:* Minor Streams
+     * *Filter expression:* `"scalerank" > 6`
+     * *Symbol:* Stroke Width $= 0.15\text{ mm}$, Stroke Style $= \text{Dash Line}$, color $= \text{Light Blue } (\text{Hex } \#5ea8e2)$
+
+4. Click **Apply**. Zoom in to observe how the river thickness adjusts logically as you traverse the drainage basin from headwaters to main channels.
+
+---
+
+## 4. Typography, Labeling, and Text Buffers
+
+Labels display alphanumeric text directly on the map screen. Bad label placement can ruin an otherwise excellent layout. In QGIS, configuration is handled under the **Labels** tab in Layer Properties.
+
+### Label Formatting and Expressions
+
+* **Text Wrapping:** You can wrap labels onto multiple lines by defining a wrap character (e.g., space or comma).
+
+* **Rule-based Labeling:** Allows you to only label features that meet specific criteria. For example, labeling only large cities.
+
+* *Exercise:* Load `ne_10m_populated_places`. Change the label setting from **No Labels** to **Single Labels**. Set the **Value** column to the name field `name`.
+
+### Readability and Text Buffers (Halos)
+
+Labels drawn on top of multi-colored backgrounds (like hillshades, satellite imagery, or dense country maps) can quickly become illegible. 
+
+* **The Text Buffer:** Draws a thin, solid, or semi-transparent outline around the text to separate it from background clutter.
+
+* *Exercise:* In the Populated Places label properties, click the **Buffer** sub-tab. Check the box to **Draw text buffer**. Set the buffer **Size** to $1.2\text{ mm}$ and color to solid white (`#ffffff`). The black text will now stand out clearly regardless of underlying map features.
+
+### Advanced Label Placement Rules
+
+Placement configuration is critical for different geometry types:
+
+* **Point Layers:** QGIS allows setting an offset from the point marker. The default **Cartographic** placement puts the label offset slightly to the top-right, which is the standard reading convention.
+
+* **Line Layers (Rivers):** Set the placement to **Curved**. Under **Line Orientation**, check **Follow line direction**. This bends the text label to match the natural curves of the river centerline.
+
+* **Polygon Layers:** Set the placement to **Horizontal** or **Free (Angled)**. Set the anchor point to the **Centroid** of the polygon.
+
+---
+
+## 5. Exporting and Saving Style Configurations
+
+Once you have styled a layer, you should preserve it so you can apply it to other datasets or share it with colleagues.
+
+### Export Formats
+
+* **QGIS Layer Style File (`.qml`):** An XML file containing all styling rules, colors, symbol properties, classification thresholds, and label settings. It references the layer structure but does not store the data.
+
+* **SLD (Styled Layer Descriptor):** An OGC-standard XML format for styling map layers, useful when publishing layers to web GIS servers like GeoServer.
+
+### Saving Styles Inside GeoPackages
+
+When working with GeoPackage databases (`.gpkg`), you can save layer styles directly into the database container:
+
+1. Double-click your styled layer and scroll to the bottom of the dialog window.
+
+2. Click **Style** > **Save Style...**.
+
+3. Set the save target to **In Database (GeoPackage)**.
+
+4. Give the style a name and check the box to make it the **Default Style** for this database table. The next time you load this table into any new QGIS project, it will render with your configured symbology automatically.

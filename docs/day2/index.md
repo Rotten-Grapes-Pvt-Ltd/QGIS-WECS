@@ -15,11 +15,11 @@ By the end of today's sessions, you will be able to:
 
 * **Evaluate** spatial, spectral, temporal, and radiometric resolutions to choose the optimal satellite dataset for specific catchment studies.
 
-* **Compile** multi-spectral band composites (True Color and False Color) to visually isolate hydrological features.
+* **Understand** multi-spectral band composites (True Color and False Color) to visually isolate hydrological features.
 
-* **Apply** raster preprocessing workflows, including coordinate projection, clipping, cell resampling, and grid alignment.
+* **Explain** raster preprocessing workflows, including coordinate projection, clipping, cell resampling, and grid alignment.
 
-* **Extract** surface water boundaries using index equations like the Normalized Difference Water Index (NDWI).
+* **Explain** how to extract surface water boundaries using index equations like the Normalized Difference Water Index (NDWI).
 
 ---
 
@@ -30,7 +30,7 @@ graph TD
     A["1. Remote Sensing<br/>Principles<br/>(EMR & Sensors)"] --> B["2. Satellites & Resolutions<br/>(Sentinel/Landsat/SAR)"]
     B --> C["3. Bands & Composites<br/>(RGB/FCC/NDWI/NDVI)"]
     C --> D["4. Preprocessing Workflows<br/>(Clipping/Resampling)"]
-    D --> E["5. Laboratory Session<br/>(Water Masking)"]
+    D --> E["5. Laboratory Session<br/>(Data Downloads &<br/>Metadata Registry)"]
     
     style A fill:#f9f9f9,stroke:#333
     style E fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px
@@ -53,7 +53,7 @@ graph TD
   Details band math, True Color, False Color (NIR-Red-Green), and spectral absorption properties of water and soil.
 
 * **[Topic 5: Accessing Open Satellite Data](05_accessing_data.md)**
-  A practical guide to data hubs: CDSE (Copernicus), USGS EarthExplorer, and NASA Earthdata policies.
+  A practical guide to data hubs: CDSE (Copernicus), USGS EarthExplorer, and NASA Earthdata database.
 
 * **[Topic 6: Satellite Data Preparation Workflows](06_preparation_workflows.md)**
   Preprocessing workflows: downloading, clipping AOIs, grid alignment, resampling, and reprojecting.
@@ -65,20 +65,20 @@ graph TD
   Calculates NDWI, NDVI, NDSI, and SAR backscatter threshold masks for floods, snow cover, and erosion.
 
 * **[Topic 9: Practical Session](09_practical_session.md)**
-  Hands-on exercises: searching portals, download, styling FCC layers, calculating NDWI, and setting threshold ranges.
+  Hands-on exercises: registering account credentials, searching public portals, online band visualizations, querying STAC APIs, and downloading raw bands and DEM grids.
 
 * **[Topic 10: Mini Assignment](10_mini_assignment.md)**
-  Guidelines for extracting surface water maps, calculating water surface area, and formatting layouts.
+  Guidelines for selecting a target basin, downloading its raw Sentinel-2 and DEM datasets, organizing folders, and compiling a metadata registry spreadsheet.
 
 ---
 
 ## Expected Outputs for Today
 At the end of Day 2, you will submit a zipped folder containing:
 
-1. A raw and prepared **Digital Elevation Model (DEM)** clipped to a target basin.
+1. Downloaded raw **Sentinel-2 Green (Band 3) and NIR (Band 8)** datasets.
 
-2. A 3-band **False Color Composite (FCC)** raster stack of the study area.
+2. Downloaded raw **Digital Elevation Model (DEM)** tiles covering the target basin.
 
-3. An **NDWI Binary Water Mask** vector layer showing extracted lake and river boundaries.
+3. A completed **Basin Metadata Registry spreadsheet** (CSV or Excel) detailing coordinates, acquisition dates, cloud cover, sensor platform, and file sizes.
 
-4. A **Final Map Layout PDF** illustrating the catchment's surface water distribution.
+4. A screenshot of a structured, local workspace directory tree containing the downloaded raw datasets.

@@ -36,10 +36,10 @@ From a single elevation raster, GIS can calculate several secondary surfaces:
 
 | Dataset | Resolution | Agency | Hydrological Application |
 | :--- | :--- | :--- | :--- |
-| **Copernicus DEM** | $30	ext{ m}$ | ESA | Modern standard for regional basin modeling. High vertical accuracy. |
-| **SRTM GL1** | $30	ext{ m}$ | NASA/USGS | Historically popular. Good for low-relief basins, but contains voids in high mountains. |
-| **ALOS AW3D30** | $30	ext{ m}$ | JAXA | Generated from optical stereo imagery. Excellent detail in steep slopes. |
-| **LiDAR DEM** | $< 1	ext{ m}$ | Various | High-precision engineering models, urban flood modeling, and river cross-sections. |
+| **Copernicus DEM** | $30\text{ m}$ | ESA | Modern standard for regional basin modeling. High vertical accuracy. |
+| **SRTM GL1** | $30\text{ m}$ | NASA/USGS | Historically popular. Good for low-relief basins, but contains voids in high mountains. |
+| **ALOS AW3D30** | $30\text{ m}$ | JAXA | Generated from optical stereo imagery. Excellent detail in steep slopes. |
+| **LiDAR DEM** | $< 1\text{ m}$ | Various | High-precision engineering models, urban flood modeling, and river cross-sections. |
 
 ---
 

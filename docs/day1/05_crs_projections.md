@@ -13,7 +13,7 @@ A GCS represents the Earth as a three-dimensional sphere or ellipsoid. Location 
 
 * **Datums:** Ellipsoids that approximate the shape of the Earth. The global standard datum is **WGS 84** (used by GPS systems).
 
-* **The Distance Dilemma:** Because longitude lines converge at the poles, the physical distance of $1^{\circ}$ of longitude changes depending on latitude. Near the equator, $1^{\circ}$ is roughly $111	ext{ km}$, but near the poles, it approaches $0	ext{ km}$. 
+* **The Distance Dilemma:** Because longitude lines converge at the poles, the physical distance of $1^{\circ}$ of longitude changes depending on latitude. Near the equator, $1^{\circ}$ is roughly $111\text{ km}$, but near the poles, it approaches $0\text{ km}$. 
 
 > [!WARNING]
 > Because GCS uses degrees as units, running calculations like buffer distances or slopes directly on a GCS layer will yield incorrect results.
@@ -51,9 +51,9 @@ The most common PCS for regional applications is the UTM system. UTM divides the
 
 * **UTM Zones for Nepal:**
 
-  * **UTM Zone 44N:** Covers Western and Central Nepal (longitude $78^{\circ}	ext{E}$ to $84^{\circ}	ext{E}$).
+  * **UTM Zone 44N:** Covers Western and Central Nepal (longitude $78^{\circ}\text{E}$ to $84^{\circ}\text{E}$).
 
-  * **UTM Zone 45N:** Covers Eastern Nepal (longitude $84^{\circ}	ext{E}$ to $90^{\circ}	ext{E}$).
+  * **UTM Zone 45N:** Covers Eastern Nepal (longitude $84^{\circ}\text{E}$ to $90^{\circ}\text{E}$).
 
 ---
 
@@ -81,4 +81,4 @@ In QGIS, datasets with different CRS can be loaded into the same map canvas. QGI
 
 * **Shifted Layers:** If coordinate datasets do not align correctly (e.g., a river layer appears shifted 200 meters to the side of a DEM), it is usually because the layer datum was defined incorrectly in the metadata.
 
-* **Incorrect Buffer Units:** Attempting to create a $100	ext{ m}$ buffer around a river layer, but the output buffer is so large it covers the entire country. This happens when the input layer is in GCS (EPSG:4326), causing QGIS to interpret the "100" input value as $100^{\circ}$ instead of $100	ext{ meters}$.
+* **Incorrect Buffer Units:** Attempting to create a $100\text{ m}$ buffer around a river layer, but the output buffer is so large it covers the entire country. This happens when the input layer is in GCS (EPSG:4326), causing QGIS to interpret the "100" input value as $100^{\circ}$ instead of $100\text{ meters}$.

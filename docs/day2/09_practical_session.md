@@ -1,95 +1,134 @@
-# Practical Session: Processing Satellite Data and Calculating Water Indices
+# Practical Session: Satellite Data Acquisition and Metadata Registry
 
-This practical session guides you through downloading Sentinel-2 multispectral bands, generating color composites, clipping datasets to a watershed, and running index equations in the QGIS Raster Calculator.
-
----
-
-## 1. Setting Up the Workspace
-
-1. In your project directory, create a folder for Day 2 data:
-
-   * `data/raster/sentinel2/`
-
-   * `data/vector/watershed/`
-
-2. Save your QGIS project as `Day2_Remote_Sensing.qgz` in the `projects/` folder.
-
-3. Configure Project CRS to **WGS 84 / UTM Zone 45N (EPSG:32645)**.
+This practical session guides you through searching, filtering, visualizing, and downloading satellite data using web portals (Copernicus CDSE Browser, USGS EarthExplorer), programmatic STAC APIs, and ObservEarth. You will establish your workspace and create a metadata registry for a selected river basin.
 
 ---
 
-## 2. Creating a False Color Composite (FCC)
+## 1. Setting Up the Project Workspace
 
-1. Import Sentinel-2 Bands 2 (Blue), 3 (Green), 4 (Red), and 8 (NIR) into QGIS.
+Before downloading any datasets, organize your local project directories:
 
-2. Build a virtual raster stack to combine these bands:
+1. In your system's file manager or terminal, create the following subdirectories inside your main training folder:
 
-   * Go to **Raster** > **Miscellaneous** > **Build Virtual Raster**.
+   * `data/raw/sentinel2/` (For raw spectral bands)
 
-   * Click **Input layers** and select Bands 8, 4, and 3.
+   * `data/raw/dem/` (For digital elevation model grids)
 
-   * Check the box for **Place each input file into a separate band**.
+   * `data/metadata/` (For metadata registry spreadsheets)
 
-   * Save the output as `sentinel2_fcc.vrt`.
-
-3. In the Layers panel, right-click `sentinel2_fcc.vrt` and select **Properties** > **Symbology**.
-
-   * Set **Red band** to `Band 1` (NIR).
-
-   * Set **Green band** to `Band 2` (Red).
-
-   * Set **Blue band** to `Band 3` (Green).
-
-   * Click **Apply**.
-
-4. Vegetation will display as bright red; water bodies will display as dark blue or black.
+2. Keep these folders clean and dedicated strictly to raw, uncompressed inputs.
 
 ---
 
-## 3. Clipping Rasters to Basin Boundaries
+## 2. Searching and Filtering in Copernicus CDSE
 
-1. Load your watershed boundary vector file (e.g., `catchment.gpkg`).
+The **Copernicus Data Space Ecosystem (CDSE)** is the primary web portal for accessing Sentinel imagery.
 
-2. Go to **Raster** > **Extraction** > **Clip Raster by Mask Layer**.
+1. Open a web browser and navigate to [dataspace.copernicus.eu](https://dataspace.copernicus.eu/). Create a free account or log in.
 
-   * **Input Layer:** `sentinel2_fcc.vrt`.
+2. Open the **CDSE Browser** map interface.
 
-   * **Mask Layer:** `catchment.gpkg`.
+3. Search for your study area:
 
-   * **Target CRS:** Match project CRS (`EPSG:32645`).
+      * In the search bar, type a catchment name in Nepal (e.g., *"Bagmati River"* or *"Melamchi Basin"*) or draw a bounding box using the polygon drawing tool.
 
-   * Save the output to `data/raster/catchment_satellite_clip.tif`.
+4. Set search criteria:
 
----
+      * **Data Collection:** Sentinel-2 L2A (Bottom-Of-Atmosphere reflectance).
 
-## 4. Calculating NDWI in the Raster Calculator
+      * **Date Range:** Select a dry-season window (e.g., October to March) to minimize cloud interference.
 
-1. Click **Raster** > **Raster Calculator**.
+      * **Cloud Cover Filter:** Slide the threshold to $< 10\%$.
 
-2. Double-click the Sentinel-2 bands in the bands list to construct the NDWI equation:
-   $$\text{NDWI} = \frac{\text{Green} - \text{NIR}}{\text{Green} + \text{NIR}}$$
-   Assuming Band 3 (Green) is `B3` and Band 8 (NIR) is `B8`, enter:
-   `("B3@1" - "B8@1") / ("B3@1" + "B8@1")`
-
-3. Save the output raster as `data/raster/catchment_ndwi.tif`.
-
-4. Click **OK** to run the calculator. The output is a gray gradient where positive values represent water surfaces.
+5. Click **Search**. The system will return a list of matching satellite scenes.
 
 ---
 
-## 5. Generating a Binary Water Mask
+## 3. Interactive Web-Based Visualizations
 
-1. Go to the **Processing Toolbox** and search for **Reclassify by Table**.
+Before downloading files, inspect the bands online:
 
-2. **Input Layer:** `catchment_ndwi.tif`.
+1. In the search results panel, select a low-cloud-cover scene over your study area.
 
-3. Click **Reclassification table** `...` to define threshold ranges:
+2. Explore the visualization modes:
 
-| Minimum Value | Maximum Value | Value |
-| :--- | :--- | :--- |
-| $-1.0$ | $0.0$ | $0$ (Non-water) |
-| $0.0$ | $1.0$ | $1$ (Water) |
+   * **True Color (B4, B3, B2):** Displays the scene in natural colors (similar to human vision). Inspect the sediment concentration in rivers (appearing brown/cyan).
 
-4. Click **OK** and save the output as `data/raster/binary_water_mask.tif`.
+   * **False Color (B8, B4, B3):** Displays the Near-Infrared (NIR) channel. Healthy vegetation will appear bright red, while water bodies will appear black or deep blue.
 
-5. Run the tool. The output is a binary grid containing only $1	ext{s}$ (water) and $0	ext{s}$ (land).
+3. Note down the **Product Name** (unique ID) of your chosen scene (e.g., `S2B_MSIL2A_20241115T...`). You will need this for your registry.
+
+---
+
+## 4. Programmatic Searching via SpatioTemporal Asset Catalog (STAC)
+
+Instead of searching manually, you can query satellite catalogs programmatically using Python.
+
+1. Open your terminal or a Python development environment.
+
+2. Install the standard STAC client library:
+   ```bash
+   pip install pystac-client pystac
+   ```
+
+3. Run a basic query block to discover Sentinel-2 scenes over a bounding box in Nepal (e.g., Kathmandu region):
+   ```python
+   from pystac_client import Client
+
+   # Connect to the open-access Element84 STAC endpoint
+   client = Client.open("https://earth-search.aws.element84.com/v1")
+
+   # Define search criteria (Kathmandu bounding box, dry season, low clouds)
+   search = client.search(
+       max_items=5,
+       collections=["sentinel-2-l2a"],
+       bbox=[85.2, 27.6, 85.4, 27.8],
+       datetime="2024-11-01/2024-12-31",
+       query={"eo:cloud_cover": {"lt": 10}}
+   )
+
+   # Print matching scenes and their asset links
+   for item in search.get_all_items():
+       print(f"ID: {item.id} | Clouds: {item.properties['eo:cloud_cover']:.2f}%")
+       # Print direct URLs to Green and NIR bands
+       print(f"  Green Band: {item.assets['green'].href}")
+       print(f"  NIR Band: {item.assets['nir'].href}")
+   ```
+
+---
+
+## 5. Streaming and Downloading from ObservEarth
+
+To bypass bulky raw zip files, utilize **ObservEarth** to download pre-clipped, analysis-ready datasets:
+
+1. Open your web browser and navigate to [observearth.com](https://observearth.com).
+
+2. Set up your user credentials or log in to the developer console.
+
+3. Define your target basin boundary:
+
+   * Draw a polygon over your selected watershed or upload your basin outline.
+
+4. Query the API/Console:
+
+   * Choose Sentinel-2 L2A as the base product.
+
+   * Request automated extraction of NDWI (Normalized Difference Water Index) and NDVI bands.
+
+5. Direct Download:
+
+   * Download the clipped Green (Band 3) and NIR (Band 8) GeoTIFF files directly to your `data/raw/sentinel2/` directory.
+
+---
+
+## 6. Downloading Digital Elevation Models (DEMs)
+
+Next, acquire topographic data using **USGS EarthExplorer**:
+
+1. Navigate to [earthexplorer.usgs.gov](https://earthexplorer.usgs.gov/).
+
+2. Define your spatial footprint using the map or coordinates.
+
+3. Under **Data Sets**, expand **Digital Elevation** and select **SRTM** > **SRTM 1 Arc-Second Global**.
+
+4. Search and download the DEM tiles covering your watershed in GeoTIFF format. Save them to `data/raw/dem/`.

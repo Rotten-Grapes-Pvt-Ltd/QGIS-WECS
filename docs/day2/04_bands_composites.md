@@ -16,10 +16,7 @@ To display satellite data in color, we assign specific bands to the three primar
 
 ### True Color Composite (Natural Color)
 
-* **Configuration:** Red Band $
-ightarrow$ Red, Green Band $
-ightarrow$ Green, Blue Band $
-ightarrow$ Blue.
+* **Configuration:** Red Band $\rightarrow$ Red, Green Band $\rightarrow$ Green, Blue Band $\rightarrow$ Blue.
 
   * *Sentinel-2:* Bands 4, 3, 2.
 
@@ -29,10 +26,7 @@ ightarrow$ Blue.
 
 ### Standard False Color Composite (Vegetation FCC)
 
-* **Configuration:** NIR Band $
-ightarrow$ Red, Red Band $
-ightarrow$ Green, Green Band $
-ightarrow$ Blue.
+* **Configuration:** NIR Band $\rightarrow$ Red, Red Band $\rightarrow$ Green, Green Band $\rightarrow$ Blue.
 
   * *Sentinel-2:* Bands 8, 4, 3.
 
@@ -47,16 +41,24 @@ The key to mapping water and vegetation lies in the infrared spectrum:
 
 ```mermaid
 graph TD
-    Water["Water Spectral Properties"] --> W_VIS["Reflects some Blue & Green light"]
-    Water --> W_NIR["Absorbs almost all Near-Infrared (NIR) light"]
-    Water --> W_SWIR["Absorbs all Shortwave-Infrared (SWIR) light"]
 
-    Veg["Vegetation Spectral Properties"] --> V_VIS["Absorbs Red and Blue (for chlorophyll)"]
-    Veg --> V_NIR["High reflection in NIR (due to leaf cell structure)"]
-    Veg --> V_SWIR["Moderate reflection, highly sensitive to leaf water content"]
+    Veg["Vegetation Spectral Properties"] --> V_VIS["Absorbs Red and Blue <br>(for chlorophyll)"]
+    Veg --> V_NIR["High reflection in NIR <br>(due to leaf cell structure)"]
+    Veg --> V_SWIR["Moderate reflection, highly <br> sensitive to leaf water content"]
 
-    style Water fill:#e6f2ff,stroke:#0066cc
+  
     style Veg fill:#d2f8d2,stroke:#2b8a2b
+```
+
+```mermaid
+graph TD
+    Water["Water Spectral Properties"] --> W_VIS["Reflects some Blue & <br> Green light"]
+    Water --> W_NIR["Absorbs almost all Near- <br>Infrared(NIR) light"]
+    Water --> W_SWIR["Absorbs all Shortwave- <br>Infrared (SWIR) light"]
+
+   
+    style Water fill:#e6f2ff,stroke:#0066cc
+  
 ```
 
 ---
@@ -67,9 +69,9 @@ The table below maps the corresponding band numbers for Sentinel-2 and Landsat 8
 
 | Spectral Band | Sentinel-2 Band | Landsat 8/9 Band | Primary Application in Hydrology |
 | :--- | :--- | :--- | :--- |
-| **Blue** | Band 2 ($10	ext{ m}$) | Band 2 ($30	ext{ m}$) | Bathymetry, mapping water depth in clear water. |
-| **Green** | Band 3 ($10	ext{ m}$) | Band 3 ($30	ext{ m}$) | Mapping turbid/sediment-laden water, NDWI calculation. |
-| **Red** | Band 4 ($10	ext{ m}$) | Band 4 ($30	ext{ m}$) | Soil mapping, vegetation chlorophyll absorption. |
-| **Near-Infrared (NIR)** | Band 8 ($10	ext{ m}$) | Band 5 ($30	ext{ m}$) | Delineating water-land boundaries, calculating NDVI and NDWI. |
-| **Shortwave-Infrared (SWIR-1)**| Band 11 ($20	ext{ m}$)| Band 6 ($30	ext{ m}$) | Soil moisture monitoring, snow-cloud separation, NDSI. |
-| **Shortwave-Infrared (SWIR-2)**| Band 12 ($20	ext{ m}$)| Band 7 ($30	ext{ m}$) | Mapping structural damage, geological faults. |
+| **Blue** | Band 2 ($10\text{ m}$) | Band 2 ($30\text{ m}$) | Bathymetry, mapping water depth in clear water. |
+| **Green** | Band 3 ($10\text{ m}$) | Band 3 ($30\text{ m}$) | Mapping turbid/sediment-laden water, NDWI calculation. |
+| **Red** | Band 4 ($10\text{ m}$) | Band 4 ($30\text{ m}$) | Soil mapping, vegetation chlorophyll absorption. |
+| **Near-Infrared (NIR)** | Band 8 ($10\text{ m}$) | Band 5 ($30\text{ m}$) | Delineating water-land boundaries, calculating NDVI and NDWI. |
+| **Shortwave-Infrared (SWIR-1)**| Band 11 ($20\text{ m}$)| Band 6 ($30\text{ m}$) | Soil moisture monitoring, snow-cloud separation, NDSI. |
+| **Shortwave-Infrared (SWIR-2)**| Band 12 ($20\text{ m}$)| Band 7 ($30\text{ m}$) | Mapping structural damage, geological faults. |

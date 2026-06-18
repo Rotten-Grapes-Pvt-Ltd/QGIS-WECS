@@ -51,7 +51,7 @@ The raster data model represents geographic features as a continuous grid of cel
 
 ### Key Raster Characteristics
 
-* **Cell Size (Resolution):** The ground area covered by a single pixel. A $10	ext{ m}$ resolution raster captures more land detail but requires 9 times more storage space than a $30	ext{ m}$ resolution raster covering the same area.
+* **Cell Size (Resolution):** The ground area covered by a single pixel. A $10\text{ m}$ resolution raster captures more land detail but requires 9 times more storage space than a $30\text{ m}$ resolution raster covering the same area.
 
 * **Georeferencing Tie-Points:** A raster is positioned in space by defining the coordinate of its upper-left pixel, its cell size, and its rotation angle. From this data, the GIS calculates the coordinate of every other pixel.
 

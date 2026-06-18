@@ -7,7 +7,7 @@ Developing accurate water models requires understanding the quality, detail, and
 ## 1. Map Scale
 Map scale is the relationship between distance on the map and distance on the ground. It is expressed in three ways:
 
-1. **Representative Fraction (Ratio):** e.g., $1:50,000$ (meaning $1	ext{ cm}$ on the map equals $50,000	ext{ cm}$ or $500	ext{ m}$ on the ground).
+1. **Representative Fraction (Ratio):** e.g., $1:50,000$ (meaning $1\text{ cm}$ on the map equals $50,000\text{ cm}$ or $500\text{ m}$ on the ground).
 
 2. **Verbal Statement:** e.g., "One centimeter represents 500 meters."
 
@@ -35,7 +35,7 @@ graph LR
 
 ### Applications in Hydrology:
 
-* **Spatial:** A $90	ext{ m}$ elevation raster is too coarse to detect narrow mountain gullies, which can lead to errors in stream network calculation. A $12.5	ext{ m}$ DEM is much more effective for modeling terrain at this scale.
+* **Spatial:** A $90\text{ m}$ elevation raster is too coarse to detect narrow mountain gullies, which can lead to errors in stream network calculation. A $12.5\text{ m}$ DEM is much more effective for modeling terrain at this scale.
 
 * **Temporal:** Flood mapping requires high temporal resolution (daily or sub-daily observations) to capture the peak water level. Drought monitoring can use lower temporal resolutions (e.g., 8-day or monthly composite datasets).
 
