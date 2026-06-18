@@ -26,9 +26,13 @@ Before applying color or line styles, it is essential to understand visual varia
 
 **Natural Earth** is a public domain map dataset available at three coordinate scales: 1:10m (high resolution), 1:50m (medium resolution), and 1:110m (coarse resolution). 
 
-You can browse and download datasets from the official [Natural Earth Downloads Portal](https://www.naturalearthdata.com/downloads/). We will refer to the following standard datasets in our exercises:
+All of these datasets are pre-packaged for you and available locally in the project directory under the [docs/data/Natural_Earth_quick_start/](file:///Users/krishnaglodha/Documents/work/wb/QGIS-WECS/docs/data/Natural_Earth_quick_start/) folder. 
+
+We will refer to the following standard datasets in our exercises:
 
 *   **Global Countries:** `ne_110m_admin_0_countries` (Global political land boundaries)
+
+    *   **Local Project Folder:** [docs/data/Natural_Earth_quick_start/110m_cultural/](file:///Users/krishnaglodha/Documents/work/wb/QGIS-WECS/docs/data/Natural_Earth_quick_start/110m_cultural/)
 
     *   **Direct Download (.zip):** [ne_110m_admin_0_countries.zip](https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip)
 
@@ -36,11 +40,15 @@ You can browse and download datasets from the official [Natural Earth Downloads 
 
 *   **Rivers & Lake Centerlines:** `ne_10m_rivers_lake_centerlines` (Stream centerlines and drainage networks)
 
+    *   **Local Project Folder:** [docs/data/Natural_Earth_quick_start/10m_physical/](file:///Users/krishnaglodha/Documents/work/wb/QGIS-WECS/docs/data/Natural_Earth_quick_start/10m_physical/)
+
     *   **Direct Download (.zip):** [ne_10m_rivers_lake_centerlines.zip](https://naciscdn.org/naturalearth/10m/physical/ne_10m_rivers_lake_centerlines.zip)
 
     *   **Information Page:** [1:10m Rivers & Lake Centerlines](https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-rivers-lake-centerlines/)
 
 *   **Populated Places:** `ne_10m_populated_places` (Point markers for global cities and capitals)
+
+    *   **Local Project Folder:** [docs/data/Natural_Earth_quick_start/10m_cultural/](file:///Users/krishnaglodha/Documents/work/wb/QGIS-WECS/docs/data/Natural_Earth_quick_start/10m_cultural/)
 
     *   **Direct Download (.zip):** [ne_10m_populated_places.zip](https://naciscdn.org/naturalearth/10m/cultural/ne_10m_populated_places.zip)
 
