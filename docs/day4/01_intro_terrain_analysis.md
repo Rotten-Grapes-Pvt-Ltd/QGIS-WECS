@@ -51,6 +51,8 @@ A Digital Elevation Model (DEM) is a grid-based representation of the Earth's to
     
     Using a DSM for flow path delineation results in artificial "dams" (e.g., roads, bridges, and vegetation blocks) that block channel pathways and create false sinks.
 
+![dtm](images/dtm.png)
+
 ### Grid Parameters and Precision
 
 To utilize DEMs effectively in QGIS, analysts must understand how elevation values are stored and referenced.
@@ -186,6 +188,8 @@ Topographic terrain is composed of distinct morphological features that govern c
     
     Water velocity slows down in these zones, encouraging infiltration, sediment deposition, and flooding.
 
+![topographic_features](images/topographic_features.png)
+
 ### The Topographic Position Index (TPI)
 
 The Topographic Position Index (TPI) is a quantitative method used to classify landforms by comparing the elevation of a central cell to the average elevation of its surrounding neighborhood.
@@ -288,6 +292,8 @@ Elevation values are referenced to a vertical datum. There are two primary types
     *   $N$ is the geoid undulation (geoid height relative to the ellipsoid).
     
     *   **Application:** Raw GPS surveys and satellite datasets must be transformed using geoid models (e.g., **EGM96** or **EGM2008**) to convert ellipsoidal heights to orthometric heights before running runoff models.
+
+![vertical_datums](images/vertical_datums.png)
 
 ### Horizontal Projections and Grid Distortion
 

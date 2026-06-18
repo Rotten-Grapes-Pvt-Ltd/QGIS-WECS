@@ -4,11 +4,11 @@ Raster grids allow us to model complex spatial environmental processes (such as 
 
 ---
 
-## 1. Surface Runoff Modeling
+## 1. Surface Runoff Peak Discharge Modeling (The Rational Method)
 
-Estimating surface runoff volume and peak discharge is critical for designing storm drains, calculating culvert capacity, and modeling floodplain hazard zones.
+Estimating peak discharge is critical for flood hazard zone mapping, storm drain dimensioning, and culvert capacity calculations.
 
-### The Rational Method (Peak Discharge)
+### Theory and Mathematical Formulation
 
 The Rational Method is a simple empirical model used to calculate the peak surface runoff rate ($Q$) at a catchment outlet:
 
@@ -24,7 +24,7 @@ Where:
 
 *   $C$ is the dimensionless runoff coefficient, representing the fraction of rainfall that becomes surface runoff.
     
-    *   **Paved / Asphalt Areas:** $C = 0.90$ (high runoff)
+    *   **Paved / Asphalt Areas:** $C = 0.90$ (high runoff potential)
     
     *   **Bare Clay Soils:** $C = 0.60$
     
@@ -48,17 +48,47 @@ Where:
 
 *   $S$ is the average slope gradient of the channel ($H_{\text{drop}} / L$).
 
-### The SCS Curve Number (CN) Method (Runoff Volume)
+### Use and Interpretation
+
+Peak runoff calculations define design limits for infrastructure. For example, a planned culvert at a road crossing must accommodate the peak 100-year return period runoff rate ($Q_{100}$) computed from the upstream drainage area.
+
+### QGIS Analysis Steps
+
+1.  **Delineate Catchment Area ($A$):**
+    
+    Ensure the vector catchment boundary (e.g. `sub_basins_polygons.gpkg` created in Chapter 5) is loaded. Open the attribute table and use the field calculator to compute area:
+    
+    `$area` (units in square meters).
+
+2.  **Calculate Peak Runoff rate ($Q$) in QGIS:**
+    
+    *   Open **Raster** > **Raster Calculator...**.
+    
+    *   If you have a spatial runoff coefficient raster `runoff_coeff_C.tif` and a rainfall intensity grid `rain_intensity_I.tif`, input the metric Rational formula:
+        
+        `("runoff_coeff_C@1" * "rain_intensity_I@1" * [Catchment Area value]) / 3600000`
+    
+    *   Save the output raster as `peak_runoff_Q.tif`.
+    
+    *   Click **OK**.
+    
+    *   *Interpretation:* High values indicate local sub-basins generating severe volumes of peak flow, pointing to downstream flooding zones.
+
+---
+
+## 2. Runoff Volume Modeling (The SCS Curve Number Method)
 
 Developed by the USDA Soil Conservation Service, this model calculates cumulative runoff depth based on land use, soil hydrologic properties, and antecedent soil moisture.
 
+### Theory and Mathematical Formulation
+
 *   **The Runoff Equation:**
     
-    $$Q = \frac{(P - I_a)^2}{P - I_a + S} \quad \text{for } P > I_a$$
+    $$Q_d = \frac{(P - I_a)^2}{P - I_a + S} \quad \text{for } P > I_a$$
     
     Where:
     
-    *   $Q$ is the cumulative runoff depth (in millimeters, $mm$).
+    *   $Q_d$ is the cumulative runoff depth (in millimeters, $mm$).
     
     *   $P$ is the cumulative rainfall depth (in millimeters, $mm$).
     
@@ -89,9 +119,45 @@ Developed by the USDA Soil Conservation Service, this model calculates cumulativ
     | **Agricultural Cultivation** | 67 | 78 | 85 | 89 |
     | **Urban Residential / Concrete** | 77 | 85 | 90 | 92 |
 
+### Use and Interpretation
+
+Outputs the spatial distribution of runoff depth across a catchment. Higher values indicate impervious land or heavy clay soils where rainfall cannot infiltrate and immediately converts to surface water volume.
+
+### QGIS Analysis Steps
+
+1.  **Prepare the Curve Number (CN) Grid:**
+    
+    *   Overlay LULC and HSG vector polygon layers in QGIS using **Vector** > **Geoprocessing Tools** > **Union**.
+    
+    *   Open the attribute table. Add a new field `CN_val` (integer) and use field calculator conditional expressions (or a join table) to assign Curve Numbers based on the matrix table (e.g. `CASE WHEN "LULC" = 'Forest' AND "HSG" = 'A' THEN 30 ... END`).
+    
+    *   Rasterize this vector layer: Go to **Raster** > **Conversion** > **Rasterize (Vector to Raster)...**. Set **Input Layer** to the unioned layer, **Field to use for burn-in value** to `CN_val`, output resolution matching the DEM, and save as `curve_number.tif`.
+
+2.  **Calculate Potential Soil Water Retention ($S$):**
+    
+    *   Open **Raster** > **Raster Calculator...**.
+    
+    *   Enter the formula:
+        
+        `(25400 / "curve_number@1") - 254`
+    
+    *   Save output as `soil_retention_S.tif`.
+
+3.  **Calculate Runoff Depth ($Q_d$):**
+    
+    *   Open the **Raster Calculator** again.
+    
+    *   Input the runoff equation (assuming a design storm rainfall $P = 150\text{ mm}$):
+        
+        `(("precipitation_P@1" - (0.2 * "soil_retention_S@1")) ^ 2) / ("precipitation_P@1" + (0.8 * "soil_retention_S@1"))`
+    
+    *   Save output as `runoff_depth_Qd.tif`.
+    
+    *   *Interpretation:* Style the output using a blue color ramp. Saturated soils and concrete surfaces will show peak runoff depths close to the rainfall value ($150\text{ mm}$), whereas forested sandy zones will show low values.
+
 ---
 
-## 2. Soil Erosion Susceptibility (The RUSLE Model)
+## 3. Soil Erosion Susceptibility (The RUSLE Model)
 
 The **Revised Universal Soil Loss Equation (RUSLE)** models average annual soil loss caused by sheet and rill erosion:
 
@@ -121,13 +187,7 @@ Where:
     
     $$LS = \left( \frac{\alpha}{22.13} \right)^m \times \left( \frac{\sin \theta}{0.0896} \right)^n$$
     
-    Where:
-    
-    *   $\alpha$ is the Specific Catchment Area (SCA) from flow accumulation.
-    
-    *   $\theta$ is the local slope angle in degrees.
-    
-    *   $m$ and $n$ are empirical exponents ($m \approx 0.4 \text{ to } 0.6$, $n \approx 1.2 \text{ to } 1.3$).
+    Where $\alpha$ is the Specific Catchment Area (SCA) from flow accumulation, $\theta$ is the local slope angle in degrees, and $m$ and $n$ are empirical exponents ($m \approx 0.4 \text{ to } 0.6$, $n \approx 1.2 \text{ to } 1.3$).
 
 *   **Cover Management Factor ($C$):**
     
@@ -143,56 +203,49 @@ Where:
     
     In steep Himalayan catchments, active terracing drops the $P$ value from $1.0$ (no support) to $0.1$, significantly reducing modeled soil loss.
 
----
+### Use and Interpretation
 
-## 3. Step-by-Step Exercise: Delineating Soil Erosion in QGIS
+Identifies spatial soil loss hotspots. Crucial for watershed rehabilitation planning (e.g., targeting soil bioengineering or agroforestry to zones showing severe erosion rates).
 
-We will generate an LS factor raster and compile the final soil erosion map.
+### QGIS Analysis Steps
 
-1.  **Verify Input Rasters:**
+1.  **Calculate the Topographic LS Factor in SAGA:**
     
-    Ensure all input factor rasters ($R, K, C, P$) are loaded in QGIS, projected to the same metric coordinate system (e.g., **UTM Zone 44N**), and have matching pixel resolutions.
-
-2.  **Calculate the LS Factor in SAGA:**
+    *   Ensure the conditioned DEM `filled_dem_wang_liu.tif` and the flow accumulation grid `flow_accumulation_unweighted.tif` (from Chapter 4) are loaded.
     
-    Go to **Processing Toolbox** > **SAGA** > **Terrain Analysis - Hydrology** > **LS Factor**.
+    *   Go to **Processing Toolbox** > **SAGA** > **Terrain Analysis - Hydrology** > **LS Factor**.
     
-    *   **Elevation:** Select your conditioned, filled DEM `filled_dem.tif`.
+    *   **Elevation:** Select `filled_dem_wang_liu.tif`.
     
-    *   **Slope:** Select your calculated slope raster `slope_degrees.tif` (or let SAGA calculate it).
+    *   **Flow Accumulation:** Select `flow_accumulation_unweighted.tif`.
     
-    *   **Area:** Select your flow accumulation raster `flow_accumulation.tif`.
-    
-    *   **Method:** Select `Moore et al. (1991)`.
+    *   **Method:** Select **Moore et al. (1991)**.
     
     *   **LS Factor:** Save output as `ls_factor.tif`.
     
-    Click **Run**.
+    *   Click **Run**.
 
-3.  **Compile Final Soil Erosion Grid:**
+2.  **Compile the Final Soil Loss Grid:**
     
-    Open **Raster** > **Raster Calculator...**.
+    *   Ensure your $R, K, C$, and $P$ factor rasters are loaded (projected to UTM Zone 45N and matching the resolution of the LS factor raster).
     
-    Enter the multiplicative RUSLE equation:
+    *   Open **Raster** > **Raster Calculator...**.
     
-    `"R_factor@1" * "K_factor@1" * "ls_factor@1" * "C_factor@1" * "P_factor@1"`
+    *   Enter the multiplicative RUSLE equation:
+        
+        `"R_factor@1" * "K_factor@1" * "ls_factor@1" * "C_factor@1" * "P_factor@1"`
     
-    Save the output as `annual_soil_loss.tif` in your project folder. Click **OK**.
+    *   Save the output as `annual_soil_loss.tif` in your project folder. Click **OK**.
 
-4.  **Categorize Erosion Severity:**
+3.  **Classify and Visualize Erosion Severity:**
     
-    Double-click `annual_soil_loss.tif` and open **Symbology**.
+    *   Open the Layer Styling Panel for `annual_soil_loss.tif`.
     
-    Change Render Type to **Singleband pseudocolor**.
+    *   Change Render Type to **Singleband pseudocolor**.
     
-    Configure an **Equal Interval** classification with 5 classes to categorize soil loss rates:
-    
-    *   **Class 1 (0 to 5 t/ha/yr):** Low Erosion (Slight).
-    
-    *   **Class 2 (5 to 10 t/ha/yr):** Moderate.
-    
-    *   **Class 3 (10 to 20 t/ha/yr):** High.
-    
-    *   **Class 4 (20 to 40 t/ha/yr):** Very High.
-    
-    *   **Class 5 (> 40 t/ha/yr):** Severe (requiring immediate terracing or restoration).
+    *   Configure an **Equal Interval** classification with 5 classes to categorize soil loss rates:
+        *   **Class 1 ($0 \text{ to } 5\text{ t/ha/yr}$):** Low Erosion (Slight).
+        *   **Class 2 ($5 \text{ to } 10\text{ t/ha/yr}$):** Moderate.
+        *   **Class 3 ($10 \text{ to } 20\text{ t/ha/yr}$):** High.
+        *   **Class 4 ($20 \text{ to } 40\text{ t/ha/yr}$):** Very High.
+        *   **Class 5 ($> 40\text{ t/ha/yr}$):** Severe (requiring immediate biological terracing or catchment bioengineering).
