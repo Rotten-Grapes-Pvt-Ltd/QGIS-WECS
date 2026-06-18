@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# macOS System Files
+.DS_Store
+
+# Large raw datasets
+docs/data/

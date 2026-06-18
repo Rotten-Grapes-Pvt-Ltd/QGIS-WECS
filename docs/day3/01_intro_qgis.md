@@ -27,11 +27,15 @@ Installing QGIS varies across operating systems. Proper installation is critical
 
 * **OSGeo4W Network Installer (Recommended for power users/IT):** A command-line package manager for Windows. It allows you to manage multiple versions of QGIS, GDAL, GRASS, and Python dependencies, updating individual packages without reinstalling the entire program.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ku3VXoqrzUU?si=DfAYNKI4sUlTZgKs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ### macOS Installation and Path Configuration
 
 * **DMG Package:** Standard installer format. Drag QGIS to the `/Applications` folder.
 
 * *macOS Path Security Warning:* On modern macOS versions (Ventura/Sonoma), gatekeeper restrictions may block external SAGA or GRASS binaries from executing inside the Processing Toolbox. You must grant execution permissions in **System Settings** > **Privacy & Security** if a "Developer cannot be verified" pop-up appears, or configure paths using homebrew packages.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KPF3jxx3HrQ?si=0rFssPxASq3oAenX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### Linux Installation (Debian/Ubuntu/Flatpak)
 
@@ -41,6 +45,8 @@ Installing QGIS varies across operating systems. Proper installation is critical
   sudo apt update
   sudo apt install qgis qgis-plugin-grass
   ```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VKDLoqH9keI?si=BLEMUxgP2OFP2ytv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 * Alternatively, utilize the **Flatpak** sandbox distribution to run isolated QGIS setups with pre-bundled dependencies.
 

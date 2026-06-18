@@ -1,6 +1,6 @@
-# Day 4: Terrain Modelling & Hydrological Spatial Analysis
+#  Terrain Modelling & Hydrological Spatial Analysis
 
-Welcome to Day 4. Today we dive into the core of **Spatial Hydrology**. We will focus on how terrain elevation models (DEMs) are processed to extract flow lines, stream directions, catchment divisions, and flood accumulation paths. This forms the analytical heart of water resource planning in WECS.
+Welcome to Module 4. Today we dive into the core of **Spatial Hydrology**. We will focus on how terrain elevation models (DEMs) are processed to extract flow lines, stream directions, catchment divisions, and flood accumulation paths. This forms the analytical heart of water resource planning in WECS.
 
 ---
 
@@ -21,7 +21,7 @@ By the end of today's sessions, you will be able to:
 
 ---
 
-## Day 4 Learning Roadmap
+##  Learning Roadmap
 
 ```mermaid
 graph TD

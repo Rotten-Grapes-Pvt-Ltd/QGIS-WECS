@@ -20,6 +20,11 @@ Extensions are split into two groups:
 
 3. Select the desired plugin and click **Install Plugin**. The tools are typically added to a new toolbar, panel, or context menu.
 
+<video width="100%" controls>
+  <source src="images/plugin.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ---
 
 ## 2. Essential Hydrology and Mapping Plugins
@@ -27,6 +32,8 @@ Extensions are split into two groups:
 Several community plugins are standard requirements for water resources and terrain modeling:
 
 ### QuickMapServices (QMS)
+
+**Link:** [https://plugins.qgis.org/plugins/quick_map_services/](https://plugins.qgis.org/plugins/quick_map_services/)
 
 Allows you to add high-quality satellite and topographic background maps to the map canvas in one click.
 
@@ -36,6 +43,8 @@ Allows you to add high-quality satellite and topographic background maps to the 
 
 ### Profile Tool
 
+**Link:** [https://plugins.qgis.org/plugins/profiletool/](https://plugins.qgis.org/plugins/profiletool/)
+
 Generates cross-sectional elevation profiles of raster grids (DEMs) along a drawn vector line or river centerline.
 
 * **Usage:** Indispensable for analyzing valley geometry, calculating river channel slopes, and identifying water flow obstructions.
@@ -43,6 +52,8 @@ Generates cross-sectional elevation profiles of raster grids (DEMs) along a draw
 * **Execution:** Add your DEM raster to the profile tool window, draw a line segment across the map canvas, and view the generated cross-sectional slope plot in real-time.
 
 ### Semi-Automatic Classification Plugin (SCP)
+
+**Link:** [https://plugins.qgis.org/plugins/SemiAutomaticClassificationPlugin/](https://plugins.qgis.org/plugins/SemiAutomaticClassificationPlugin/)
 
 A comprehensive remote sensing toolbox designed for land cover mapping.
 

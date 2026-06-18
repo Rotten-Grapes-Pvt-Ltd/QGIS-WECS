@@ -1,6 +1,6 @@
 # Mini-Assignment: Watershed Terrain Characterization
 
-In this assignment, you will apply the terrain analysis and flow routing skills learned during Day 4 to preprocess a digital elevation model, delineate a watershed, extract its stream network, compute Strahler stream orders, calculate catchment statistics, and compile a landscape map layout. This assignment requires approximately 1 hour to complete.
+In this assignment, you will apply the terrain analysis and flow routing skills learned during Module 4 to preprocess a digital elevation model, delineate a watershed, extract its stream network, compute Strahler stream orders, calculate catchment statistics, and compile a landscape map layout. This assignment requires approximately 1 hour to complete.
 
 ---
 
