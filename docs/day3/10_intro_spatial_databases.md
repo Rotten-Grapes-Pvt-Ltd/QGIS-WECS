@@ -32,35 +32,74 @@ PostGIS distinguishes between two coordinate representations:
 
 PostgreSQL utilizes B-Tree indexes for fast text/numeric searches. PostGIS introduces **GIST (Generalized Search Tree)** spatial indexing. GIST indexes group feature coordinates into hierarchically nested bounding boxes. This allows the database to instantly locate features inside query zones without scanning every geometry row.
 
+### Spinning Up PostGIS using Docker Compose
+
+To quickly run a local PostGIS instance for development or training, you can spin it up inside a Docker container using a `docker-compose.yml` file.
+
+Create a file named `docker-compose.yml` in your project folder with the following configuration:
+
+```yaml
+version: '3.8'
+
+services:
+  db:
+    image: postgis/postgis:15-3.3
+    container_name: postgis_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: hydrology_db
+      POSTGRES_USER: wecs_user
+      POSTGRES_PASSWORD: securepassword123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+```
+
+#### How to Start and Verify:
+
+1. Open a terminal in the folder containing `docker-compose.yml`.
+
+2. Run the command to spin up the container in detached (background) mode:
+   `docker compose up -d`
+
+3. Verify that the container is running successfully:
+   `docker ps`
+
 ---
 
 ## 3. Spatial SQL Syntax and Operations
 
-PostGIS exposes spatial operators as standard SQL functions. By writing SQL queries, you can run geoprocessing algorithms inside the database engine without rendering them on screen:
+PostGIS exposes spatial operators as standard SQL functions. By importing your Natural Earth layers (e.g., `countries`, `rivers`, and `cities` tables) into PostGIS, you can execute spatial queries directly inside the database engine:
 
 ### Area Calculations (`ST_Area`)
 
-Calculates the polygon area. If using GEOMETRY, it outputs value in projection units; if using GEOGRAPHY, it outputs value in square meters:
+Calculates the polygon area. If using GEOMETRY, it outputs the value in projection units; if using GEOGRAPHY, it outputs the value in square meters:
 
 ```sql
--- Calculate area in square kilometers for all catchments
+-- Calculate area of South Asian countries in square kilometers
 SELECT 
-    basin_name, 
+    name, 
     ST_Area(geom) / 1000000.0 AS area_sqkm 
-FROM catchment_boundaries;
+FROM countries
+WHERE subregion = 'Southern Asia';
 ```
 
 ### Proximity Analysis (`ST_Distance`)
 
-Calculates the shortest distance separating two features:
+Calculates the shortest distance separating two features. By casting geometry (`geom`) to the geography type, we get accurate geodesic distances in meters:
 
 ```sql
--- Find the distance in meters between gauges and planned reservoirs
+-- Find the distance in meters between Kathmandu and the Ganges river segment
 SELECT 
-    g.station_name, 
-    r.project_name, 
-    ST_Distance(g.geom, r.geom) AS distance_meters
-FROM rain_gauges g, planned_reservoirs r;
+    c.name AS city_name, 
+    r.name AS river_name, 
+    ST_Distance(c.geom::geography, r.geom::geography) AS distance_meters
+FROM cities c, rivers r
+WHERE c.name = 'Kathmandu' AND r.name = 'Ganges';
 ```
 
 ### Spatial Containment (`ST_Contains` / `ST_Within`)
@@ -68,50 +107,85 @@ FROM rain_gauges g, planned_reservoirs r;
 Checks if a target geometry contains or is within another geometry (evaluates to true/false):
 
 ```sql
--- List all rain gauges located inside the Koshi Basin polygon
+-- List all populated places (cities) located within the boundary of Nepal
 SELECT 
-    g.station_name 
-FROM rain_gauges g, river_basins b
-WHERE b.basin_name = 'Koshi' 
-  AND ST_Contains(b.geom, g.geom);
+    c.name AS city_name, 
+    c.pop_max AS max_population
+FROM cities c, countries co
+WHERE co.name = 'Nepal' 
+  AND ST_Contains(co.geom, c.geom)
+ORDER BY c.pop_max DESC;
 ```
 
-### Buffering & Intersections (`ST_Buffer` & `ST_Intersection`)
+### Buffering & Intersections (`ST_Buffer`)
 
-Creates buffers and extracts intersecting overlapping geometries:
+Generates a buffer around geometries at a specified metric distance:
 
 ```sql
--- Generate a 100m vector riparian corridor polygon around streams
+-- Generate a 10km buffer corridor around major continental rivers
 SELECT 
-    river_name, 
-    ST_Buffer(geom, 100) AS corridor_geom 
-FROM river_network;
+    name, 
+    ST_Buffer(geom::geography, 10000)::geometry AS buffer_geom 
+FROM rivers
+WHERE scalerank <= 2;
 ```
 
 ---
 
-## 4. Connecting QGIS to PostGIS and DB Manager
+## 4. Managing PostGIS Connections and Data in QGIS
 
-QGIS provides integrated tools to browse, query, and edit PostGIS databases:
+Once the database is running inside Docker, QGIS provides integrated tools to browse, query, and edit PostGIS tables.
 
-### Establishing a Connection:
+### Connecting QGIS to the Database:
 
-1. In the **Browser Panel**, right-click **PostgreSQL** and select **New Connection...**.
+1. In the QGIS **Browser Panel**, right-click **PostgreSQL** and select **New Connection...**.
 
-2. Enter the connection parameters (Host, Port, Database, Username, and Password).
+2. Set the connection parameters:
+   * **Name:** `WECS PostGIS Database`
+   * **Host:** `localhost`
+   * **Port:** `5432`
+   * **Database:** `hydrology_db`
+   * **Authentication:** Select **Basic** tab and enter Username `wecs_user` and Password `securepassword123`.
 
-3. Click **Test Connection** to verify database access.
+3. Click **Test Connection** to verify database access. Once connected, click **OK**.
 
-4. Once connected, expand the listing to drag and drop database tables directly onto the Map Canvas.
+4. The connection is now listed under **PostgreSQL** in the Browser Panel.
+
+### Importing Vector Layers to PostGIS:
+
+To upload your Natural Earth vector layers into the database for SQL analysis:
+
+1. Go to **Database** > **DB Manager...** in the menu bar.
+
+2. Expand **PostgreSQL** in the left panel and double-click the `WECS PostGIS Database` connection.
+
+3. Click the **Import Layer/File** (down arrow) icon in the DB Manager toolbar.
+
+4. Set the parameters:
+   * **Input Layer:** Select the loaded vector layer you wish to upload (e.g., `ne_10m_rivers_lake_centerlines`).
+   * **Schema:** Select `public`.
+   * **Table:** Enter a clean, lowercase name (e.g., `rivers`).
+   * **Options:** Check the boxes to **Create spatial index** (for GIST indexing), **Convert field names to lowercase**, and **Replace destination table if exists** (if re-importing).
+
+5. Click **OK** to run the upload. Verify that the table appears under your database schema in the DB Manager and Browser lists.
 
 ### Running SQL Queries via DB Manager:
 
-1. Click **Database** > **DB Manager** > **DB Manager**.
+1. Expand the PostgreSQL listing in the DB Manager and select your database connection.
 
-2. Expand the PostgreSQL listing and select your connection schema.
+2. Click the **SQL Window** icon (a tablet with an SQL brush, or press `F2`).
 
-3. Click the **SQL Window** icon (a tablet with an SQL brush).
+3. Write your spatial SQL query (e.g., combining buffers and attribute selections):
+   ```sql
+   -- Find the total length of major rivers in kilometers grouped by class
+   SELECT 
+       featurecla, 
+       COUNT(*) as segment_count,
+       SUM(ST_Length(geom) / 1000.0) AS total_length_km
+   FROM rivers
+   GROUP BY featurecla;
+   ```
 
-4. Write your spatial SQL query (e.g., combining buffers and attribute selections).
+4. Click **Execute** (`F5`) to view the results as a text table.
 
-5. Check the box to **Load as new layer**. Select the geometry column (usually `geom`) and click **Execute**. QGIS will immediately render the SQL results as a live vector layer on the Map Canvas.
+5. Check the box to **Load as new layer**. Select the geometry column (usually `geom`) and click **Load**. QGIS will immediately render the SQL results as a live vector layer on the Map Canvas.

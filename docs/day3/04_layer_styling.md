@@ -68,6 +68,8 @@ Renders all features in the layer using the exact same symbol properties (fill c
 
 * *Exercise:* Load `ne_110m_admin_0_countries`. Set the symbol type to **Simple Fill**. Change the fill color to a neutral pastel sand color (e.g., Hex `#ebdcb9`) and the stroke color to a dark gray (`#4a4a4a`) with a line width of $0.2\text{ mm}$. This creates a clean base map layer.
 
+![single_color](images/single_color.png)
+
 ### Categorized Symbology (Qualitative Classification)
 
 Splits features into separate color bins based on unique nominal or text values in an attribute column.
@@ -75,6 +77,8 @@ Splits features into separate color bins based on unique nominal or text values 
 * **Application:** Styling land cover maps or geological zones.
 
 * *Exercise:* In the Layer Styling panel, change the styling dropdown from **Single Symbol** to **Categorized**. Set the **Value** column to `CONTINENT`. Under the color ramp menu, select a qualitative ramp (e.g., *Pastel* or *Spectral*). Click **Classify** at the bottom. QGIS will generate a distinct fill color for each continent.
+
+![categorized_color](images/categorized_color.png)
 
 ### Graduated Symbology (Quantitative Classification)
 
@@ -94,6 +98,8 @@ Styles features using a color ramp based on numeric values. You must select a cl
 * **Natural Breaks (Jenks):** Computes class boundaries based on natural groupings and variances inherent in the dataset. Minimizes variance within classes while maximizing difference between classes. This is the standard method for thematic maps.
 
 * *Exercise:* Load `ne_110m_admin_0_countries`. Change the symbology type to **Graduated**. Set **Value** to the country population field `POP_EST`. Select a sequential color ramp (e.g., *YlOrRd* - Yellow to Red). Set the **Mode** to **Natural Breaks (Jenks)** and **Classes** to `5`. Click **Classify** to visualize global population density.
+
+![graduated_color](images/graduated_color.png)
 
 ---
 
@@ -133,9 +139,66 @@ Natural Earth river layers (`ne_10m_rivers_lake_centerlines`) include a `scalera
 
 4. Click **Apply**. Zoom in to observe how the river thickness adjusts logically as you traverse the drainage basin from headwaters to main channels.
 
+![rule_base](images/rule_base.png)
+
 ---
 
-## 4. Typography, Labeling, and Text Buffers
+## 4. Raster Layer Styling
+
+Rasters store gridded continuous or categorical data (e.g., elevation, temperature, spectral imagery, land cover). QGIS provides multiple engines to render these cells into geographic representations.
+
+We will use the local Digital Elevation Model (DEM) dataset:
+
+*   **DEM Dataset:** `output_hh.tif` (with elevation values ranging from $600$ to $7000$ meters)
+*   **Local Project File:** [docs/data/Natural_Earth_quick_start/DEM/output_hh.tif](file:///Users/krishnaglodha/Documents/work/wb/QGIS-WECS/docs/data/Natural_Earth_quick_start/DEM/output_hh.tif)
+
+Open the **Layer Styling Panel** (`F7`) and select the raster layer to see the rendering options. Here are the key raster styling engines in QGIS:
+
+### Singleband Gray (Continuous Grayscale)
+
+Renders a single band as a continuous gradient from black to white (or vice versa).
+
+* **Application:** Grayscale DEMs, single satellite bands (e.g., infrared), or index results (e.g., NDVI).
+
+* *Exercise:* Load `output_hh.tif`. In the styling panel, set the **Render type** to **Singleband gray**. Under **Color gradient**, select **Black to White** or **White to Black**. In **Min / Max Value Settings**, select **Min / Max** and click **Estimate** (or manually input `600` and `7000`). Set **Contrast enhancement** to **Stretch to MinMax** to stretch the full dynamic range of elevations across the visible black-to-white spectrum.
+
+### Singleband Pseudocolor (Continuous Color Ramp)
+
+Maps pixel values to a continuous color ramp based on values.
+
+* **Application:** Standard method for visual representation of elevations, bathymetry, temperature, or precipitation.
+
+* *Exercise:* Set the **Render type** to **Singleband pseudocolor**. Choose a color ramp (e.g., *Terrain* or *Cividis*). Set the **Interpolation** mode to **Linear** (smooth gradient transition between values) or **Discrete** (blocks of flat color for elevation zones). Set **Min** to `600` and **Max** to `7000`. Click **Classify** to apply the color ramps across the elevation scale.
+
+### Hillshade (Shaded Relief representation)
+
+Calculates live topographic illumination on-the-fly, generating shadows and light values to simulate three-dimensional terrain without modifying the source data.
+
+* **Application:** Visualizing slopes, ridges, valleys, and terrain texture.
+
+* *Exercise:* Set the **Render type** to **Hillshade**. Leave **Altitude** at $45^\circ$ and **Azimuth** at $315^\circ$ (standard cartographic sun positioning from the northwest). Toggle the **Multidirectional** option to compute illumination from multiple angles for more realistic shadows in rugged terrain.
+  
+  * *Pro Tip (Blending layers):* Place the hillshade layer *below* a Singleband Pseudocolor elevation layer. Select the elevation layer, open **Layer Rendering** (at the bottom of the Styling panel), and set the **Blending mode** to **Multiply** (or set transparency to $40\%$). This blends the color ramp with the shaded terrain relief for a stunning 3D physical map!
+
+### Contours (Dynamic Elevation Lines)
+
+Dynamically calculates and draws contour lines at a specified interval on top of the raster cell grid on-the-fly.
+
+* **Application:** Showing elevation steps and slope steepness without vectorizing the raster.
+
+* *Exercise:* Set the **Render type** to **Contours**. Set the **Interval** to `500` (this draws a line every 500 meters of elevation change). Choose a line symbol, color (e.g., dark brown `#5c4033`), and thickness ($0.2\text{ mm}$). Set the **Index Contour Interval** to `2500` (every 5th line will be thicker, e.g., $0.5\text{ mm}$ line width) to establish visual contour hierarchy.
+
+### Paletted / Unique Values
+
+Assigns a distinct color to each integer pixel value in the dataset.
+
+* **Application:** Styling discrete categorical datasets such as land cover, soil type classes, or political zone codes.
+
+* **Note:** Not suitable for continuous datasets like our DEM (since there would be thousands of unique floating-point values).
+
+---
+
+## 5. Typography, Labeling, and Text Buffers
 
 Labels display alphanumeric text directly on the map screen. Bad label placement can ruin an otherwise excellent layout. In QGIS, configuration is handled under the **Labels** tab in Layer Properties.
 
@@ -167,7 +230,7 @@ Placement configuration is critical for different geometry types:
 
 ---
 
-## 5. Exporting and Saving Style Configurations
+## 6. Exporting and Saving Style Configurations
 
 Once you have styled a layer, you should preserve it so you can apply it to other datasets or share it with colleagues.
 

@@ -56,27 +56,73 @@ Streams raw, multi-dimensional raster cell values (e.g., actual elevation values
 
 * **Hydrological Application:** Streaming regional DEMs or daily precipitation grids for runoff modeling.
 
+### Modern OGC API Standards
+
+Traditional OGC web services (WMS, WFS, WCS) were designed in the early 2000s and rely heavily on complex XML schemas, SOAP protocols, and verbose requests. The new **OGC API** standards represent a complete modernization of geospatial web streaming, designed for the modern web:
+
+* **RESTful Architecture:** Uses clean HTTP methods (`GET`, `POST`, `DELETE`) and intuitive URL pathways (e.g., `/collections/rivers/items/1`).
+
+* **JSON/GeoJSON Payloads:** Transmits data using lightweight GeoJSON for features and JSON for metadata instead of heavy XML/GML wrappers.
+
+* **OpenAPI Documentation:** The service capabilities are documented using standard OpenAPI specifications, making them developer-friendly and indexable by search engine crawlers.
+
+The core modern OGC API standards include:
+
+* **OGC API - Features (replaces WFS):** Streams vector attributes and geometry using GeoJSON.
+
+* **OGC API - Tiles (replaces WMTS):** Streams map tile sets (both raster and vector tiles).
+
+* **OGC API - Coverages (replaces WCS):** Streams continuous gridded raster data values.
+
+* **OGC API - Environmental Data Retrieval (EDR):** Provides a simple API for querying weather, oceanographic, and environmental point-series datasets.
+
 ---
 
-## 3. Connecting to OGC Services in QGIS
+## 3. Connecting to OGC Services in QGIS (Step-by-Step Exercises)
 
-Connecting to OGC servers requires a service endpoint URL:
+Connecting to remote geospatial web services in QGIS is handled through the **Browser Panel**. The following exercises use active, public web services from the USGS, Esri, and OGC testbeds.
 
-1. Locate the service URL (e.g., Copernicus CDSE browser service endpoints or WECS registry server links).
+### Exercise 1: Connect to an Esri XYZ/WMTS Basemap (High-Res Satellite Imagery)
+XYZ tile connections are the fastest way to add high-resolution satellite basemaps to your project.
 
-2. In the QGIS **Browser Panel**, locate the service type:
+1. In the QGIS **Browser Panel**, right-click **XYZ Tiles** and select **New Connection...**.
+2. Set the parameters:
+   * **Name:** `Esri World Imagery`
+   * **URL:** `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}`
+   * **Max. Zoom Level:** `19`
+3. Click **OK**. Expand the **XYZ Tiles** list, locate **Esri World Imagery**, and double-click to add it to your map canvas.
 
-   * Right-click **WMS/WMTS** to add an image stream.
+### Exercise 2: Connect to a Public WMS Server (USGS Topographic Map)
+WMS streams pre-rendered topographic base maps, perfect for referencing boundaries.
 
-   * Right-click **WFS** to add vector features.
+1. In the Browser Panel, right-click **WMS/WMTS** and select **New Connection...**.
+2. Set the parameters:
+   * **Name:** `USGS National Topographic Map`
+   * **URL:** `https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer`
+3. Click **OK**.
+4. Expand the **WMS/WMTS** tree, expand the **USGS National Topographic Map** connection, locate the `0` or `USGS Topo Map` layer, and drag it into the Layers panel. Zoom in to watch the topological details render dynamically.
 
-   * Right-click **WCS** to add raw raster coverage.
+### Exercise 3: Connect to a Public WFS Server (US Government Boundary Lines)
+WFS allows you to stream actual vector boundaries (polygons) directly into your attribute table.
 
-3. Select **New Connection...**.
+1. In the Browser Panel, right-click **WFS / OGC API Features** (or **WFS**) and select **New Connection...**.
+2. Set the parameters:
+   * **Name:** `USGS Governmental Boundaries`
+   * **URL:** `https://carto.nationalmap.gov/arcgis/services/govunits/MapServer/WFSServer`
+3. Click **OK**.
+4. Expand the connection, select a boundary layer (e.g., `State_or_Territory`), and drag it onto the canvas.
+5. Use the **Identify Features** tool or press `F6` to open the Attribute Table. Notice that you have full access to the actual table attributes and boundary coordinates streamed from the server.
 
-4. Enter a name for the connection and paste the server URL.
+### Exercise 4: Connect to a Modern OGC API - Features Service
+OGC API - Features represents the REST/GeoJSON standard for vector feature streaming.
 
-5. Click **OK**. Expand the connection listing in the Browser Panel, select the desired layer, and drag it onto the Map Canvas.
+1. In the Browser Panel, locate **WFS / OGC API Features** (in older versions, right-click **OGC API Features**). Select **New Connection...**.
+2. Set the parameters:
+   * **Name:** `Pygeoapi Demo Server`
+   * **URL:** `https://demo.pygeoapi.io/master` (a public testing server running Pygeoapi).
+3. Click **OK**.
+4. Expand the connection tree. You will see several Collections (e.g., `Lakes`, `Natural Earth Countries`).
+5. Double-click the `Lakes` collection. The points or polygons will stream instantly as lightweight GeoJSON, showing up on your map canvas with full attributes.
 
 ---
 

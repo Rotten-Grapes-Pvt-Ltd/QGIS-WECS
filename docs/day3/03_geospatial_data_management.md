@@ -27,6 +27,26 @@ Before initializing a GIS project, you must enforce a standard directory structu
         └── data_dictionary.md <-- Text catalog documenting data origins and parameters
 ```
 
+### QGIS Project File Path Configuration (Relative vs. Absolute Paths)
+
+When QGIS links to spatial datasets (e.g., GeoPackages, Shapefiles, or Rasters), it stores the file paths inside the `.qgz` project file. The path storage configuration determines whether you can share your project folder without breaking data connections:
+
+* **Absolute Paths:** Stores the full system path (e.g., `/Users/krishnaglodha/Documents/work/wb/QGIS-WECS/docs/data/Natural_Earth_quick_start/DEM/output_hh.tif`). If you move the project folder to a different computer or share it with a colleague, all links will break, throwing a **Handle Bad Layers** error dialog.
+* **Relative Paths (Recommended):** Stores paths relative to the position of the `.qgz` project file (e.g., `./docs/data/Natural_Earth_quick_start/DEM/output_hh.tif`). This allows you to copy, zip, or move the entire project root folder structure to any directory on any computer without breaking any database links.
+
+#### Setting Relative Paths in QGIS:
+1. Go to **Project** > **Properties...** (`Ctrl+Shift+P`).
+2. Select the **General** tab.
+3. Under **General settings**, find **Save paths**. Change this dropdown from **Absolute** to **Relative**.
+4. Click **Apply** and **OK**. Save your project.
+
+### QGIS Backup Files (`.qgz~`)
+
+Whenever you save a project in QGIS, the software creates a backup file alongside your main file, appended with a tilde symbol (e.g., `project_name.qgz~` or `project_name.qgs~`). 
+
+* **Purpose:** Acts as a recovery point in the event of a system crash, power loss, or database write interruption that corrupts your main `.qgz` project file.
+* **How to Restore:** If your main project file fails to open, navigate to your workspace root directory. Delete the corrupted `project_name.qgz` file. Rename the backup file by stripping off the trailing tilde (rename `project_name.qgz~` to `project_name.qgz`). Open this renamed file in QGIS to recover your project up to the last successful save point.
+
 ---
 
 ## 2. Metadata Standards and Documentation
@@ -90,3 +110,61 @@ The **OGC GeoPackage (GPKG)** is an open, standards-based, platform-independent 
 * **Spatial Indexing:** Automatically builds spatial R-Tree indexes. This allows QGIS to query and render millions of vector shapes in milliseconds, whereas shapefiles require slow, sequential table scans.
 
 * **Multi-Layer Collections:** You can store all vector catchments, stream lines, elevation rasters, and tabular climate gauge records for an entire watershed inside a single `catchment_database.gpkg` file, simplifying file transfer.
+
+---
+
+## 5. Safe File Manipulation using the QGIS Browser Panel
+
+A common mistake is attempting to rename, copy, or delete shapefiles or database files using your operating system's native file explorer (Windows Explorer or macOS Finder). Because GIS files (especially shapefiles) are composite formats made up of multiple linked files, this manual file manipulation frequently breaks reference links and corrupts datasets.
+
+To safely organize your files, always use the built-in **QGIS Browser Panel**:
+
+```text
+    QGIS BROWSER PANEL ACTIONS
+    +----------------------------------+
+    | Browser                          |
+    +----------------------------------+
+    |  * Favorites  --> Add Shortcuts  |
+    |  * Project    --> Active Files   |
+    |  * GeoPackage --> [Right-Click]  |
+    |                   ├── New GPKG...|
+    |                   ├── Delete...  |
+    |                   └── Rename...  |
+    +----------------------------------+
+```
+
+* **Adding Folder Shortcuts:** Right-click **Favorites** in the Browser Panel and select **Add a Directory...**. Pin your main project root folder (`QGIS-WECS`) here to jump to your workspace folders instantly.
+* **Creating a New Database:** Right-click **GeoPackage** in the Browser panel, select **Create Database...**, set the file destination, name the table, and configure the spatial parameters (CRS, geometry type).
+* **Safe Table Operations:** To rename, copy, or delete a layer table inside a GeoPackage, right-click the table name inside the Browser panel and select the respective operation. QGIS will safely modify the SQL database schema without corrupting structural system files.
+
+---
+
+## 6. Inspecting GeoPackages with the DB Manager
+
+Because the GeoPackage is a standard SQLite database container, you can interact with it using database commands. QGIS includes a built-in database client interface called the **DB Manager**.
+
+* **Accessing:** Go to **Database** > **DB Manager...**.
+
+Inside the DB Manager, you can inspect spatial databases without adding them to your Layers panel:
+
+1. Expand the **GeoPackage** tree in the left pane of the DB Manager.
+2. Select your target `.gpkg` database (e.g., `catchment_analysis.gpkg`) to view database parameters.
+3. Select a specific table inside the database. The right pane provides three tabs:
+   * **Info:** Displays structural details like table columns, primary key constraints, coordinate reference system, and index flags.
+   * **Table:** Renders the tabular spreadsheet of attributes directly.
+   * **Preview:** Renders a quick, non-interactive map rendering of the spatial features.
+4. **SQL Window:** Click the SQL window icon in the toolbar (or press `F2`) to open a query editor. You can write custom SQL statements (e.g., `SELECT NAME, POP_EST FROM ne_10m_admin_0_countries WHERE CONTINENT = 'Asia'`) to query, filter, and extract layers directly from your database.
+
+---
+
+## 7. Consolidating Workspaces with the Package Layers Tool
+
+At the end of a spatial analysis project, you may have layers loaded from multiple temporary directories, external network drives, or different folders. If you need to share this project with a colleague, packaging these scattered source layers is a tedious process.
+
+QGIS provides the **Package Layers** tool to automate workspace consolidation:
+
+1. Open the **Processing Toolbox** (`Ctrl+Alt+T`) and search for **Package Layers**.
+2. **Input layers:** Click `...` and check the boxes for all vector layers you want to consolidate in your workspace.
+3. **Destination GeoPackage:** Click `...` > **Save to File** and define the path for a new database (e.g., `final_project_archive.gpkg`).
+4. Keep the boxes checked for **Save style configurations** (packages your symbology, colors, and label settings inside the GeoPackage) and **Save metadata** (retains dataset descriptors).
+5. Click **Run**. QGIS compiles all separate vector layers, along with their active symbology properties, into a single `.gpkg` file. You can share this database container and the `.qgz` project file with any user, and it will render perfectly on their machine.
