@@ -10,7 +10,8 @@ extra_javascript = [
 ]
 
 nav = [
-    { "Overview" = "index.md" },
+    { "Home" = "index.md" },
+    { "About Us" = "about_us.md" },
     { "Spatial Thinking & GIS" = [
         "day1/index.md",
         "day1/01_intro_gis.md",
@@ -41,16 +42,17 @@ nav = [
         "day3/index.md",
         "day3/01_intro_qgis.md",
         "day3/02_plugins_extensions.md",
-        "day3/03_geospatial_data_management.md",
-        "day3/04_layer_styling.md",
-        "day3/05_attribute_tables.md",
-        "day3/06_vector_geoprocessing.md",
-        "day3/07_raster_processing.md",
-        "day3/08_spatial_queries.md",
-        "day3/09_web_gis_ogc.md",
-        "day3/10_intro_spatial_databases.md",
-        "day3/11_practical_session.md",
-        "day3/12_mini_assignment.md"
+        "day3/03_hydrology_plugins.md",
+        "day3/04_geospatial_data_management.md",
+        "day3/05_layer_styling.md",
+        "day3/06_attribute_tables.md",
+        "day3/07_vector_geoprocessing.md",
+        "day3/08_raster_processing.md",
+        "day3/09_spatial_queries.md",
+        "day3/10_web_gis_ogc.md",
+        "day3/11_intro_spatial_databases.md",
+        "day3/12_practical_session.md",
+        "day3/13_mini_assignment.md"
     ]},
     { "Terrain & Hydrological Analysis" = [
         "day4/index.md",
@@ -62,8 +64,7 @@ nav = [
         "day4/06_raster_modelling.md",
         "day4/07_rainfall_environmental.md",
         "day4/08_flood_water_resources.md",
-        "day4/09_practical_session.md",
-        "day4/10_mini_assignment.md"
+        "day4/09_practical_session.md"
     ]},
     { "Time Series & Decision Support" = [
         "day5/index.md",
@@ -87,5 +88,26 @@ generic = true
 [project.markdown_extensions."pymdownx.superfences"]
 custom_fences = [
   { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
+]
+
+[project.theme]
+logo = "images/logo.png"
+features = [
+    "navigation.tabs",
+    "navigation.tabs.sticky",
+    "navigation.indexes",
+    "navigation.instant",
+    "navigation.instant.prefetch",
+    "navigation.path",
+    "navigation.sections",
+    "navigation.top",
+    "navigation.tracking",
+    "search.highlight",
+    "content.code.annotate",
+    "content.code.copy",
+    "content.code.select",
+    "content.footnote.tooltips",
+    "content.tabs.link",
+    "content.tooltips"
 ]
 
