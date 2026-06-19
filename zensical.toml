@@ -111,3 +111,13 @@ features = [
     "content.tooltips"
 ]
 
+[[project.extra.social]]
+icon = "material/github"
+link = "https://github.com/Rotten-Grapes-Pvt-Ltd/QGIS-WECS"
+name = "GitHub"
+
+[[project.extra.social]]
+icon = "material/earth"
+link = "https://rottengrapes.tech/"
+name = "Website"
+
