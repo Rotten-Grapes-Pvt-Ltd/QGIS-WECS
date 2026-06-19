@@ -30,7 +30,7 @@ By the end of today's sessions, you will be able to:
 
 ## Course Syllabus & Roadmap
 
-The day is structured into 13 comprehensive topics:
+The day is structured into 12 comprehensive topics:
 
 ```mermaid
 graph TD
@@ -44,8 +44,7 @@ graph TD
     M8 --> M9["9. Spatial Queries & <br> Neighborhoods<br/>(Predicates & <br> Zonal Stats)"]
     M9 --> M10["10. Web GIS & <br> OGC Services<br/>(WMS/WFS & <br> Modern OGC APIs)"]
     M10 --> M11["11. Spatial Databases<br/>(PostGIS Docker & <br> SQL Queries)"]
-    M11 --> M12["12. Practical Lab Session<br/>(10 Guided Exercises)"]
-    M12 --> M13["13. Mini-Assignment<br/>(GIS Database Compilation)"]
+    M11 --> M12["12. Practical Lab & Assignment<br/>(GIS Database Compilation)"]
 
     %% Premium styled flowchart nodes
     style M1 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
@@ -59,8 +58,7 @@ graph TD
     style M9 fill:#fce4ec,stroke:#c2185b,stroke-width:2px
     style M10 fill:#e0f2f1,stroke:#00695c,stroke-width:2px
     style M11 fill:#e0f7fa,stroke:#00838f,stroke-width:2px
-    style M12 fill:#f9fbe7,stroke:#9e9d24,stroke-width:2px
-    style M13 fill:#d2f8d2,stroke:#2b8a2b,stroke-width:3px
+    style M12 fill:#d2f8d2,stroke:#2b8a2b,stroke-width:3px
 ```
 
 ### Day 3 Course Materials:
@@ -87,6 +85,4 @@ graph TD
 
 11. **[11: Spatial Databases and PostGIS](11_intro_spatial_databases.md)**: Relational databases, geometry vs. geography types, GIST indexing, spinning up PostGIS using Docker Compose, database connections, layer imports, and spatial SQL queries.
 
-12. **[12: Practical Laboratory Session](12_practical_session.md)**: Multi-step geoprocessing workflows and 10 detailed practice exercises ranging from basic layer properties to advanced multi-criteria hub matrices.
-
-13. **[13: Mini-Assignment: GIS Database Compilation](13_mini_assignment.md)**: Building a structured, multi-layer catchment database inside a GeoPackage container and creating a publication-quality map layout.
+12. **[12: Practical Lab & Assignment](12_practical_session.md)**: Multi-step geoprocessing workflows and 10 detailed practice exercises ranging from basic layer properties to advanced multi-criteria hub matrices, concluding with a comprehensive GIS database and watershed mapping layout assignment.

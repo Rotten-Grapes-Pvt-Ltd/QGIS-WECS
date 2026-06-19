@@ -30,11 +30,10 @@ Below is the progression of topics for today, moving from core theoretical conce
 graph TD
     A["1. Spatial Thinking &<br/>GIS Foundations<br/>(McHarg Overlays)"] --> B["2. Data Models &<br/>Coordinate Systems<br/>(Vector/Raster/UTM)"]
     B --> C["3. Open Ecosystem &<br/>File Formats<br/>(QGIS & GPKG/GeoTIFF)"]
-    C --> D["4. Guided Laboratory<br/>(Queries & Symbology)"]
-    D --> E["5. Mini-Assignment<br/>(Watershed Layout)"]
+    C --> D["4. Guided Lab & Assignment<br/>(Map Layout & Export)"]
     
     style A fill:#f9f9f9,stroke:#333
-    style E fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px
+    style D fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px
 ```
 
 ---
@@ -65,11 +64,8 @@ graph TD
 * **[Topic 8: Geospatial Data Formats](08_geospatial_formats.md)**
   Details legacy Shapefile limitations, OGC GeoPackage advantages, web-native GeoJSON, and Cloud-Optimized GeoTIFF (COG) internal tile mechanisms.
 
-* **[Topic 9: Practical Session](09_practical_session.md)**
-  Step-by-step laboratory tutorial on setting up project structures, loading datasets, running expression queries, styling elevations, and exporting reprojected layers.
-
-* **[Topic 10: Mini Assignment](10_mini_assignment.md)**
-  Practical student project layout guidelines directing coordinate transformations, multi-layer symbology adjustments, legend cleanliness, print layouts, graticules, and export setups.
+* **[Topic 9: Practical Lab & Assignment](09_practical_session.md)**
+  Step-by-step laboratory tutorial on setting up project structures, loading datasets, running expression queries, styling elevations, exporting reprojected layers, and compiling a styled watershed overview layout map.
 
 ---
 

@@ -135,7 +135,7 @@ hide:
   </div>
 </div>
 
-<h2 class="section-title">Selected Clients & Partners</h2>
+<h2 class="section-title">Recent Clients</h2>
 
 <div class="grid-container">
   <div class="client-card">

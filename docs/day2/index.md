@@ -29,11 +29,10 @@ By the end of today's sessions, you will be able to:
 graph TD
     A["1. Remote Sensing<br/>Principles<br/>(EMR & Sensors)"] --> B["2. Satellites & Resolutions<br/>(Sentinel/Landsat/SAR)"]
     B --> C["3. Bands & Composites<br/>(RGB/FCC/NDWI/NDVI)"]
-    C --> D["4. Preprocessing Workflows<br/>(Clipping/Resampling)"]
-    D --> E["5. Laboratory Session<br/>(Data Downloads &<br/>Metadata Registry)"]
+    C --> D["4. Preprocessing & Lab<br/>(Data Downloads & Metadata)"]
     
     style A fill:#f9f9f9,stroke:#333
-    style E fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px
+    style D fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px
 ```
 
 ---
@@ -64,11 +63,8 @@ graph TD
 * **[Topic 8: Remote Sensing Applications in Hydrology](08_applications_hydrology.md)**
   Calculates NDWI, NDVI, NDSI, and SAR backscatter threshold masks for floods, snow cover, and erosion.
 
-* **[Topic 9: Practical Session](09_practical_session.md)**
-  Hands-on exercises: registering account credentials, searching public portals, online band visualizations, querying STAC APIs, and downloading raw bands and DEM grids.
-
-* **[Topic 10: Mini Assignment](10_mini_assignment.md)**
-  Guidelines for selecting a target basin, downloading its raw Sentinel-2 and DEM datasets, organizing folders, and compiling a metadata registry spreadsheet.
+* **[Topic 9: Practical Lab & Assignment](09_practical_session.md)**
+  Hands-on exercises: registering account credentials, searching public portals, online band visualizations, querying STAC APIs, and downloading raw bands and DEM grids, concluding with an independent satellite basin dataset acquisition and metadata catalog compiling assignment.
 
 ---
 

@@ -1,7 +1,7 @@
 [project]
-site_name = "Hydrological Modelling Training Plan"
+site_name = "Hydrological Modelling Training with QGIS"
 site_description = "5-Day Training Plan for Hydrological Modelling using Geospatial and Remote Sensing Data"
-site_author = "WECS"
+site_author = "Krishna Lodha"
 docs_dir = "docs"
 site_dir = "site"
 extra_javascript = [
@@ -22,8 +22,7 @@ nav = [
         "day1/06_map_scale.md",
         "day1/07_open_geospatial.md",
         "day1/08_geospatial_formats.md",
-        "day1/09_practical_session.md",
-        "day1/10_mini_assignment.md"
+        "day1/09_practical_session.md"
     ]},
     { "Remote Sensing & EO" = [
         "day2/index.md",
@@ -35,8 +34,7 @@ nav = [
         "day2/06_preparation_workflows.md",
         "day2/07_dem_terrain.md",
         "day2/08_applications_hydrology.md",
-        "day2/09_practical_session.md",
-        "day2/10_mini_assignment.md"
+        "day2/09_practical_session.md"
     ]},
     { "QGIS & Data Management" = [
         "day3/index.md",
@@ -51,8 +49,7 @@ nav = [
         "day3/09_spatial_queries.md",
         "day3/10_web_gis_ogc.md",
         "day3/11_intro_spatial_databases.md",
-        "day3/12_practical_session.md",
-        "day3/13_mini_assignment.md"
+        "day3/12_practical_session.md"
     ]},
     { "Terrain & Hydrological Analysis" = [
         "day4/index.md",
