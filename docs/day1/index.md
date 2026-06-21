@@ -30,18 +30,13 @@ Below is the progression of topics for today, moving from core theoretical conce
 flowchart TD
     subgraph Row1 [" "]
         direction LR
-        A["1. Spatial Thinking &<br/>GIS Foundations<br/>(McHarg Overlays)"] --> B["2. Data Models &<br/>Coordinate Systems<br/>(Vector/Raster/UTM)"]
+        A["1. Spatial Thinking &<br/>GIS Foundations<br/>(McHarg Overlays)"] --> B["2. Data Models &<br/>Coordinate Systems<br/>(Vector/Raster/UTM)"] --> C["3. Open Ecosystem &<br/>File Formats<br/>(QGIS & GPKG/GeoTIFF)"]
     end
-    subgraph Row2 [" "]
-        direction RL
-        C["3. Open Ecosystem &<br/>File Formats<br/>(QGIS & GPKG/GeoTIFF)"] --> D["4. Guided Lab & Assignment<br/>(Map Layout & Export)"]
-    end
-    B --> C
     
-    style A fill:#f9f9f9,stroke:#333
-    style D fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px
+    style A fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style B fill:#fff3e0,stroke:#d84315,stroke-width:2px
+    style C fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
     style Row1 fill:none,stroke:none,stroke-width:0px
-    style Row2 fill:none,stroke:none,stroke-width:0px
 ```
 
 ---
@@ -54,34 +49,17 @@ flowchart TD
 * **[Topic 2: Role of Geospatial Technologies in Water Resource Management](02_role_geospatial.md)**
   Explores real-world use cases, including watershed planning, flood inundation mapping (SAR), reservoir sedimentation, and drought indexes compliance.
 
-* **[Topic 3: Spatial Data Models](03_spatial_data_models.md)**
-  A deep-dive into vector primitives (points, lines, polygons, nodes, vertices) versus continuous raster grids, and how to choose the right model.
+* **[Topic 3: Spatial Data Models and Geospatial Datasets](03_spatial_data_models.md)**
+  A deep-dive into vector primitives (points, lines, polygons) versus continuous raster grids, and an overview of key datasets (DEMs, LULC, rainfall, boundaries) and their significance in hydrology.
 
-* **[Topic 4: Understanding Geospatial Datasets](04_understanding_datasets.md)**
-  Familiarization with administrative boundaries, stream networks, DEMs (DTM vs. DSM), satellite sensors, LULC runoff curves, and gridded rainfall.
-
-* **[Topic 5: Coordinate Reference Systems and Projections](05_crs_projections.md)**
+* **[Topic 4: Coordinate Reference Systems and Projections](04_crs_projections.md)**
   An essential guide to geoids, datums (WGS 84), projections, the UTM coordinate grid, EPSG codes, and how to troubleshoot displaced layers.
 
-* **[Topic 6: Map Scale, Resolution and Accuracy](06_map_scale.md)**
+* **[Topic 5: Map Scale, Resolution and Accuracy](05_map_scale.md)**
   Details map scales, spatial/temporal/spectral resolutions, the accuracy-precision matrix, and scale-dependent vector generalizations.
 
-* **[Topic 7: Open Geospatial Ecosystem](07_open_geospatial.md)**
+* **[Topic 6: Open Geospatial Ecosystem](06_open_geospatial.md)**
   Overview of the OSGeo software stack: QGIS Desktop, GDAL/OGR translators, PostGIS spatial databases, GeoServer, and the PROJ transformation engine.
 
-* **[Topic 8: Geospatial Data Formats](08_geospatial_formats.md)**
+* **[Topic 7: Geospatial Data Formats](07_geospatial_formats.md)**
   Details legacy Shapefile limitations, OGC GeoPackage advantages, web-native GeoJSON, and Cloud-Optimized GeoTIFF (COG) internal tile mechanisms.
-
-* **[Topic 9: Practical Lab & Assignment](09_practical_session.md)**
-  Step-by-step laboratory tutorial on setting up project structures, loading datasets, running expression queries, styling elevations, exporting reprojected layers, and compiling a styled watershed overview layout map.
-
----
-
-## Expected Outputs for Today
-At the end of Day 1, you will submit a zipped folder containing:
-
-1. A standardized **GIS Project Directory Layout** (data/vector, data/raster, projects, outputs).
-
-2. A unified **GeoPackage (.gpkg) Database** containing all reprojected vector layers in WGS 84 / UTM Zone 45N (EPSG:32645).
-
-3. An **A4 Landscape Map PDF** (`Watershed_Overview_WECS.pdf`) styled and prepared using the QGIS Print Layout, complete with scale bar, north arrow, coordinate graticules grid, title block, and formatted legend.

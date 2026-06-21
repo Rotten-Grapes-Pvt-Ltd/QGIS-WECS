@@ -2,6 +2,10 @@
 
 Geographic Information Systems (GIS) and spatial thinking form the foundation of modern water resource management. This section provides a comprehensive, deep-dive into what GIS is, its core structural components, how it compares to other analytical software, the principles of spatial thinking, and how these concepts are applied to solve real-world river basin challenges at the Water and Energy Commission Secretariat (WECS).
 
+
+!!! tip  "Presentation Slides"
+    You can download or view the lecture slides for this topic: [Spatial_Hydrology_Framework.pdf](presentations/01_Spatial_Hydrology_Framework.pdf)
+
 ---
 
 ## 1. What is GIS? A Deep-Dive Framework

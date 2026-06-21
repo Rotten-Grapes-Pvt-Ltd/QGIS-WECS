@@ -4,6 +4,8 @@ site_description = "5-Day Training Plan for Hydrological Modelling using Geospat
 site_author = "Krishna Lodha"
 docs_dir = "docs"
 site_dir = "site"
+repo_url = "https://github.com/Rotten-Grapes-Pvt-Ltd/QGIS-WECS"
+
 extra_javascript = [
     "javascripts/mathjax.js",
     "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"
@@ -17,12 +19,10 @@ nav = [
         "day1/01_intro_gis.md",
         "day1/02_role_geospatial.md",
         "day1/03_spatial_data_models.md",
-        "day1/04_understanding_datasets.md",
-        "day1/05_crs_projections.md",
-        "day1/06_map_scale.md",
-        "day1/07_open_geospatial.md",
-        "day1/08_geospatial_formats.md",
-        "day1/09_practical_session.md"
+        "day1/04_crs_projections.md",
+        "day1/05_map_scale.md",
+        "day1/06_open_geospatial.md",
+        "day1/07_geospatial_formats.md"
     ]},
     { "Remote Sensing & EO" = [
         "day2/index.md",
@@ -46,10 +46,11 @@ nav = [
         "day3/06_attribute_tables.md",
         "day3/07_vector_geoprocessing.md",
         "day3/08_raster_processing.md",
-        "day3/09_spatial_queries.md",
-        "day3/10_web_gis_ogc.md",
-        "day3/11_intro_spatial_databases.md",
-        "day3/12_practical_session.md"
+        "day3/09_georeferencing.md",
+        "day3/10_spatial_queries.md",
+        "day3/11_web_gis_ogc.md",
+        "day3/12_intro_spatial_databases.md",
+        "day3/13_practical_session.md"
     ]},
     { "Terrain & Hydrological Analysis" = [
         "day4/index.md",
@@ -87,6 +88,11 @@ custom_fences = [
   { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
 ]
 
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.pymdownx.details]
+
+
+
 [project.theme]
 logo = "images/logo.png"
 features = [
@@ -118,3 +124,13 @@ icon = "material/earth"
 link = "https://rottengrapes.tech/"
 name = "Website"
 
+[[project.extra.social]]
+icon = "material/email"
+link = "mailto:krishna@rottengrapes.tech"
+name = "Email"
+
+
+[[project.extra.social]]
+icon = "material/linkedin"
+link = "https://www.linkedin.com/company/rottengrapes"
+name = "LinkedIn"

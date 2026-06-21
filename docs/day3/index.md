@@ -30,7 +30,7 @@ By the end of today's sessions, you will be able to:
 
 ## Course Syllabus & Roadmap
 
-The day is structured into 12 comprehensive topics:
+The day is structured into 13 comprehensive topics:
 
 ```mermaid
 flowchart TD
@@ -40,14 +40,14 @@ flowchart TD
     end
     subgraph Row2 [" "]
         direction RL
-        M5["5. Symbology & Styling<br/>(Vector Styles & Raster Renders)"] --> M6["6. Attribute Data Operations<br/>(Calculations & <br> Virtual Fields)"] --> M7["7. Vector Geoprocessing<br/>(Spatial Overlays & <br> Validations)"] --> M8["8. Raster Processing<br/>(Map Algebra & <br> Resampling)"]
+        M5["5. Symbology & Styling<br/>(Vector Styles & Raster Renders)"] --> M6["6. Attribute Data Operations<br/>(Calculations & <br> Virtual Fields)"] --> M7["7. Vector Geoprocessing<br/>(Spatial Overlays & <br> Validations)"] --> M8["8. Raster Processing<br/>(Map Algebra & <br> Resampling)"] --> M9["9. Georeferencing<br/>(GCPs & Transformations)"]
     end
     subgraph Row3 [" "]
         direction LR
-        M9["9. Spatial Queries & <br> Neighborhoods<br/>(Predicates & <br> Zonal Stats)"] --> M10["10. Web GIS & <br> OGC Services<br/>(WMS/WFS & <br> Modern OGC APIs)"] --> M11["11. Spatial Databases<br/>(PostGIS Docker & <br> SQL Queries)"] --> M12["12. Practical Lab & Assignment<br/>(GIS Database Compilation)"]
+        M10["10. Spatial Queries & <br> Neighborhoods<br/>(Predicates & <br> Zonal Stats)"] --> M11["11. Web GIS & <br> OGC Services<br/>(WMS/WFS & <br> Modern OGC APIs)"] --> M12["12. Spatial Databases<br/>(PostGIS Docker & <br> SQL Queries)"] --> M13["13. Practical Lab & Assignment<br/>(GIS Database Compilation)"]
     end
     M4 --> M5
-    M8 --> M9
+    M9 --> M10
 
     %% Premium styled flowchart nodes
     style M1 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
@@ -58,10 +58,11 @@ flowchart TD
     style M6 fill:#fff3e0,stroke:#d84315,stroke-width:2px
     style M7 fill:#fff3e0,stroke:#d84315,stroke-width:2px
     style M8 fill:#efebe9,stroke:#4e342e,stroke-width:2px
-    style M9 fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    style M10 fill:#e0f2f1,stroke:#00695c,stroke-width:2px
-    style M11 fill:#e0f7fa,stroke:#00838f,stroke-width:2px
-    style M12 fill:#d2f8d2,stroke:#2b8a2b,stroke-width:3px
+    style M9 fill:#fdf8e2,stroke:#f5b041,stroke-width:2px
+    style M10 fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    style M11 fill:#e0f2f1,stroke:#00695c,stroke-width:2px
+    style M12 fill:#e0f7fa,stroke:#00838f,stroke-width:2px
+    style M13 fill:#d2f8d2,stroke:#2b8a2b,stroke-width:3px
     style Row1 fill:none,stroke:none,stroke-width:0px
     style Row2 fill:none,stroke:none,stroke-width:0px
     style Row3 fill:none,stroke:none,stroke-width:0px
@@ -85,10 +86,12 @@ flowchart TD
 
 8. **[08: Raster Processing and Map Algebra](08_raster_processing.md)**: Cell dimensions, Raster Calculator masking, warping, Bilinear resampling, reclassify by table, and polygonize/rasterize conversions.
 
-9. **[09: Spatial Queries and Neighborhood Analysis](09_spatial_queries.md)**: Spatial predicates, select by location, spatial joins (one-to-one, summarized), zonal statistics overlay (on administrative bounds and custom digitized polygons), and hub distance matrices.
+9. **[09: Georeferencing in QGIS](09_georeferencing.md)**: Scanned paper maps, ground control points (GCPs), linear/polynomial/TPS transformations, resampling methods, and residual RMSE error analysis.
 
-10. **[10: Web GIS and OGC Services](10_web_gis_ogc.md)**: Remote servers, WMS/WMTS/WFS/WCS streaming protocols, modern RESTful OGC APIs (Features, Tiles, Coverages, EDR), public server connection exercises, and web publishing.
+10. **[10: Spatial Queries and Neighborhood Analysis](10_spatial_queries.md)**: Spatial predicates, select by location, spatial joins (one-to-one, summarized), zonal statistics overlay (on administrative bounds and custom digitized polygons), and hub distance matrices.
 
-11. **[11: Spatial Databases and PostGIS](11_intro_spatial_databases.md)**: Relational databases, geometry vs. geography types, GIST indexing, spinning up PostGIS using Docker Compose, database connections, layer imports, and spatial SQL queries.
+11. **[11: Web GIS and OGC Services](11_web_gis_ogc.md)**: Remote servers, WMS/WMTS/WFS/WCS streaming protocols, modern RESTful OGC APIs (Features, Tiles, Coverages, EDR), public server connection exercises, and web publishing.
 
-12. **[12: Practical Lab & Assignment](12_practical_session.md)**: Multi-step geoprocessing workflows and 10 detailed practice exercises ranging from basic layer properties to advanced multi-criteria hub matrices, concluding with a comprehensive GIS database and watershed mapping layout assignment.
+12. **[12: Spatial Databases and PostGIS](12_intro_spatial_databases.md)**: Relational databases, geometry vs. geography types, GIST indexing, spinning up PostGIS using Docker Compose, database connections, layer imports, and spatial SQL queries.
+
+13. **[13: Practical Lab & Assignment](13_practical_session.md)**: Multi-step geoprocessing workflows and 10 detailed practice exercises ranging from basic layer properties to advanced multi-criteria hub matrices, concluding with a comprehensive GIS database and watershed mapping layout assignment.

@@ -2,6 +2,9 @@
 
 Water resource management is fundamentally spatial and temporal. Rivers cross administrative boundaries, rainfall patterns vary across mountains, and floods impact low-lying valleys. Managing these resources requires a system that can model the physical landscape and analyze the human impact on it. This section details how Geographic Information Systems (GIS) and Remote Sensing (RS) are used across key areas of water resource management.
 
+!!! tip  "Presentation Slides"
+    You can download or view the lecture slides for this topic: [Geospatial_Water_Management.pdf](presentations/02_Geospatial_Water_Management.pdf)
+
 ---
 
 ## 1. Watershed Planning
@@ -86,3 +89,92 @@ Healthy river basins require maintaining ecological flows and water quality.
 * **Riparian Buffer Zone Assessment:** Using buffer tools in GIS to analyze land use within 100 to 500 meters of river banks. Restoring vegetation within these buffers helps filter agricultural runoff and stabilize banks.
 
 * **Ecological Flow Compliance:** Monitoring whether minimum environmental flows are maintained downstream of run-of-river hydropower projects by overlaying layout maps with real-time discharge database records.
+
+---
+
+## 7. Groundwater Assessment and Aquifer Mapping
+Groundwater is an invisible but vital resource. GIS and Remote Sensing help visualize and manage aquifers:
+
+* **Aquifer Vulnerability Mapping:** Using the **DRASTIC** model (Depth to water, net Recharge, Aquifer media, Soil media, Topography, Impact of vadose zone, and hydraulic Conductivity) to map areas highly susceptible to pollution.
+
+* **Groundwater Potential Zone (GWPZ) Mapping:** Integrating multiple thematic layers (geology, geomorphology, slope, land cover, lineament density, and drainage density) in a weighted overlay analysis to identify potential groundwater recharge zones.
+
+* **Satellite Gravity Monitoring:** Utilizing **GRACE (Gravity Recovery and Climate Experiment)** satellite data to track long-term regional changes in total water storage and estimate groundwater depletion rates.
+
+---
+
+## 8. Rainfall Analysis and Hydrometeorology
+Weather and climate drive the hydrological cycle. Spatial analysis of meteorological data is critical:
+
+* **Spatial Interpolation of Rainfall:** Using techniques like **Inverse Distance Weighting (IDW)**, **Kriging**, and **Spline** to convert point observations from weather stations into continuous rainfall surfaces.
+
+* **Satellite Rainfall Estimates (SRE):** Utilizing high-resolution gridded datasets such as **CHIRPS** (Climate Hazards Group InfraRed Precipitation with Station data) or **GPM** (Global Precipitation Measurement) to model hydrology in ungauged or remote basins.
+
+* **Orographic Effects Modeling:** Incorporating elevation datasets (DEMs) to adjust spatial rainfall estimates based on elevation gradients, crucial for mountainous terrains like Nepal.
+
+---
+
+## 9. Hydrological Modeling and Decision Support Systems
+Decision support systems integrate data and models to help policymakers manage river basins:
+
+* **GIS-Model Coupling:** Exporting geospatial parameters (catchment boundaries, slopes, land cover, soil classifications) from GIS into physical models such as **SWAT (Soil and Water Assessment Tool)** or **HEC-HMS (Hydrological Modeling System)**.
+
+* **Scenario Analysis:** Running models under different scenarios (e.g., land-use changes or infrastructure development) to visualize future water availability and discharge dynamics.
+
+* **Web-Based Dashboards:** Deploying interactive Web GIS portals to visualize real-time streamflow, water quality, and reservoir levels for river basin management.
+
+---
+
+## 10. Climate Change and Water Security
+Climate change directly alters hydrological patterns, affecting water security:
+
+* **Glacial Lake Outburst Flood (GLOF) Monitoring:** Using satellite imagery (Sentinel-2, Landsat) to monitor glacial retreat, map glacial lakes, and model downstream flood paths to secure mountain communities.
+
+* **Snow Cover Mapping:** Extracting snow cover area (SCA) using indices like the **Normalized Difference Snow Index (NDSI)** from MODIS or Sentinel-3 to forecast spring snowmelt contributions.
+
+* **Future Inundation Scenarios:** Simulating future flood extents by forcing hydraulic models with climate projection data (e.g., CMIP6 scenarios) to plan resilient structures.
+
+---
+
+## 11. Water Infrastructure Planning
+The siting and design of water infrastructure are spatial decisions:
+
+* **Optimal Dam Siting:** Using multicriteria evaluation (MCE) in GIS to identify optimal locations for dams and reservoirs based on storage capacity, slope stability, environmental impact, and geological safety.
+
+* **Canal Routing and Alignment:** Using least-cost path analysis and DEMs to route irrigation canals or drinking water pipelines to minimize excavation costs and pump energy.
+
+* **Command Area Mapping:** Delineating irrigation command areas and monitoring crop water requirements by analyzing remote sensing crop indices.
+
+---
+
+## 12. Real-Time Monitoring and Early Warning Systems
+Early warning systems save lives and property by providing advance alerts:
+
+* **Telemetry Integration:** Overlaying live water level and discharge data from telemetry stations onto GIS risk maps to dynamically track flood warning levels.
+
+* **Rapid Flood Inundation Models:** Running pre-calculated flood libraries or simplified hydraulic models in real time to generate immediate inundation maps during extreme storm events.
+
+* **Public Alert Mapping:** Generating spatial alert zones to distribute targeted notifications via SMS or local broadcast networks.
+
+---
+
+## 13. Emerging Technologies in Water Resource Management
+New technologies are accelerating the transition from static mapping to dynamic modeling:
+
+* **Cloud Computing (Google Earth Engine):** Processing petabytes of satellite imagery in seconds to perform national-scale water surface monitoring, land-cover mapping, and long-term climate analysis.
+
+* **UAVs and LiDAR:** Deploying drones to capture ultra-high-resolution topography and bathymetry, which is crucial for detailed hydraulic modeling and riverbank stability analysis.
+
+* **AI and Machine Learning:** Applying deep learning models to predict flood inundation, forecast rainfall-runoff, and classify remote sensing images.
+
+---
+
+## 14. Water Balance and Water Accounting
+Water accounting quantifies water availability and consumption across river basins:
+
+* **Precipitation-Runoff Balancing:** Delineating the water budget components ($P = ET + Q + \Delta S$) using remote sensing estimates of precipitation (P), evapotranspiration (ET), and streamflow telemetry (Q).
+
+* **Evapotranspiration Estimation:** Using surface energy balance models (e.g., **METRIC**, **SEBAL**) with thermal satellite bands (Landsat-8/9) to measure actual crop water consumption.
+
+* **Basin-Wide Water Auditing:** Compiling standardized water accounts (such as WA+ framework) to help authorities allocate water rights equitably among agriculture, energy, and urban sectors.
+
