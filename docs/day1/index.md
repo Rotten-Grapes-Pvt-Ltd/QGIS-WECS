@@ -63,3 +63,15 @@ flowchart TD
 
 * **[Topic 7: Geospatial Data Formats](07_geospatial_formats.md)**
   Details legacy Shapefile limitations, OGC GeoPackage advantages, web-native GeoJSON, and Cloud-Optimized GeoTIFF (COG) internal tile mechanisms.
+
+## Existing Resources
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=B_QsD40XYlQjaaaY&amp;list=PL3MO67NH2XxLAFn3jc7gOhXLD9YFx-oew" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/id04Bpuk4Fs?si=cOfG_taqgXfoYAvS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+- <a href="https://ocw.mit.edu/courses/res-str-001-geographic-information-system-gis-tutorial-january-iap-2022/pages/gis-level-1/" target="_blank">MIT OpenCourseware GIS</a>
+
+- <a href="https://www.coursera.org/specializations/gis" target="_blank">Coursera GIS</a>
+
