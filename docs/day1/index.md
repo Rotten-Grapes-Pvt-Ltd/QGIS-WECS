@@ -27,13 +27,21 @@ By the end of today's sessions, you will be able to:
 Below is the progression of topics for today, moving from core theoretical concepts to practical, independent map compilation:
 
 ```mermaid
-graph TD
-    A["1. Spatial Thinking &<br/>GIS Foundations<br/>(McHarg Overlays)"] --> B["2. Data Models &<br/>Coordinate Systems<br/>(Vector/Raster/UTM)"]
-    B --> C["3. Open Ecosystem &<br/>File Formats<br/>(QGIS & GPKG/GeoTIFF)"]
-    C --> D["4. Guided Lab & Assignment<br/>(Map Layout & Export)"]
+flowchart TD
+    subgraph Row1 [" "]
+        direction LR
+        A["1. Spatial Thinking &<br/>GIS Foundations<br/>(McHarg Overlays)"] --> B["2. Data Models &<br/>Coordinate Systems<br/>(Vector/Raster/UTM)"]
+    end
+    subgraph Row2 [" "]
+        direction RL
+        C["3. Open Ecosystem &<br/>File Formats<br/>(QGIS & GPKG/GeoTIFF)"] --> D["4. Guided Lab & Assignment<br/>(Map Layout & Export)"]
+    end
+    B --> C
     
     style A fill:#f9f9f9,stroke:#333
     style D fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px
+    style Row1 fill:none,stroke:none,stroke-width:0px
+    style Row2 fill:none,stroke:none,stroke-width:0px
 ```
 
 ---

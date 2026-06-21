@@ -26,12 +26,19 @@ By the end of today's sessions, you will be able to:
 ## Day 5 Learning Roadmap
 
 ```mermaid
-graph TD
-    A["1. Time-Series & Indices<br/>(NDVI/NDWI/SAVI)"] --> B["2. Automation Workflows<br/>(Model Builder)"]
-    B --> C["3. Cartography & AI<br/>(Print Layouts & scripts)"]
-    C --> D["4. Capstone Project<br/>(Integrated Modeling)"]
-    D --> E["5. Wrap-up & Roadmap"]
+flowchart TD
+    subgraph Row1 [" "]
+        direction LR
+        A["1. Time-Series & Indices<br/>(NDVI/NDWI/SAVI)"] --> B["2. Automation Workflows<br/>(Model Builder)"] --> C["3. Cartography & AI<br/>(Print Layouts & scripts)"]
+    end
+    subgraph Row2 [" "]
+        direction RL
+        D["4. Capstone Project<br/>(Integrated Modeling)"] --> E["5. Wrap-up & Roadmap"]
+    end
+    C --> D
     
     style A fill:#f9f9f9,stroke:#333
     style E fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px
+    style Row1 fill:none,stroke:none,stroke-width:0px
+    style Row2 fill:none,stroke:none,stroke-width:0px
 ```

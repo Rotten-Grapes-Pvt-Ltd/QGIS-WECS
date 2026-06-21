@@ -33,18 +33,21 @@ By the end of today's sessions, you will be able to:
 The day is structured into 12 comprehensive topics:
 
 ```mermaid
-graph TD
-    M1["1. Intro to QGIS Desktop<br/>(Interface & Projections)"] --> M2["2. Plugins & Extensions<br/>(PyQGIS & Core Plugins)"]
-    M2 --> M3["3. Hydrology Plugins<br/>(Whitebox, GRASS, SAGA, QSWAT)"]
-    M3 --> M4["4. Workspace & Data <br> Management<br/>(Relative Paths & <br> GeoPackages)"]
-    M4 --> M5["5. Symbology & Styling<br/>(Vector Styles & Raster Renders)"]
-    M5 --> M6["6. Attribute Data Operations<br/>(Calculations & <br> Virtual Fields)"]
-    M6 --> M7["7. Vector Geoprocessing<br/>(Spatial Overlays & <br> Validations)"]
-    M7 --> M8["8. Raster Processing<br/>(Map Algebra & <br> Resampling)"]
-    M8 --> M9["9. Spatial Queries & <br> Neighborhoods<br/>(Predicates & <br> Zonal Stats)"]
-    M9 --> M10["10. Web GIS & <br> OGC Services<br/>(WMS/WFS & <br> Modern OGC APIs)"]
-    M10 --> M11["11. Spatial Databases<br/>(PostGIS Docker & <br> SQL Queries)"]
-    M11 --> M12["12. Practical Lab & Assignment<br/>(GIS Database Compilation)"]
+flowchart TD
+    subgraph Row1 [" "]
+        direction LR
+        M1["1. Intro to QGIS Desktop<br/>(Interface & Projections)"] --> M2["2. Plugins & Extensions<br/>(PyQGIS & Core Plugins)"] --> M3["3. Hydrology Plugins<br/>(Whitebox, GRASS, SAGA, QSWAT)"] --> M4["4. Workspace & Data <br> Management<br/>(Relative Paths & <br> GeoPackages)"]
+    end
+    subgraph Row2 [" "]
+        direction RL
+        M5["5. Symbology & Styling<br/>(Vector Styles & Raster Renders)"] --> M6["6. Attribute Data Operations<br/>(Calculations & <br> Virtual Fields)"] --> M7["7. Vector Geoprocessing<br/>(Spatial Overlays & <br> Validations)"] --> M8["8. Raster Processing<br/>(Map Algebra & <br> Resampling)"]
+    end
+    subgraph Row3 [" "]
+        direction LR
+        M9["9. Spatial Queries & <br> Neighborhoods<br/>(Predicates & <br> Zonal Stats)"] --> M10["10. Web GIS & <br> OGC Services<br/>(WMS/WFS & <br> Modern OGC APIs)"] --> M11["11. Spatial Databases<br/>(PostGIS Docker & <br> SQL Queries)"] --> M12["12. Practical Lab & Assignment<br/>(GIS Database Compilation)"]
+    end
+    M4 --> M5
+    M8 --> M9
 
     %% Premium styled flowchart nodes
     style M1 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
@@ -59,6 +62,9 @@ graph TD
     style M10 fill:#e0f2f1,stroke:#00695c,stroke-width:2px
     style M11 fill:#e0f7fa,stroke:#00838f,stroke-width:2px
     style M12 fill:#d2f8d2,stroke:#2b8a2b,stroke-width:3px
+    style Row1 fill:none,stroke:none,stroke-width:0px
+    style Row2 fill:none,stroke:none,stroke-width:0px
+    style Row3 fill:none,stroke:none,stroke-width:0px
 ```
 
 ### Day 3 Course Materials:

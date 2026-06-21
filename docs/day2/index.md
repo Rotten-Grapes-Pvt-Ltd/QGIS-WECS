@@ -26,13 +26,21 @@ By the end of today's sessions, you will be able to:
 ## Day 2 Learning Roadmap
 
 ```mermaid
-graph TD
-    A["1. Remote Sensing<br/>Principles<br/>(EMR & Sensors)"] --> B["2. Satellites & Resolutions<br/>(Sentinel/Landsat/SAR)"]
-    B --> C["3. Bands & Composites<br/>(RGB/FCC/NDWI/NDVI)"]
-    C --> D["4. Preprocessing & Lab<br/>(Data Downloads & Metadata)"]
+flowchart TD
+    subgraph Row1 [" "]
+        direction LR
+        A["1. Remote Sensing<br/>Principles<br/>(EMR & Sensors)"] --> B["2. Satellites & Resolutions<br/>(Sentinel/Landsat/SAR)"]
+    end
+    subgraph Row2 [" "]
+        direction RL
+        C["3. Bands & Composites<br/>(RGB/FCC/NDWI/NDVI)"] --> D["4. Preprocessing & Lab<br/>(Data Downloads & Metadata)"]
+    end
+    B --> C
     
     style A fill:#f9f9f9,stroke:#333
     style D fill:#d2f8d2,stroke:#2b8a2b,stroke-width:2px
+    style Row1 fill:none,stroke:none,stroke-width:0px
+    style Row2 fill:none,stroke:none,stroke-width:0px
 ```
 
 ---

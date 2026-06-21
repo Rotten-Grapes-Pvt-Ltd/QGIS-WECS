@@ -31,15 +31,21 @@ By the end of today's sessions, you will be able to:
 The day is structured into 9 comprehensive topics:
 
 ```mermaid
-graph TD
-    M1["1. Intro to Terrain Analysis<br/>(DSM vs. DTM & Resolution)"] --> M2["2. DEM Preprocessing<br/>(Sink Filling & Stream Burning)"]
-    M2 --> M3["3. Terrain Derivatives<br/>(Slope, Aspect, TWI & Ruggedness)"]
-    M3 --> M4["4. Flow Routing & Catchment<br/>(D8/MFD & Watershed bounds)"]
-    M4 --> M5["5. Basin Partitioning<br/>(r.watershed & Stream Orders)"]
-    M5 --> M6["6. Raster-Based Models<br/>(Rational Method, SCS CN & RUSLE)"]
-    M6 --> M7["7. Spatial Interpolation<br/>(IDW, Kriging & Orographic Rain)"]
-    M7 --> M8["8. Flood & Water Planning<br/>(HEC-RAS, HAND & Reservoir Stage)"]
-    M8 --> M9["9. Practical Lab & Assignment<br/>(Watershed characterization)"]
+flowchart TD
+    subgraph Row1 [" "]
+        direction LR
+        M1["1. Intro to Terrain Analysis<br/>(DSM vs. DTM & Resolution)"] --> M2["2. DEM Preprocessing<br/>(Sink Filling & Stream Burning)"] --> M3["3. Terrain Derivatives<br/>(Slope, Aspect, TWI & Ruggedness)"]
+    end
+    subgraph Row2 [" "]
+        direction RL
+        M4["4. Flow Routing & Catchment<br/>(D8/MFD & Watershed bounds)"] --> M5["5. Basin Partitioning<br/>(r.watershed & Stream Orders)"] --> M6["6. Raster-Based Models<br/>(Rational Method, SCS CN & RUSLE)"]
+    end
+    subgraph Row3 [" "]
+        direction LR
+        M7["7. Spatial Interpolation<br/>(IDW, Kriging & Orographic Rain)"] --> M8["8. Flood & Water Planning<br/>(HEC-RAS, HAND & Reservoir Stage)"] --> M9["9. Practical Lab & Assignment<br/>(Watershed characterization)"]
+    end
+    M3 --> M4
+    M6 --> M7
 
     %% Premium styled flowchart nodes
     style M1 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
@@ -51,6 +57,9 @@ graph TD
     style M7 fill:#efebe9,stroke:#4e342e,stroke-width:2px
     style M8 fill:#fce4ec,stroke:#c2185b,stroke-width:2px
     style M9 fill:#d2f8d2,stroke:#2b8a2b,stroke-width:3px
+    style Row1 fill:none,stroke:none,stroke-width:0px
+    style Row2 fill:none,stroke:none,stroke-width:0px
+    style Row3 fill:none,stroke:none,stroke-width:0px
 ```
 
 ### Day 4 Course Materials:

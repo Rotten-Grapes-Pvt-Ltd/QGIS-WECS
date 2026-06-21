@@ -225,7 +225,7 @@ hide:
 <div class="grid-container">
   <div class="card">
     <h3>Elevation Grids</h3>
-    <p>High-resolution Digital Elevation Models (DEMs) including SRTM (30m) and ALOS PALSAR (12.5m) to trace flow paths and slopes.</p>
+    <p>High-resolution Digital Elevation Models (DEMs) including SRTM (30m) and Sentinel 1 SAR to trace flow paths and slopes.</p>
   </div>
   <div class="card">
     <h3>Vector Layers</h3>
