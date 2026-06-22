@@ -67,7 +67,7 @@ Rivers in active tectonic zones (such as those in Nepal) transport heavy sedimen
 
 ```mermaid
 graph LR
-    Hist[Historical Landsat / Corona Imagery] --> Alignment[Raster Co-Registration]
+    Hist[Historical Sentinel 2 <br> / Sentinel-1 Imagery] --> Alignment[Raster Co-Registration]
     Alignment --> Vector[Digitize River Banklines]
     Vector --> DSAS[Digital Shoreline Analysis System - DSAS]
     DSAS --> Rates[Calculate Bank Erosion & Channel Migration Rates]
