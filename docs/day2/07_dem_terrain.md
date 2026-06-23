@@ -2,6 +2,9 @@
 
 Digital Elevation Models (DEMs) are the core datasets used in spatial hydrology. They define slopes, flow directions, and drainage pathways. This section explains DEM concepts, terrain derivatives, global datasets, and terrain data limitations in mountainous catchments.
 
+!!! tip "Presentation Slides"
+    You can download or view the lecture slides for this topic: [07_DEM_Terrain.pdf](presentations/07_DEM_Terrain.pdf)
+
 ---
 
 ## 1. DSM vs. DTM in Hydrology

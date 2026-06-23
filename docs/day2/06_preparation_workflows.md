@@ -2,6 +2,9 @@
 
 Raw satellite imagery cannot be used directly in hydrological models. It must undergo preprocessing to correct atmospheric distortion, mask out clouds, reproject to metrics, and align pixel grids. This section details the standard preparation pipeline.
 
+!!! tip "Presentation Slides"
+    You can download or view the lecture slides for this topic: [06_Preparation_Workflows.pdf](presentations/06_Preparation_Workflows.pdf)
+
 ---
 
 ## 1. Preprocessing Pipeline
