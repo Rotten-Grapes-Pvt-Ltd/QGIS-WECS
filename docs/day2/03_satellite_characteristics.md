@@ -26,6 +26,7 @@ graph TD
 ```
 
 * **Spatial vs. Temporal:** Satellites with very high spatial resolution (e.g., $30\text{ cm}$ commercial imagery) cover a small area per image swath. Consequently, it takes longer to re-image the same location (low temporal resolution). Conversely, weather satellites scan entire hemispheres every 15 minutes (high temporal resolution) but have pixels spanning several kilometers (low spatial resolution).
+
 * **Spectral vs. Spatial:** Splitting incoming electromagnetic energy into hundreds of narrow wavelengths (hyperspectral) reduces the amount of light reaching each individual detector. To maintain a strong signal-to-noise ratio, the sensor must capture light over a larger area, resulting in larger ground pixel sizes (coarse spatial resolution).
 
 ---
@@ -48,11 +49,15 @@ When a pixel covers an area containing multiple surface types, the resulting dig
 $$\text{Reflectance}_{\text{pixel}} = f_{\text{water}} \cdot R_{\text{water}} + (1 - f_{\text{water}}) \cdot R_{\text{land}}$$
 
 Where $f_{\text{water}}$ is the fraction of the pixel covered by water, and $R$ is the characteristic reflectance. 
+
 * If a river channel is $15\text{ m}$ wide, a $30\text{ m}$ Landsat pixel covering it will contain at least 50% land. 
+
 * If the land reflectance dominates, the pixel will be classified as land, causing the river network to appear fragmented or disconnected in your model.
 
 ### Hydrological Scale Requirements:
+
 * **Micro-Catchments & Streams (< 100 km²):** Require high spatial resolution ($\le 10\text{ m}$, e.g., Sentinel-2 or commercial PlanetScope) to delineate narrow riparian corridors and urban drainage patterns.
+
 * **Large River Basins (> 10,000 km²):** Can be modeled effectively with medium resolution ($30\text{ m}$ to $250\text{ m}$, e.g., Landsat or MODIS), saving computation time.
 
 ---
@@ -74,6 +79,7 @@ Spectral resolution refers to the sensor's ability to divide the electromagnetic
 ```
 
 * **Strong NIR/SWIR Absorption:** Pure water absorbs almost all near-infrared (NIR) and shortwave infrared (SWIR) light. Consequently, on NIR and SWIR band images, water bodies appear solid black, creating a sharp boundary with soil and vegetation, which reflect strongly in those wavelengths.
+
 * **Visible Wavelength Scattering:** Suspended sediments (turbidity) scatter green and red light, while chlorophyll-a in algae absorbs blue and red light and reflects green. Analyzing these bands allows us to measure water quality parameters from space.
 
 ### Sensor Band Comparison Table
@@ -94,13 +100,19 @@ Spectral resolution refers to the sensor's ability to divide the electromagnetic
 Temporal resolution (revisit time) is the frequency at which a satellite sensor images the same location on Earth. It is governed by the satellite's orbit:
 
 * **Sun-Synchronous Polar Orbits:**
+
     * **How they work:** Satellites pass from pole to pole while the Earth rotates underneath, crossing the equator at the same local solar time each day.
+
     * **Temporal Revisit:** Constrained by the swath width. For example, Landsat has a 16-day repeat cycle. Sentinel-2 utilizes two identical satellites (2A and 2B) phased 180 degrees apart in the same orbit to achieve a 5-day revisit.
+
     * **Off-Nadir Steering:** Commercial constellations (like PlanetScope) can tilt their cameras sideways (off-nadir) to view a target from an angle, reducing revisit times to less than 24 hours (though this introduces geometric distortion).
 
 * **Geostationary Orbits:**
+
     * **How they work:** Satellites orbit directly above the equator at an altitude of $\sim 35,786\text{ km}$, matching the Earth's rotational speed. They remain stationary over a fixed point.
+
     * **Temporal Revisit:** Extremely high (every 10 to 15 minutes).
+
     * **Limitation:** Very low spatial resolution (1 to 4 kilometers). Primarily used for real-time weather monitoring and tracking regional storm movements.
 
 ---
@@ -112,13 +124,15 @@ Radiometric resolution is the sensor's sensitivity to small differences in refle
 graph TD
     Bit["Bit Depth & Color Levels"] --> B8["8-bit<br/>(256 values: 0 - 255)"]
     Bit --> B12["12-bit<br/>(4,096 values: 0 - 4095)"]
-    Bit --> B16["16-bit<br/>(65,536 values: 0 - 65535)"]
+    Bit --> B16["16-bit<br/>(65,536 levels: 0 - 65535)"]
 
     style Bit fill:#2e4053,color:#fff,stroke:#1a252f,stroke-width:2px
 ```
 
 * **Landsat 1-5 (8-bit):** Coarse detail. Reflectance is squeezed into 256 levels, which often causes dark water bodies and shadows to blend together into the same digital number value.
+
 * **Sentinel-2 (12-bit):** Excellent separation of intermediate values. Stores 4,096 levels of data.
+
 * **Landsat 8-9 (16-bit):** Ultra-high radiometric resolution, storing 65,536 levels. Allows mapping of subtle variations inside dark water bodies, such as plume currents and varying concentrations of suspended sediment.
 
 ---
@@ -139,11 +153,16 @@ Different hydrological applications demand different configurations. Choosing th
 
 ### Scenario A: Selecting the Best Dataset
 An engineering firm needs to monitor the weekly spatial extent of irrigation storage reservoirs in a small agricultural valley in Nepal. The largest reservoir is $80\text{ m}$ wide, and the smallest is $15\text{ m}$ wide.
+
 1. **Calculate pixel coverage:** How many $30\text{ m}$ Landsat pixels would fit inside the smallest reservoir? How many $10\text{ m}$ Sentinel-2 pixels?
+
 2. **Evaluate Temporal Revisit:** If cloud cover blocks 50% of the summer images, which satellite system offers a better chance of acquiring clear data during the monsoon season?
+
 3. **Choose the System:** Which satellite would you recommend, and why?
 
 ### Scenario B: Understanding Band Signatures
 A researcher wants to classify a mountain lake, but shadows cast by adjacent cliffs look identical to the water in visible bands.
+
 1. How can the researcher use Near-Infrared (NIR) or Shortwave Infrared (SWIR) bands to distinguish terrain shadows from open water?
+
 2. What role does radiometric resolution play in resolving details inside shadow zones?

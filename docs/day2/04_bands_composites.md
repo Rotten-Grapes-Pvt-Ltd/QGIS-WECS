@@ -28,31 +28,51 @@ By varying which band is mapped to which display channel, we highlight different
 ## 2. Common Band Composites in Hydrology
 
 ### 1. True Color (Natural Color)
+
 * **Wavelengths mapped:** Red $\rightarrow$ Red | Green $\rightarrow$ Green | Blue $\rightarrow$ Blue.
+
 * **Band Configurations:**
+
     * *Sentinel-2:* `B04, B03, B02`
+
     * *Landsat 8/9:* `B04, B03, B02`
+
 * **Hydrological Application:** Mimics human vision. It is the best composite for identifying water turbidity, sediment plumes in reservoirs, and mapping river plume distribution in coastal zones.
 
 ### 2. Standard False Color (Vegetation FCC)
+
 * **Wavelengths mapped:** Near-Infrared (NIR) $\rightarrow$ Red | Red $\rightarrow$ Green | Green $\rightarrow$ Blue.
+
 * **Band Configurations:**
+
     * *Sentinel-2:* `B08, B04, B03`
+
     * *Landsat 8/9:* `B05, B04, B03`
+
 * **Hydrological Application:** Vegetation reflects NIR light strongly due to cellular structure, so healthy canopy forest appears bright red. Since water absorbs NIR completely, open water bodies stand out as dark blue or solid black, making this composite excellent for delineating shoreline boundaries.
 
 ### 3. SWIR Agriculture & Water Composite
+
 * **Wavelengths mapped:** Shortwave-Infrared (SWIR-1) $\rightarrow$ Red | Near-Infrared (NIR) $\rightarrow$ Green | Red $\rightarrow$ Blue.
+
 * **Band Configurations:**
+
     * *Sentinel-2:* `B11, B08, B04`
+
     * *Landsat 8/9:* `B06, B05, B04`
+
 * **Hydrological Application:** This composite maximizes the contrast between water and land. Water absorbs both NIR and SWIR, appearing deep dark blue or black. Healthy crops appear bright green, bare soils appear in shades of brown/orange, and built-up urban structures appear in magenta. It is the standard composite for mapping flooded fields and reservoir margins.
 
 ### 4. Atmospheric Penetration / Geology Composite
+
 * **Wavelengths mapped:** SWIR-2 $\rightarrow$ Red | SWIR-1 $\rightarrow$ Green | NIR $\rightarrow$ Blue.
+
 * **Band Configurations:**
+
     * *Sentinel-2:* `B12, B11, B08`
+
     * *Landsat 8/9:* `B07, B06, B05`
+
 * **Hydrological Application:** Uses longer wavelengths that easily penetrate atmospheric haze, smoke, and thin clouds. Highly useful for mapping geological faults, drainage paths, or post-fire burn severity in mountainous catchments.
 
 ---
@@ -83,6 +103,7 @@ Specifically formulated to highlight open water surfaces:
 $$\text{NDWI} = \frac{\text{Green} - \text{NIR}}{\text{Green} + \text{NIR}} \quad \text{or} \quad \text{NDWI} = \frac{\text{B03} - \text{B08}}{\text{B03} + \text{B08}} \quad \text{(Sentinel-2)}$$
 
 * **Values:** Water features return positive values ($> 0.0$), while soil and vegetation yield negative or zero values.
+
 * **Limitation:** Built-up urban areas reflect green and NIR light similarly to water, which can create false-positive water classifications in cities.
 
 ### 3. MNDWI (Modified Normalized Difference Water Index - Xu)
@@ -105,15 +126,25 @@ $$\text{NDSI} = \frac{\text{Green} - \text{SWIR-1}}{\text{Green} + \text{SWIR-1}
 To build a custom composite from individual band files (e.g., bands downloaded from Landsat or Sentinel):
 
 1. **Import Bands:** Load the required single-band GeoTIFFs into the QGIS Layers Panel.
+
 2. **Build Virtual Raster:**
+
     * Navigate to **Raster** > **Miscellaneous** > **Build Virtual Raster**.
+
     * **Input Layers:** Select the individual band files in order (e.g., Red, Green, Blue, NIR, SWIR).
+
     * **Place each input file into a separate band:** **Check this option** to generate a multiband file.
+
     * Click **Run**. QGIS creates a temporary `Virtual` layer.
+
 3. **Configure Symbology:**
+
     * Right-click the `Virtual` layer and select **Properties** > **Symbology**.
+
     * **Render Type:** Select **Multiband Color**.
+
     * **Red / Green / Blue Band mappings:** Assign your desired bands to the display channels (e.g., for Sentinel-2 SWIR Agriculture composite: Red channel = Band 5 (SWIR-1), Green channel = Band 4 (NIR), Blue channel = Band 3 (Red)).
+
     * Click **Apply**.
 
 ---
@@ -121,9 +152,15 @@ To build a custom composite from individual band files (e.g., bands downloaded f
 ## 6. Review & Interactive Discussion Prompts (10 Minutes)
 
 1. **Index Selection Trade-offs:**
-   * Why would you prefer **MNDWI** over **NDWI** when mapping a river that passes through a major city?
-   * If you are mapping snow cover in a catchment that is 80% covered by clouds, why is a simple threshold on the true-color band insufficient?
+
+    * Why would you prefer **MNDWI** over **NDWI** when mapping a river that passes through a major city?
+
+    * If you are mapping snow cover in a catchment that is 80% covered by clouds, why is a simple threshold on the true-color band insufficient?
+
 2. **Band Combinations for Flood Response:**
-   * During active flood events, skies are often overcast. What composite or sensor system (hint: SAR vs. Optical) would you select to capture flood extents under heavy cloud cover, and why?
+
+    * During active flood events, skies are often overcast. What composite or sensor system (hint: SAR vs. Optical) would you select to capture flood extents under heavy cloud cover, and why?
+
 3. **The Shadow Problem:**
-   * Look back at the Land Surface Feature Appearance Matrix. Note how both deep open water and steep terrain shadows can appear black in a Vegetation FCC. Suggest a workflow combining spectral indices and digital elevation thresholds to isolate the true water body.
+
+    * Look back at the Land Surface Feature Appearance Matrix. Note how both deep open water and steep terrain shadows can appear black in a Vegetation FCC. Suggest a workflow combining spectral indices and digital elevation thresholds to isolate the true water body.
