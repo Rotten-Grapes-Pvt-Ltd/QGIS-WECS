@@ -122,7 +122,7 @@ $$\text{NDSI} = \frac{\text{Green} - \text{SWIR-1}}{\text{Green} + \text{SWIR-1}
 
 ---
 
-## 5. Practical QGIS Workflow: Building Composites (15 Minutes)
+## 5. Practical QGIS Workflow: Building Composites 
 To build a custom composite from individual band files (e.g., bands downloaded from Landsat or Sentinel):
 
 1. **Import Bands:** Load the required single-band GeoTIFFs into the QGIS Layers Panel.
