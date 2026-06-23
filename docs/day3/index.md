@@ -88,7 +88,7 @@ flowchart TD
 
 9. **[09: Georeferencing in QGIS](09_georeferencing.md)**: Scanned paper maps, ground control points (GCPs), linear/polynomial/TPS transformations, resampling methods, and residual RMSE error analysis.
 
-10. **[10: Spatial Queries and Neighborhood Analysis](10_spatial_queries.md)**: Spatial predicates, select by location, spatial joins (one-to-one, summarized), zonal statistics overlay (on administrative bounds and custom digitized polygons), and hub distance matrices.
+10. **[10: Spatial Queries and Neighborhood Analysis](10_spatial_queries.md)**: OGC spatial predicates (DE-9IM matrix), compound select by location/expression, spatial joins (one-to-one, one-to-many, summarized summaries), zonal statistics and zonal histograms, proximity hubs, and point distance matrices.
 
 11. **[11: Web GIS and OGC Services](11_web_gis_ogc.md)**: Remote servers, WMS/WMTS/WFS/WCS streaming protocols, modern RESTful OGC APIs (Features, Tiles, Coverages, EDR), public server connection exercises, and web publishing.
 
