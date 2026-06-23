@@ -1,6 +1,6 @@
 # Remote Sensing Applications in Hydrology
 
-By combining and calculating spectral bands, we can extract physical parameters directly from satellite images. This section explains the formulas and workflows for mapping surface water, snow extent, and vegetation health.
+By combining and calculating spectral bands, we can extract physical parameters directly from satellite images. This section explains the formulas and workflows for mapping surface water, snow extent, vegetation water stress, water quality, and land surface heat emissions.
 
 ---
 
@@ -77,9 +77,10 @@ Plotting a histogram of the calibrated backscatter values of a flooded area typi
 
 ---
 
-## 3. Vegetation Monitoring & Crop Coefficients (NDVI)
+## 3. Vegetation Vigor & Canopy Water Stress (NDVI & NDMI)
 
-The Normalized Difference Vegetation Index (NDVI) measures vegetation density and health by comparing chlorophyll absorption in red light and cellular scattering in NIR light:
+### Normalized Difference Vegetation Index (NDVI)
+The NDVI measures vegetation density and health by comparing chlorophyll absorption in red light and cellular scattering in NIR light:
 
 $$\text{NDVI} = \frac{\text{NIR} - \text{Red}}{\text{NIR} + \text{Red}}$$
 
@@ -96,7 +97,48 @@ $$\text{NDVI} = \frac{\text{NIR} - \text{Red}}{\text{NIR} + \text{Red}}$$
 
 ---
 
-## 4. Snow Cover Mapping & SCA (NDSI)
+### Normalized Difference Moisture Index (NDMI)
+While NDVI measures chlorophyll activity, the NDMI monitors canopy water content and plant water stress by comparing NIR scattering with SWIR absorption:
+
+$$\text{NDMI} = \frac{\text{NIR} - \text{SWIR}}{\text{NIR} + \text{SWIR}}$$
+
+* **Sentinel-2 Bands:**
+  $$\text{NDMI} = \frac{\text{Band 8} - \text{Band 11}}{\text{Band 8} + \text{Band 11}}$$
+
+* **Landsat 8/9 Bands:**
+  $$\text{NDMI} = \frac{\text{Band 5} - \text{Band 6}}{\text{Band 5} + \text{Band 6}}$$
+
+* **Hydrological Role:** Values range from $-1.0$ to $1.0$. High positive values ($0.2$ to $0.4$) represent fully hydrated, unstressed canopies. Negative values indicate crop water stress, agricultural drought, or high forest fire fuel vulnerability.
+
+---
+
+## 4. Water Quality, Algal Blooms & Turbidity
+
+Spectral bands allow qualitative assessment of key water quality parameters:
+
+* **Suspended Sediment & Turbidity:** Silt and suspended solids scatter visible light. While clear water absorbs almost all light, sediment-laden water reflects strongly in the Green and Red bands. Hydrologists use a Green-to-Red band ratio or threshold the Red band directly to qualitatively map sediment plumes and river discharge mixing zones.
+
+* **Algal Blooms & Chlorophyll-a:** Photosynthetic algae contain chlorophyll-a and phycocyanin. Active chlorophyll-a absorbs blue and red light, but exhibits a sharp rise in reflectance in the transition zone between red and near-infrared, known as the **Red-Edge** spectrum ($0.70 - 0.75\text{ }\mu\text{m}$). 
+  
+  * *Red-Edge Tracking:* Sentinel-2 includes three narrow Red-Edge bands (Bands 5, 6, and 7) designed specifically to detect this spectral shift. Analyzing these bands enables the early detection of algal blooms and eutrophication in water supply reservoirs.
+
+---
+
+## 5. Land Surface Temperature & Evapotranspiration Concepts
+
+Satellites equipped with thermal sensors (such as Landsat TIRS or MODIS) record self-emitted thermal infrared radiation ($8 - 14\text{ }\mu\text{m}$):
+
+* **Land Surface Temperature (LST):** Thermal band DN values are converted to physical temperature (Kelvin or Celsius) using calibration methods (such as Split-Window algorithms) that correct for atmospheric moisture absorption.
+
+* **Evapotranspiration (ET) Estimation:** In energy balance models (like SEBAL or METRIC), LST is combined with NDVI to map spatial ET flux. 
+  
+  * *Cooling Effect:* Where water is abundant and vegetation is healthy, plants transpire actively, cooling the surface. This produces a signature of **high NDVI and low LST**.
+  
+  * *Heating Effect:* Dry, water-stressed crops transpire minimally, raising the surface temperature. This produces a signature of **low NDVI and high LST**. This relationship allows mapping of actual crop water use.
+
+---
+
+## 6. Snow Cover Mapping & SCA (NDSI)
 
 The Normalized Difference Snow Index (NDSI) distinguishes snow from clouds. While both snow and clouds appear bright white in visible bands, snow absorbs SWIR light whereas clouds reflect it:
 
@@ -109,7 +151,49 @@ $$\text{NDSI} = \frac{\text{Green} - \text{SWIR}}{\text{Green} + \text{SWIR}}$$
 
 ---
 
-## 5. Guided Class Exercises
+## 7. Step-by-Step QGIS Raster Calculator Guide
+
+When calculating indices in QGIS, open the **Raster Calculator** (**Raster** > **Raster Calculator...**) and use the following syntax models. Replace the band names with your actual layer names (double-click layers in the raster calculator list to insert them with `@1` indicating band 1):
+
+### Sentinel-2 MSI Index Formulations
+
+* **NDVI (Vegetation Index):**
+  `("B08@1" - "B04@1") / ("B08@1" + "B04@1")`
+
+* **NDWI (Water Index - McFeeters):**
+  `("B03@1" - "B08@1") / ("B03@1" + "B08@1")`
+
+* **MNDWI (Water Index - Xu):**
+  `("B03@1" - "B11@1") / ("B03@1" + "B11@1")`
+
+* **NDSI (Snow Index):**
+  `("B03@1" - "B11@1") / ("B03@1" + "B11@1")`
+
+* **NDMI (Moisture Index):**
+  `("B08@1" - "B11@1") / ("B08@1" + "B11@1")`
+
+---
+
+### Landsat 8/9 OLI Index Formulations
+
+* **NDVI (Vegetation Index):**
+  `("B05@1" - "B04@1") / ("B05@1" + "B04@1")`
+
+* **NDWI (Water Index - McFeeters):**
+  `("B03@1" - "B05@1") / ("B03@1" + "B05@1")`
+
+* **MNDWI (Water Index - Xu):**
+  `("B03@1" - "B06@1") / ("B03@1" + "B06@1")`
+
+* **NDSI (Snow Index):**
+  `("B03@1" - "B06@1") / ("B03@1" + "B06@1")`
+
+* **NDMI (Moisture Index):**
+  `("B05@1" - "B06@1") / ("B05@1" + "B06@1")`
+
+---
+
+## 8. Guided Class Exercises
 
 ### Exercise 1: Selecting NDWI vs. MNDWI for an urban-adjacent reservoir
 An analyst is tasked with mapping the surface water boundary of a municipal drinking water reservoir located adjacent to a growing town. 
