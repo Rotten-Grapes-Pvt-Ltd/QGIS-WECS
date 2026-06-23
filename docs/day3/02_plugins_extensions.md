@@ -41,23 +41,35 @@ Allows you to add high-quality satellite and topographic background maps to the 
 
 * **Settings:** After installation, go to **Web** > **QuickMapServices** > **Settings** > **More services** and click **Get contributed pack** to unlock background maps from Google, Esri, Bing, and Mapbox.
 
-### Profile Tool
+### OSMDownloader
 
-**Link:** [https://plugins.qgis.org/plugins/profiletool/](https://plugins.qgis.org/plugins/profiletool/)
+**Link:** [https://plugins.qgis.org/plugins/OSMDownloader/](https://plugins.qgis.org/plugins/OSMDownloader/)
 
-Generates cross-sectional elevation profiles of raster grids (DEMs) along a drawn vector line or river centerline.
+Downloads OpenStreetMap vector data (roads, buildings, waterways) for a selected area of interest directly into QGIS.
 
-* **Usage:** Indispensable for analyzing valley geometry, calculating river channel slopes, and identifying water flow obstructions.
+* **Usage:** Indispensable for gathering baseline reference layers for your watershed modeling.
 
-* **Execution:** Add your DEM raster to the profile tool window, draw a line segment across the map canvas, and view the generated cross-sectional slope plot in real-time.
+* **Execution:** Use the OSMDownloader tool to drag a rectangle on your map canvas and download all OSM vectors within the bounding box.
 
-### Semi-Automatic Classification Plugin (SCP)
+### qgis2web
 
-**Link:** [https://plugins.qgis.org/plugins/SemiAutomaticClassificationPlugin/](https://plugins.qgis.org/plugins/SemiAutomaticClassificationPlugin/)
+**Link:** [https://plugins.qgis.org/plugins/qgis2web/](https://plugins.qgis.org/plugins/qgis2web/)
 
-A comprehensive remote sensing toolbox designed for land cover mapping.
+Exports a QGIS project to an interactive web map (using Leaflet or OpenLayers) with no coding required.
 
-* **Usage:** Features tools for downloading satellite datasets (Landsat, Sentinel), performing atmospheric corrections (DOS1), stacking bands, calculating spectral indices, and running supervised image classification algorithms.
+* **Usage:** Excellent for sharing your water maps, basin layouts, and flood extents with stakeholders as interactive web pages.
+
+* **Execution:** Run the plugin, configure layers and zoom limits, and click export to generate a self-contained web map directory.
+
+### AI Segmentation by TerraLab
+
+**Link:** [https://plugins.qgis.org/plugins/terralab-ai/](https://plugins.qgis.org/plugins/terralab-ai/)
+
+Uses AI models (like Meta's Segment Anything Model - SAM) to perform click-based vector segmentation on satellite or aerial imagery.
+
+* **Usage:** Allows rapid digitization of surface water bodies, crop fields, or rooftops from high-resolution rasters.
+
+* **Execution:** Select the model, click on a visual feature (such as a lake or forest outline) in your imagery, and the plugin automatically draws a matching vector boundary polygon.
 
 ---
 
@@ -104,3 +116,23 @@ For repetitive workflows, QGIS exposes its entire graphical interface and geopro
   }
   processing.run("native:buffer", params)
   ```
+
+---
+
+## 4. Troubleshooting Common Plugin Errors
+
+When installing or loading plugins, users frequently encounter path or package extraction errors.
+
+### Error: "Couldn't load plugin '__MACOSX/qg'..."
+
+* **The Cause:** This error occurs when a python plugin zip file was compiled on macOS and then manually extracted into the QGIS plugins directory. macOS automatically creates hidden metadata directories named `__MACOSX`. When QGIS scans the plugins directory, it incorrectly attempts to parse the `__MACOSX` folder as a python plugin. Since it lacks the required plugin files (like `__init__.py` and `metadata.txt`), QGIS throws an error.
+
+* **The Solution:** 
+  
+  1. Open QGIS and navigate to **Settings** > **User Profiles** > **Open Active Profile Folder**.
+  
+  2. Navigate into the `python/plugins/` directory.
+  
+  3. Locate the hidden `__MACOSX` folder and **delete it** entirely.
+  
+  4. Restart QGIS, and the error warning will be resolved. Always use the built-in plugin manager to install zip files (via **Install from ZIP**) instead of manual extraction to avoid this issue.
