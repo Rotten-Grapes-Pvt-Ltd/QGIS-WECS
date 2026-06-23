@@ -10,7 +10,7 @@ By the end of today's sessions, you will be able to:
 
 * **Navigate** the QGIS user interface, configure directories, manage file paths (Relative vs. Absolute), and troubleshoot project backup files (`.qgz~`).
 
-* **Evaluate and deploy** hydrology-specific QGIS plugins (including WhiteboxTools, GRASS, SAGA, QSWAT, RiverGIS, FLO-2D, and FREEWAT) classified by operational priorities to solve specialized catchment, hydraulic, and groundwater modeling problems.
+* **Evaluate and deploy** hydrology-specific QGIS plugins (including WhiteboxTools, GRASS, SAGA, QSWAT, FLO-2D, and FREEWAT) classified by operational priorities to solve specialized catchment, hydraulic, and groundwater modeling problems.
 
 * **Apply** professional cartographic symbology (single symbol, categorized, graduated, rule-based) and label rendering for vectors, as well as configure raster color ramps, hillshades, contours, and transparency blending.
 
@@ -74,7 +74,7 @@ flowchart TD
 
 2. **[02: QGIS Plugins and Extensions](02_plugins_extensions.md)**: Installing core plugins, geoprocessing toolboxes, and an introduction to the PyQGIS Python console.
 
-3. **[03: Hydrological Plugins and Integrated Tools](03_hydrology_plugins.md)**: Prioritized directory of hydrology plugins covering WhiteboxTools, GRASS, SAGA, QSWAT, RiverGIS, FLO-2D, and FREEWAT.
+3. **[03: Hydrological Plugins and Integrated Tools](03_hydrology_plugins.md)**: Prioritized directory of hydrology plugins covering WhiteboxTools, GRASS, SAGA, QSWAT, FLO-2D, and FREEWAT.
 
 4. **[04: Geospatial Data Management and Organization](04_geospatial_data_management.md)**: Project relative path settings, project backup file recovery, folder architectures, metadata cataloging, Shapefiles vs. GeoPackages, Browser Panel operations, DB Manager client, and workspace consolidation (Package Layers).
 

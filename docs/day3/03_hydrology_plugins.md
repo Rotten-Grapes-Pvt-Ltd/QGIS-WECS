@@ -14,7 +14,6 @@ The table below outlines the recommended progression for mastering hydrological 
 | **Must Learn** | GRASS Hydrology Tools | Catchment delineation, landscape flow accumulation, and channel statistics. |
 | **Must Learn** | SAGA Hydrology Tools | Topographic wetness index, LS-factor, and slope height calculations. |
 | **Advanced** | QSWAT / QSWAT+ | Soil & Water Assessment Tool (SWAT) interface for basin-scale runoff. |
-| **Advanced** | RiverGIS | Cross-section geometry preparation for 1D HEC-RAS hydraulic models. |
 | **Advanced** | FLO-2D | Visual simulation setup for 2D flood routing and urban inundation. |
 | **Specialized** | FREEWAT | Integrated groundwater flow modeling (MODFLOW) and management. |
 | **Specialized** | Midvatten | Hydrogeological database tool for borehole and groundwater level records. |
@@ -97,22 +96,6 @@ A Python-based interface for the Soil & Water Assessment Tool (SWAT/SWAT+), whic
     *   Runs the SWAT simulation engine and imports outputs (river discharge, sediment yield) back into QGIS for visualization.
 
 *   **Hydrological Application:** Used for evaluating water resource management policies, agricultural runoff, and sediment transport in large catchments.
-
----
-
-### RiverGIS
-
-**Repository:** [https://github.com/folmer/RiverGIS](https://github.com/folmer/RiverGIS)
-
-A tool designed to prepare geometric data for HEC-RAS, a 1D/2D hydraulic model developed by the US Army Corps of Engineers.
-
-*   **Key Capabilities:**
-    *   Generates cross-sectional lines across river centerlines.
-    *   Extracts elevation profiles along cross-sections using a underlying high-resolution DEM.
-    *   Establishes bank stations, flow paths, and downstream reach lengths.
-    *   Exports spatial geometries directly to HEC-RAS geometry format (`.g01`).
-
-*   **Hydrological Application:** Simplifies the tedious workflow of digitizing cross-sections and extracting elevations for 1D flood wave routing.
 
 ---
 
