@@ -49,18 +49,7 @@ When incoming solar energy strikes an Earth feature, it undergoes three primary 
 
 The relative proportion of reflection, absorption, and transmission changes across different wavelengths. This variation forms a unique **spectral signature** for each feature:
 
-```text
-               Incoming Radiation (Sun)
-                     \      /
-                      \    /
-                       \  / (Reflection) - Detected by Satellites
-                        \/
-               +------------------+
-               |  Earth Feature   |  <-- (Absorption) - Energy is converted to heat
-               +------------------+
-                        |
-                        v  (Transmission) - Passes through feature
-```
+![EMR Interactions with Earth Features](images/emr_interactions.png)
 
 ### Water Spectral Signature:
 * Clear water absorbs almost all Near-Infrared (NIR) and Shortwave Infrared (SWIR) light. Reflectance is concentrated in the visible blue-green bands. It appears very dark/black in NIR and SWIR imagery.
