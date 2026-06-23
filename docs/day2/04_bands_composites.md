@@ -157,10 +157,42 @@ To build a custom composite from individual band files (e.g., bands downloaded f
 
     * If you are mapping snow cover in a catchment that is 80% covered by clouds, why is a simple threshold on the true-color band insufficient?
 
+??? check "Answer Key - Discussion Prompt 1"
+
+    * **MNDWI vs. NDWI in urban settings:**
+
+        * Built-up concrete structures and buildings reflect green and NIR light similarly, yielding NDWI values near or above zero, which creates false-positive water classifications in cities.
+
+        * MNDWI replaces the NIR band with SWIR-1. Because urban features reflect SWIR-1 energy strongly, MNDWI yields strongly negative values for built-up areas, suppressing urban noise and clearly isolating river networks.
+
+    * **Why true-color fails for snow vs. clouds:**
+
+        * Both snow and clouds reflect visible wavelengths strongly and appear bright white in a true-color (RGB 4,3,2) image, making them visually indistinguishable.
+
+        * NDSI uses the SWIR-1 band. Because snow absorbs SWIR-1 energy while clouds reflect it, NDSI yields positive values for snow and values near zero for clouds, allowing clear separation.
+
 2. **Band Combinations for Flood Response:**
 
     * During active flood events, skies are often overcast. What composite or sensor system (hint: SAR vs. Optical) would you select to capture flood extents under heavy cloud cover, and why?
 
+??? check "Answer Key - Discussion Prompt 2"
+
+    * **Sensor selection under cloud cover:**
+
+        * Active Radar (SAR / Synthetic Aperture Radar) like the Sentinel-1 C-band should be selected.
+
+        * SAR sensors emit their own microwave energy at wavelengths that easily penetrate clouds, fog, and rain, allowing flood boundaries to be mapped day or night regardless of weather conditions. Optical sensors (Landsat, Sentinel-2) are completely blocked by overcast skies during flood events.
+
 3. **The Shadow Problem:**
 
     * Look back at the Land Surface Feature Appearance Matrix. Note how both deep open water and steep terrain shadows can appear black in a Vegetation FCC. Suggest a workflow combining spectral indices and digital elevation thresholds to isolate the true water body.
+
+??? check "Answer Key - Discussion Prompt 3"
+
+    * **Isolating water bodies from terrain shadows:**
+
+        * **Step 1:** Calculate **MNDWI**. Open water bodies will return high positive values, while shadows cast on vegetated slopes or bare rock will yield negative or near-zero values.
+
+        * **Step 2:** Calculate a **Slope grid** from a Digital Elevation Model (DEM). Water bodies are flat (slope $\approx 0^\circ$), whereas mountain faces casting steep shadows exhibit high slope angles.
+
+        * **Step 3:** Apply a raster math threshold, mapping as water only those pixels that have both high MNDWI (e.g., $> 0.1$) and low slope values (e.g., $< 3^\circ$). This masks out mountain shadows.

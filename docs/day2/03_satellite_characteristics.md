@@ -160,9 +160,39 @@ An engineering firm needs to monitor the weekly spatial extent of irrigation sto
 
 3. **Choose the System:** Which satellite would you recommend, and why?
 
+??? check "Answer Key - Scenario A"
+
+    1. **Calculate pixel coverage:**
+
+        * Landsat ($30\text{ m}$): The smallest reservoir is $15\text{ m}$ wide, which is less than half a Landsat pixel width. No full Landsat pixel can fit inside it; it will be a mixed pixel.
+
+        * Sentinel-2 ($10\text{ m}$): The reservoir is $15\text{ m}$ wide, which can contain at least one full $10\text{ m}$ pixel (since $15\text{ m} > 10\text{ m}$), although border pixels will still be mixed.
+
+    2. **Evaluate Temporal Revisit:**
+
+        * Landsat has a 16-day repeat cycle. With 50% cloud cover, the average clear revisit is 32 days.
+
+        * Sentinel-2 (using both 2A and 2B) has a 5-day repeat cycle. With 50% cloud cover, the average clear revisit is 10 days. Therefore, Sentinel-2 offers a significantly higher chance of capturing clear data.
+
+    3. **Choose the System:**
+
+        * Sentinel-2 is recommended. It provides both the spatial resolution required to detect the $15\text{ m}$ reservoir (avoiding the mixed pixel problem) and the temporal resolution needed to bypass summer cloud cover during the monsoon.
+
 ### Scenario B: Understanding Band Signatures
 A researcher wants to classify a mountain lake, but shadows cast by adjacent cliffs look identical to the water in visible bands.
 
 1. How can the researcher use Near-Infrared (NIR) or Shortwave Infrared (SWIR) bands to distinguish terrain shadows from open water?
 
 2. What role does radiometric resolution play in resolving details inside shadow zones?
+
+??? check "Answer Key - Scenario B"
+
+    1. **Terrain Shadows vs. Open Water:**
+
+        * Open water absorbs almost all Near-Infrared (NIR) and Shortwave Infrared (SWIR) light. In contrast, while shadows also reduce reflectance, shadows cast on land surfaces (like vegetation or rock) still exhibit the spectral signature of the underlying feature in NIR/SWIR (vegetation will still show a small NIR rise).
+
+        * Combining NIR with SWIR in indices like MNDWI separates water (positive values) from shadows on land (strongly negative/near-zero values).
+
+    2. **Role of Radiometric Resolution:**
+
+        * High radiometric resolution ($\ge 12\text{ bit}$) provides a wider range of digital numbers ($0-4095$ for 12-bit vs. $0-255$ for 8-bit). This allows the sensor to detect very small differences in the dark (low-reflectance) ranges, resolving fine terrain details within shadow zones rather than clipping them all to a single black value.
