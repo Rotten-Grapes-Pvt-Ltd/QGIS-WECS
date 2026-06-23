@@ -64,7 +64,7 @@ graph TD
     GUI --> PyQGIS["Python Environment<br/>(Plugins & Processing Scripts)"]
     GUI --> SpatiaLite["SpatiaLite / SQLite<br/>(Local Storage & SQL)"]
     
-    style GUI fill:#003366,color:#fff,stroke:#002244,stroke-width:2px
+    style GUI fill:#d6eaf8,stroke:#003366,stroke-width:2px
 ```
 
 * **GDAL/OGR (Geospatial Data Abstraction Library):** The engine that reads and writes spatial file formats. GDAL handles raster formats (e.g., GeoTIFF, NetCDF, ArcInfo ASCII Grid), while OGR handles vector formats (e.g., GeoPackage, Esri Shapefile, KML, GeoJSON). If QGIS cannot open a specific file, it is usually because the underlying GDAL/OGR library lacks support for that format.

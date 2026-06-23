@@ -45,7 +45,7 @@ graph TD
     
     MW --> MW_D["Microwaves<br/>(Penetrates clouds/rain;<br/>SAR flood mapping)"]
 
-    style EM fill:#fffecd,color:#fff
+    style EM fill:#fffecd
 ```
 
 ---

@@ -23,7 +23,7 @@ graph TD
     Line --> Line_D["Coordinates: Series of <br>connected points<br/>Dimensions: 1D<br/>Examples: Rivers, pipelines,<br> roads"]
     Polygon --> Polygon_D["Coordinates: Closed loop <br>of lines<br/>Dimensions: 2D<br/>Examples: Catchments, <br>reservoirs, soil zones"]
 
-    style Vector fill:#caebea,color:#fff
+    style Vector fill:#caebea
 ```
 
 ### Key Vector Characteristics

@@ -85,7 +85,7 @@ graph TD
     MD --> MD_D["Delineation, Projections,<br/>Spatial Interpolation"]
     PP --> PP_D["Field Staff, Analysts,<br/>Hydrologists & Managers"]
     
-    style GIS fill:#caebea,stroke:#333,stroke-width:2px,color:#fff
+    style GIS fill:#caebea,stroke:#333,stroke-width:2px
     style DT fill:#f4f9ff,stroke:#0066cc,stroke-width:1px
     style MD fill:#f4f9ff,stroke:#0066cc,stroke-width:1px
 ```

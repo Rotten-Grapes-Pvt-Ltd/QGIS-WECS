@@ -18,7 +18,7 @@ graph TD
     Res --> Temp["3. Temporal Resolution<br/>(Revisit frequency)"]
     Res --> Rad["4. Radiometric Resolution<br/>(Bit depth & signal sensitivity)"]
 
-    style Res fill:#1a5276,color:#fff,stroke:#114b72,stroke-width:2px
+    style Res fill:#d6eaf8,stroke:#1a5276,stroke-width:2px
     style Spat fill:#ebf5fb,stroke:#2980b9,stroke-width:1px
     style Spec fill:#ebf5fb,stroke:#2980b9,stroke-width:1px
     style Temp fill:#ebf5fb,stroke:#2980b9,stroke-width:1px
@@ -126,7 +126,7 @@ graph TD
     Bit --> B12["12-bit<br/>(4,096 values: 0 - 4095)"]
     Bit --> B16["16-bit<br/>(65,536 levels: 0 - 65535)"]
 
-    style Bit fill:#2e4053,color:#fff,stroke:#1a252f,stroke-width:2px
+    style Bit fill:#eaecee,stroke:#2e4053,stroke-width:2px
 ```
 
 * **Landsat 1-5 (8-bit):** Coarse detail. Reflectance is squeezed into 256 levels, which often causes dark water bodies and shadows to blend together into the same digital number value.
