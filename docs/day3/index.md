@@ -82,9 +82,9 @@ flowchart TD
 
 6. **[06: Attribute Data and Table Operations](06_attribute_tables.md)**: Schema structures, data types, geometry calculators, conditional logic `CASE` queries, virtual vs. physical fields, advanced aggregates, and tabular joins.
 
-7. **[07: Vector Geoprocessing Operations](07_vector_geoprocessing.md)**: Buffering, clipping, dissolving, intersections, difference overlays, and fixing geometry self-intersections or bowtie errors.
+7. **[07: Vector Geoprocessing Operations](07_vector_geoprocessing.md)**: Proximity buffers, multi-ring zoning, clipping, dissolving, spatial joins, line-in-polygon densities, Thiessen polygons for rain gauges, and fixing topological geometry errors.
 
-8. **[08: Raster Processing and Map Algebra](08_raster_processing.md)**: Cell dimensions, Raster Calculator masking, warping, Bilinear resampling, reclassify by table, and polygonize/rasterize conversions.
+8. **[08: Raster Processing and Map Algebra](08_raster_processing.md)**: Cell concepts, mosaicking adjacent tiles, mask clipping, map algebra, reprojection/resampling, extracting terrain slope/aspect/hillshades, reclassifications, and raster-vector conversions.
 
 9. **[09: Georeferencing in QGIS](09_georeferencing.md)**: Scanned paper maps, ground control points (GCPs), linear/polynomial/TPS transformations, resampling methods, and residual RMSE error analysis.
 
