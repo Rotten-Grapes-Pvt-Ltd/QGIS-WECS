@@ -65,18 +65,7 @@ Where $f_{\text{water}}$ is the fraction of the pixel covered by water, and $R$ 
 ## 3. Spectral Resolution & The Optical Signature of Water
 Spectral resolution refers to the sensor's ability to divide the electromagnetic spectrum into discrete wavelengths (bands). Water has a highly distinct spectral signature compared to soil and vegetation:
 
-```text
-    Reflectance (%)
-     |
-  40 |       /--\ (Vegetation Peak)
-     |      /    \               /--\ (Vegetation NIR Plateau)
-  20 |     /      \             /    \
-     |  --/ (Soil) \           /      \
-   0 |=============\==========/========\===================
-     |  Blue   Green   Red    NIR     SWIR
-     |  [-----Visible-----]   [----Infrared----]
-     |  ====== Water Signature (High absorption in NIR/SWIR) ======
-```
+![spectral_resolution](images/spectral_resolution.png)
 
 * **Strong NIR/SWIR Absorption:** Pure water absorbs almost all near-infrared (NIR) and shortwave infrared (SWIR) light. Consequently, on NIR and SWIR band images, water bodies appear solid black, creating a sharp boundary with soil and vegetation, which reflect strongly in those wavelengths.
 
@@ -149,7 +138,7 @@ Different hydrological applications demand different configurations. Choosing th
 
 ---
 
-## 7. Guided Class Exercises (15 Minutes)
+## 7. Guided Class Exercises 
 
 ### Scenario A: Selecting the Best Dataset
 An engineering firm needs to monitor the weekly spatial extent of irrigation storage reservoirs in a small agricultural valley in Nepal. The largest reservoir is $80\text{ m}$ wide, and the smallest is $15\text{ m}$ wide.
