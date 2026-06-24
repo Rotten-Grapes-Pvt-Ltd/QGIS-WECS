@@ -66,13 +66,13 @@ flowchart TD
 
 1.  **[01: Introduction to Terrain Analysis](01_intro_terrain_analysis.md)**: DEM concepts, grid cell size and precision, differences between DSM/DTM, data sources (SRTM, ALOS, Copernicus), and horizontal-vertical datums.
 
-2.  **[02: DEM Processing and Conditioning](02_dem_processing.md)**: Sinks and depressions, mathematical flow routing problems, SAGA Wang & Liu sink filling, GRASS r.fill.dir Planchon & Darboux, DEM breaching, and AGREE stream burning.
+2.  **[02: DEM Processing and Conditioning](02_dem_processing.md)**: Sinks and depressions, mathematical flow routing problems, WhiteboxTools Wang & Liu sink filling, GRASS r.fill.dir Planchon & Darboux, DEM breaching, and AGREE stream burning.
 
 3.  **[03: Primary and Secondary Terrain Derivatives](03_terrain_derivatives.md)**: Moving neighborhood windows (Horn's vs. Zevenbergen & Thorne), slope, aspect, standard/multi-directional hillshading, curvatures, TRI ruggedness indices, TPI landforms, TWI wetness index, and SPI stream power calculations.
 
 4.  **[04: Hydrological Analysis and Flow Routing](04_hydrological_analysis.md)**: Flow direction models (D8, MFD, D-Infinity), flow accumulation (unweighted area vs. weighted runoff discharge), threshold-based stream network extraction, and pour point snapping single-basin upslope delineations.
 
-5.  **[05: River Basins and Stream Ordering](05_river_basin_watershed.md)**: Automated regional sub-basin delineation using SAGA Channel Network and GRASS r.watershed. Delineating Strahler stream orders (Horton's laws, bifurcation ratios) and Shreve stream magnitude ordering.
+5.  **[05: River Basins and Stream Ordering](05_river_basin_watershed.md)**: Automated regional sub-basin delineation using WhiteboxTools Stream Link Identifier and GRASS r.watershed. Delineating Strahler stream orders (Horton's laws, bifurcation ratios) and Shreve stream magnitude ordering.
 
 6.  **[06: Raster-Based Hydrological and Soil Erosion Modelling](06_raster_modelling.md)**: Runoff peak discharge modeling (Rational Method), runoff volume depth estimation (SCS Curve Number), and annual soil loss susceptibility mapping (RUSLE).
 

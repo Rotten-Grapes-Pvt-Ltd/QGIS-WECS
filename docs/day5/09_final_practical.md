@@ -40,7 +40,7 @@ You must submit a single compressed ZIP file named `WECS_Capstone_Group_[Number]
     
     *   Load the raw DEM `dem_raw_rapti.tif`.
     
-    *   Run SAGA **Fill Sinks (Wang & Liu)** to remove internal depression artifacts.
+    *   Run WhiteboxTools **Fill Depressions** to remove internal depression artifacts.
     
     *   Compute Flow Direction and Flow Accumulation rasters.
     

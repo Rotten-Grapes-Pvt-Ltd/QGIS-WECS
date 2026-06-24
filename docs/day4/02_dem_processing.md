@@ -58,9 +58,9 @@ While natural closed depressions exist (e.g., limestone sinkholes in karst terra
 
 To establish a continuous flow network, elevation grids must be preprocessed using terrain conditioning algorithms. There are three primary geoprocessing methods:
 
-### Wang and Liu Sink Filling (SAGA)
+### Wang and Liu Sink Filling (WhiteboxTools / WBT)
 
-The SAGA **Fill Sinks (Wang & Liu)** algorithm is the standard tool for resolving depressions. It operates through the following mathematical steps:
+The WhiteboxTools **Fill Depressions (Wang & Liu)** algorithm is the standard tool for resolving depressions. It operates through the following mathematical steps:
 
 1.  **Identify Pit Cells:** Scan the DEM grid to locate all individual sink pixels and multi-pixel depression basins.
 
@@ -222,7 +222,7 @@ We will execute, analyze, and compare terrain conditioning algorithms in QGIS us
 
 ### Exercise 1: Wang & Liu Sink Filling and Pit Depth Mapping
 
-In this exercise, we will identify and fill closed depressions using SAGA's Wang & Liu algorithm and map their depths.
+In this exercise, we will identify and fill closed depressions using WhiteboxTools' Wang & Liu algorithm and map their depths.
 
 1.  **Run the Fill Sinks Tool:**
     
@@ -294,7 +294,7 @@ Now, we will resolve depressions using Planchon & Darboux's virtual flooding sim
 
 ### Exercise 3: DEM Breaching to Preserve Drainage Channels
 
-In flat terrains, sink filling can create massive flat terraces. We will carve narrow breach channels through blocking ridges using SAGA's DEM Breaching.
+In flat terrains, sink filling can create massive flat terraces. We will carve narrow breach channels through blocking ridges using WhiteboxTools' Breach Depressions.
 
 1.  **Run the DEM Breaching Tool:**
     
@@ -328,7 +328,7 @@ In flat terrains, sink filling can create massive flat terraces. We will carve n
 
 ### Exercise 4: Stream Burning with Vector River Networks
 
-We will burn a vector river network into the DEM using SAGA's stream burning tool to force the routing engine to follow real-world rivers.
+We will burn a vector river network into the DEM using WhiteboxTools' stream burning tool to force the routing engine to follow real-world rivers.
 
 1.  **Run the Burn Stream Network Tool:**
     

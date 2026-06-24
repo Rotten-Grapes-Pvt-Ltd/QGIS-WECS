@@ -44,7 +44,7 @@ The **Soil & Water Assessment Tool (SWAT / QSWAT+)** is a continuous, semi-distr
     
     1.  Load the LULC and Soil vector/raster layers in QSWAT.
     
-    2.  Run SAGA Slope on the DEM and group slopes into classes (e.g. $0-5\%$, $5-15\%$, $>15\%$).
+    2.  Run QGIS Native **Slope** (or GDAL equivalent) on the DEM and group slopes into classes (e.g. $0-5\%$, $5-15\%$, $>15\%$).
     
     3.  Run the **HRU Definition** overlay tool. QSWAT intersects these three layers, eliminates fractional sliver polygons below a user threshold (e.g. $<5\%$ area), and generates a database file parameterizing the hydrology of each HRU.
 

@@ -31,7 +31,7 @@ Over the course of this 5-day training program, we progressed from basic spatial
 
 *   **Day 3:** Vector digitizing, attribute table manipulation, spatial queries, and categorized/graduated map styling.
 
-*   **Day 4:** Terrain derivatives calculation, SAGA hydrologic tools, flow routing models, and sub-basin delineation.
+*   **Day 4:** Terrain derivatives calculation, GRASS/WhiteboxTools hydrologic tools, flow routing models, and sub-basin delineation.
 
 *   **Day 5:** Time-series change analysis, multi-criteria evaluations (MCDA), Graphical Model Builder automation, and layout design.
 

@@ -22,7 +22,7 @@ graph TD
     
     QGIS --> BackEnd["Analytical Back-Ends<br/> & Translators"]
     BackEnd --> GDAL["GDAL/OGR <br/> (Format Translation)"]
-    BackEnd --> GRASS["GRASS & SAGA<br/>(Hydrological Geoprocessing)"]
+    BackEnd --> GRASS["GRASS & WhiteboxTools<br/>(Hydrological Geoprocessing)"]
     
     User --> APIs["Web API & Metadata Layer"]
     APIs --> GeoNetwork["GeoNetwork<br/>(Metadata Catalog & Search)"]
@@ -53,7 +53,7 @@ QGIS is the leading desktop application in the open stack.
 
 * **Extensibility:** Includes a Python API, allowing users to write custom automation scripts and build plugins.
 
-* **Processing Toolbox:** Functions as a unified interface to run tools from other open-source programs like GRASS, SAGA, and GDAL.
+* **Processing Toolbox:** Functions as a unified interface to run tools from other open-source programs like GRASS, WhiteboxTools, and GDAL.
 
 ### 2. GDAL/OGR (Geospatial Data Abstraction Library)
 The translator library under the hood of almost all GIS software.

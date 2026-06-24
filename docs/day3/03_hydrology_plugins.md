@@ -12,7 +12,7 @@ The table below outlines the recommended progression for mastering hydrological 
 | :--- | :--- | :--- |
 | **Must Learn** | WhiteboxTools | High-performance terrain analysis, flow routing, and stream extraction. |
 | **Must Learn** | GRASS Hydrology Tools | Catchment delineation, landscape flow accumulation, and channel statistics. |
-| **Must Learn** | SAGA Hydrology Tools | Topographic wetness index, LS-factor, and slope height calculations. |
+| **Must Learn** | WhiteboxTools Hydrology Suite | Topographic wetness index, LS-factor, and slope height calculations. |
 | **Advanced** | QSWAT / QSWAT+ | Soil & Water Assessment Tool (SWAT) interface for basin-scale runoff. |
 | **Advanced** | FLO-2D | Visual simulation setup for 2D flood routing and urban inundation. |
 | **Specialized** | FREEWAT | Integrated groundwater flow modeling (MODFLOW) and management. |
@@ -63,20 +63,20 @@ GRASS GIS is fully integrated into the QGIS Processing Toolbox, providing powerf
 
 ---
 
-### SAGA Hydrology Tools
+### WhiteboxTools Hydrology Suite
 
-**Documentation:** [https://saga-gis.sourceforge.io/](https://saga-gis.sourceforge.io/)
+**Documentation:** [https://www.whiteboxgeo.com/](https://www.whiteboxgeo.com/)
 
-SAGA GIS is a dedicated raster processing platform that connects seamlessly with QGIS, offering the widest range of terrain parameter calculations.
+WhiteboxTools is a powerful, stand-alone geospatial analysis engine that connects seamlessly with QGIS, offering the widest range of terrain parameter calculations.
 
 *   **Key Capabilities:**
-    *   *SAGA Wetness Index (SWI)*: A modified Topographic Wetness Index that accounts for soil moisture storage capacity.
+    *   *WhiteboxTools Wetness Index (SWI)*: A modified Topographic Wetness Index that accounts for soil moisture storage capacity.
     *   *Slope Length and Steepness (LS) Factor*: A key input parameter for Soil Loss models like RUSLE.
     *   *Channel Network and Drainage Basins*: Generates clean vector streams and nested catchments.
 
 *   **Hydrological Application:** Standard industry tool for calculating terrain derivatives and preparing raster inputs for erosion and runoff models.
 
-*   **Access in QGIS:** Install the **SAGA NextGen** plugin from the plugin manager to run SAGA tools directly from the Processing Toolbox.
+*   **Access in QGIS:** Install the **WhiteboxTools** plugin from the plugin manager to run WhiteboxTools tools directly from the Processing Toolbox.
 
 ---
 
