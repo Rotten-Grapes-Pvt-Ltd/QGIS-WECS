@@ -2,6 +2,16 @@
 
 Satellite remote sensing enables the continuous monitoring of water quality parameters across lakes, reservoirs, and rivers. By analyzing the optical reflectance signatures of water bodies, GIS specialists can map turbidity, Total Suspended Solids (TSS), and chlorophyll-a concentrations to identify pollution and algal blooms.
 
+> [!TIP]
+> **Data Sources & Acquisition:**
+> If you do not have satellite or ground sampling databases to monitor water quality:
+> 
+> *   **Sentinel-2 Level-2A (BOA) Reflectance:** Mandatory for index calculation. Download pre-processed Bottom-of-Atmosphere (BOA) tiles from the [Copernicus Browser](https://dataspace.copernicus.eu/). Select clear, cloud-free days during key agricultural or algal season phases.
+> 
+> *   **Landsat 8/9 Level-2 Surface Reflectance:** Download from [USGS EarthExplorer](https://earthexplorer.usgs.gov/).
+> 
+> *   **UNEP GEMStat (Global Water Quality Database):** Sourced from the United Nations Environment Programme, this database offers global in-situ freshwater quality data. Request historical dataset access at the [GEMStat Portal](https://gemstat.org/).
+
 ---
 
 ## 1. Core Objectives
@@ -98,14 +108,3 @@ $$NDCI = \frac{\text{Band 5} - \text{Band 4}}{\text{Band 5} + \text{Band 4}}$$
 *   **Ecosystem Monitoring:** Early detection of toxic blue-green algal blooms (cyanobacteria) allows resource managers to close recreational lakes and issue public health alerts.
 
 *   **Catchment Erosion Feedback:** Elevated turbidity levels in river systems during storm events point to severe soil erosion and landslide activities in upstream sub-catchments.
-
-
-## 7. Data Sources & Acquisition
-
-If you do not have satellite or ground sampling databases to monitor water quality:
-
-*   **Sentinel-2 Level-2A (BOA) Reflectance:** Mandatory for index calculation. Download pre-processed Bottom-of-Atmosphere (BOA) tiles from the [Copernicus Browser](https://dataspace.copernicus.eu/). Select clear, cloud-free days during key agricultural or algal season phases.
-
-*   **Landsat 8/9 Level-2 Surface Reflectance:** Download from [USGS EarthExplorer](https://earthexplorer.usgs.gov/).
-
-*   **UNEP GEMStat (Global Water Quality Database):** Sourced from the United Nations Environment Programme, this database offers global in-situ freshwater quality data. Request historical dataset access at the [GEMStat Portal](https://gemstat.org/).

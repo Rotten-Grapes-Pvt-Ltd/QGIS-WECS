@@ -2,6 +2,16 @@
 
 Drought is a slow-onset natural hazard characterized by the lack of moisture over extended periods. GIS and satellite remote sensing enable continuous monitoring of meteorological, agricultural, and hydrological drought across regional scales by tracking land surface temperature and plant moisture stress.
 
+> [!TIP]
+> **Data Sources & Acquisition:**
+> If you do not have satellite imagery to monitor drought stress:
+> 
+> *   **Sentinel-2 Multispectral Imagery (10m - 20m resolution):** Ideal for current, high-resolution agricultural drought monitoring. Download Sentinel-2 Level-2A (Bottom-of-Atmosphere) tiles from the [Copernicus Browser](https://dataspace.copernicus.eu/).
+> 
+> *   **Landsat 8/9 OLI & TIRS (30m - 100m resolution):** Essential for long-term monitoring and land surface temperature (LST) calculations. Download from the [USGS EarthExplorer](https://earthexplorer.usgs.gov/) under the *Landsat* > *Landsat Collection 2 Level-2* category.
+> 
+> *   **MODIS Vegetation Indices (NDVI/EVI, 250m resolution):** Best for regional, long-term time series trend analysis. Download pre-calculated product codes (e.g. MOD13Q1) from the [NASA AppEEARS Portal](https://appeears.earthdatacloud.nasa.gov/).
+
 ---
 
 ## 1. Core Objectives
@@ -107,14 +117,3 @@ Where:
 *   **Hydrological Forecasts:** Prolonged soil moisture and vegetation droughts lead to low basin runoff coefficients, meaning a future rainfall event will yield less river flow as dry soils absorb initial precipitation.
 
 *   **Early Warning Systems:** Integrated GIS drought maps support disaster response planning, food security forecasting, and drought relief allocation.
-
-
-## 6. Data Sources & Acquisition
-
-If you do not have satellite imagery to monitor drought stress:
-
-*   **Sentinel-2 Multispectral Imagery (10m - 20m resolution):** Ideal for current, high-resolution agricultural drought monitoring. Download Sentinel-2 Level-2A (Bottom-of-Atmosphere) tiles from the [Copernicus Browser](https://dataspace.copernicus.eu/).
-
-*   **Landsat 8/9 OLI & TIRS (30m - 100m resolution):** Essential for long-term monitoring and land surface temperature (LST) calculations. Download from the [USGS EarthExplorer](https://earthexplorer.usgs.gov/) under the *Landsat* > *Landsat Collection 2 Level-2* category.
-
-*   **MODIS Vegetation Indices (NDVI/EVI, 250m resolution):** Best for regional, long-term time series trend analysis. Download pre-calculated product codes (e.g. MOD13Q1) from the [NASA AppEEARS Portal](https://appeears.earthdatacloud.nasa.gov/).

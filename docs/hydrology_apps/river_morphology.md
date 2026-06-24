@@ -2,6 +2,14 @@
 
 River channels are dynamic features that change shape, migrate across floodplains, and erode banks over time due to sediment transport and hydraulic forces. GIS and multi-temporal satellite observations allow engineers and hydrologists to track historical migrations, calculate river sinuosity, and assess bank erosion risks.
 
+> [!TIP]
+> **Data Sources & Acquisition:**
+> To track channel migration without historical surveys, use the following free remote sensing image archives:
+> 
+> *   **Landsat Historical Archive (1972 - Present):** The longest continuous satellite record of Earth's surface. Download Landsat 5 (TM), Landsat 7 (ETM+), and Landsat 8/9 (OLI) Level-2 scenes for free from the [USGS EarthExplorer](https://earthexplorer.usgs.gov/). Select corresponding dry-season months (e.g., post-monsoon winter months) to ensure low river stages and high visibility of sandbars and channel centerlines.
+> 
+> *   **Sentinel-2 Imagery (2015 - Present):** High-resolution $10\text{ m}$ visible and shortwave-infrared bands for tracking contemporary channel shifts. Download from the [Copernicus Browser](https://dataspace.copernicus.eu/).
+
 ---
 
 ## 1. Core Objectives
@@ -96,12 +104,3 @@ To visualize where the river has migrated over time:
 *   **Bank Stabilization:** Identifying high-sinuosity bend loops locates zones where high shear stress is directed at outer river banks, helping plan riprap, gabion, or bio-engineering bank stabilization works.
 
 *   **Reservoir Sedimentation:** Fast channel migration and bank erosion upstream deliver heavy sediment loads to downstream reservoirs, reducing their active storage capacity. Tracking channel erosion helps locate sediment source areas.
-
-
-## 6. Data Sources & Acquisition
-
-To track channel migration without historical surveys, use the following free remote sensing image archives:
-
-*   **Landsat Historical Archive (1972 - Present):** The longest continuous satellite record of Earth's surface. Download Landsat 5 (TM), Landsat 7 (ETM+), and Landsat 8/9 (OLI) Level-2 scenes for free from the [USGS EarthExplorer](https://earthexplorer.usgs.gov/). Select corresponding dry-season months (e.g., post-monsoon winter months) to ensure low river stages and high visibility of sandbars and channel centerlines.
-
-*   **Sentinel-2 Imagery (2015 - Present):** High-resolution $10	ext{ m}$ visible and shortwave-infrared bands for tracking contemporary channel shifts. Download from the [Copernicus Browser](https://dataspace.copernicus.eu/).

@@ -2,6 +2,16 @@
 
 Water Accounting Plus (WA+) is a standard framework developed by IHE Delft, FAO, and partners. It uses open-access satellite data to report on the state of water resources, consumption, and flows at the river basin level. It acts as a spatial financial audit for water, showing where water comes from, who consumes it, and where it goes.
 
+> [!TIP]
+> **Data Sources & Acquisition:**
+> If you do not have water budget grids or evapotranspiration maps:
+> 
+> *   **Actual Evapotranspiration ($ET_a$):** Download evapotranspiration, transpiration, and interception raster datasets directly from the [FAO WaPOR Portal](https://wapor.apps.fao.org/) (spatial resolutions range from $100\text{m}$ to $250\text{m}$). Alternatively, download SSEBop actual ET grids from the [USGS FEWS NET Data Portal](https://earlywarning.usgs.gov/fews/product/66).
+> 
+> *   **Precipitation Grids ($P$):** Download CHIRPS or IMERG datasets.
+> 
+> *   **Groundwater Storage Anomalies ($\Delta S$):** Download GRACE and GRACE-FO spherical harmonic grids from the [NASA JPL GRACE Tellus Portal](https://grace.jpl.nasa.gov/) to map regional groundwater depletion and recharge storage cycles.
+
 ---
 
 ## 1. Core Objectives
@@ -101,14 +111,3 @@ WA+ groups spatial land use polygons into four management classes:
 *   **Irrigation Audit:** Identifies irrigation schemes consuming more water than allocated, assisting in upgrading canal operations.
 
 *   **Sustainable Aquifer Yields:** Highlights basins where groundwater extraction exceeds natural recharge rates by tracking chronic negative storage anomalies ($\Delta S$).
-
-
-## 7. Data Sources & Acquisition
-
-If you do not have water budget grids or evapotranspiration maps:
-
-*   **Actual Evapotranspiration ($ET_a$):** Download evapotranspiration, transpiration, and interception raster datasets directly from the [FAO WaPOR Portal](https://wapor.apps.fao.org/) (spatial resolutions range from $100	ext{m}$ to $250	ext{m}$). Alternatively, download SSEBop actual ET grids from the [USGS FEWS NET Data Portal](https://earlywarning.usgs.gov/fews/product/66).
-
-*   **Precipitation Grids ($P$):** Download CHIRPS or IMERG datasets.
-
-*   **Groundwater Storage Anomalies ($\Delta S$):** Download GRACE and GRACE-FO spherical harmonic grids from the [NASA JPL GRACE Tellus Portal](https://grace.jpl.nasa.gov/) to map regional groundwater depletion and recharge storage cycles.

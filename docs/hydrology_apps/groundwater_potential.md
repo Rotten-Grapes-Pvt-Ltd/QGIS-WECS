@@ -2,6 +2,16 @@
 
 Groundwater is a vital sub-surface water resource. Unlike surface water, aquifers are hidden. GIS enables the mapping of groundwater potential zones (GWPZ) by combining multiple thematic layers representing surface and sub-surface conditions that control infiltration and storage.
 
+> [!TIP]
+> **Data Sources & Acquisition:**
+> If you lack geological, soil, or land cover data for groundwater potential zoning:
+> 
+> *   **Global Geology and Lithology Layers:** Download global-scale rock and geologic map layers from the [USGS Mineral Resources Program](https://mrdata.usgs.gov/geology/world/) or query regional maps from national geological portals (such as national mining and geology bureaus).
+> 
+> *   **Harmonized World Soil Database (HWSD):** Provides global soil textures, clay percentages, and hydraulic properties. Download the spatial database for free from the [IIASA HWSD Portal](https://gryphon.iiasa.ac.at/index.php/HWSD).
+> 
+> *   **Land Use / Land Cover (LULC) maps:** Download the $10\text{ m}$ global land cover classification grid from the [ESA WorldCover Portal](https://esa-worldcover.org/).
+
 ---
 
 ## 1. Core Objectives
@@ -113,14 +123,3 @@ Once weights are established, GIS is used to compile the final potential map:
 *   **Artificial Recharge Management:** Locating check dams and recharge pits in "High" potential zones where soils and slopes are optimized for infiltration accelerates aquifer recovery.
 
 *   **Aquifer Protection Zoning:** Overlaying high potential zones with agricultural pollution maps outlines regions where groundwater is vulnerable to chemical contamination.
-
-
-## 6. Data Sources & Acquisition
-
-If you lack geological, soil, or land cover data for groundwater potential zoning:
-
-*   **Global Geology and Lithology Layers:** Download global-scale rock and geologic map layers from the [USGS Mineral Resources Program](https://mrdata.usgs.gov/geology/world/) or query regional maps from national geological portals (such as the [Department of Mines and Geology, Nepal](http://dmgnepal.gov.np/)).
-
-*   **Harmonized World Soil Database (HWSD):** Provides global soil textures, clay percentages, and hydraulic properties. Download the spatial database for free from the [IIASA HWSD Portal](https://gryphon.iiasa.ac.at/index.php/HWSD).
-
-*   **Land Use / Land Cover (LULC) maps:** Download the $10	ext{ m}$ global land cover classification grid from the [ESA WorldCover Portal](https://esa-worldcover.org/) or stream the ESRI 10m Land Cover dataset directly inside the QGIS Browser panel.
