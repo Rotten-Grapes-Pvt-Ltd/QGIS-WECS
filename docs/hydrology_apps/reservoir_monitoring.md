@@ -115,7 +115,7 @@ Catchment reservoir storage and area monitoring requires extracting surface wate
     
     *   *How to Fill the SAGA Form in QGIS:*
         
-        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **SAGA** > **Grid - Analysis** > **Grid Volume**.
+        *   **Tool Path:** Open the **Processing Toolbox**, search for "Grid volume", or navigate to **SAGA** > **Raster analysis** > **Grid volume** (or **SAGA** > **Grid - Analysis** / **Grid - Calculus** > **Grid Volume** depending on your QGIS SAGA provider version).
         
         *   **Grid:** Select `basin_dem_utm.tif` (must be in a projected metric CRS like UTM so volume is computed in cubic meters, not degrees).
         
