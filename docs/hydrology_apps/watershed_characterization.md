@@ -40,129 +40,107 @@ In desktop GIS (QGIS with SAGA or WhiteboxTools), catchment delineation follows 
 
 1.  **Fill Sinks / Pits:**
     
+    *   **What We Are Doing:** Filling the natural and artificial depressions (sinks or pits) in the raw elevation dataset to create a hydrologically continuous terrain surface.
+    
+    *   **Why This Step is Needed:** Elevation datasets derived from remote sensing contain radar speckle, forest canopy blockages, and integer rounding errors. Sinks act as digital water traps. If left unconditioned, the flow routing engine cannot assign flow directions to these cells, resulting in broken stream networks and incomplete catchment boundaries.
+    
     *   *Input:* Raw DEM raster (`output_hh_utm.tif`).
     
     *   *Output:* Conditioned, depressionless elevation grid (`filled_dem.tif`).
     
-    *   *Logic:* Identifies and raises artificial elevation depressions (sinks) in the DEM to ensure water can flow continuously toward the outer boundary.
-    
-    *   *How to fill the QGIS Form:*
+    *   *How to Fill the SAGA Form in QGIS:*
         
-        *   **SAGA Fill Sinks (Wang & Liu):**
-            
-            *   *DEM:* Select `output_hh_utm.tif`.
-            
-            *   *Minimum Slope:* Set to `0.01` (injects a micro-gradient to force downstream flow).
-            
-            *   *Filled DEM:* Click the file dialog button and save as `filled_dem.tif`.
+        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **SAGA** > **Terrain Analysis - Hydrology** > **Fill Sinks (Wang & Liu)**.
         
-        *   **WhiteboxTools FillDepressions:**
-            
-            *   *Input DEM file:* Select `output_hh_utm.tif`.
-            
-            *   *Flat increment:* Set to `0.001` (to prevent completely flat surfaces).
-            
-            *   *Output DEM file:* Save as `filled_dem.tif`.
+        *   **DEM:** Select `output_hh_utm.tif`.
+        
+        *   **Minimum Slope:** Set to `0.01` (to force a micro-slope downstream across filled flat shelves).
+        
+        *   **Filled DEM:** Click the file dialog button and save as `filled_dem.tif`. (Uncheck other outputs like Flow Directions).
 
 2.  **Flow Direction:**
+    
+    *   **What We Are Doing:** Calculating the direction of steepest downhill slope for every cell in the elevation model.
+    
+    *   **Why This Step is Needed:** The D8 algorithm determines which of the eight surrounding cells has the steepest downward slope. This flow direction map acts as the routing blueprint for water moving across the watershed. Without it, the GIS engine cannot calculate downstream flow accumulation or trace catchment boundaries.
     
     *   *Input:* Conditioned DEM (`filled_dem.tif`) from **Step 1**.
     
     *   *Output:* Flow Direction grid (`flow_direction.tif`), encoding flow paths.
     
-    *   *Logic:* Calculates the direction of steepest descent from each cell to one of its eight neighboring cells. Output is encoded as grid directions (e.g., $1, 2, 4, 8, 16, 32, 64, 128$).
-    
-    *   *How to fill the QGIS Form:*
+    *   *How to Fill the SAGA Form in QGIS:*
         
-        *   **SAGA Flow Accumulation (Top-Down):**
-            
-            *   *Elevation:* Select `filled_dem.tif` (the output from Step 1).
-            
-            *   *Method:* Select `[0] Deterministic 8 (D8)`.
-            
-            *   *Flow Directions:* Save as `flow_direction.tif`. (Uncheck other outputs if only direction is needed).
+        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **SAGA** > **Terrain Analysis - Hydrology** > **Flow Accumulation (Top-Down)**.
         
-        *   **WhiteboxTools D8Pointer:**
-            
-            *   *Input DEM file:* Select `filled_dem.tif`.
-            
-            *   *Output pointer file:* Save as `flow_direction.tif`.
+        *   **Elevation:** Select `filled_dem.tif` (the output from Step 1).
+        
+        *   **Method:** Select `[0] Deterministic 8 (D8)`.
+        
+        *   **Flow Directions:** Save as `flow_direction.tif`. (Uncheck other outputs).
 
 3.  **Flow Accumulation:**
     
-    *   *Input:* Conditioned DEM (`filled_dem.tif` from **Step 1**) and/or Flow Direction grid (`flow_direction.tif` from **Step 2**).
+    *   **What We Are Doing:** Calculating the cumulative number of upstream cells that drain into each downhill pixel.
+    
+    *   **Why This Step is Needed:** Flow accumulation simulates runoff concentration. Cells with high accumulation counts have large drainage areas feeding into them, which locates stream channels and river valleys. Ridge divides and mountaintops will have an accumulation value of zero, as no upstream areas drain into them.
+    
+    *   *Input:* Conditioned DEM (`filled_dem.tif` from **Step 1**).
     
     *   *Output:* Contributing drainage area grid (`flow_accumulation.tif`).
     
-    *   *Logic:* Counts the cumulative number of upstream cells draining into each downstream cell. High flow accumulation cells represent natural drainage channels (streams).
-    
-    *   *How to fill the QGIS Form:*
+    *   *How to Fill the SAGA Form in QGIS:*
         
-        *   **SAGA Flow Accumulation (Top-Down):**
-            
-            *   *Elevation:* Select `filled_dem.tif` (from Step 1).
-            
-            *   *Method:* Select `[0] Deterministic 8 (D8)`.
-            
-            *   *Flow Accumulation:* Save as `flow_accumulation.tif`.
+        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **SAGA** > **Terrain Analysis - Hydrology** > **Flow Accumulation (Top-Down)**.
         
-        *   **WhiteboxTools D8FlowAccumulation:**
-            
-            *   *Input D8 pointer file:* Select `flow_direction.tif` (from Step 2).
-            
-            *   *Output flow accumulation file:* Save as `flow_accumulation.tif`.
+        *   **Elevation:** Select `filled_dem.tif`.
+        
+        *   **Method:** Select `[0] Deterministic 8 (D8)`.
+        
+        *   **Flow Accumulation:** Save as `flow_accumulation.tif`. (Uncheck other outputs).
 
 4.  **Stream Network Extraction:**
+    
+    *   **What We Are Doing:** Extracting stream segments by filtering out cells that do not meet a minimum contributing drainage area.
+    
+    *   **Why This Step is Needed:** Continuous flow accumulation cells contain values ranging from zero to millions. To delineate stream paths, we apply a threshold to isolate pixels representing significant drainage concentration. This converts the continuous contributing area map into a binary stream/non-stream raster.
     
     *   *Input:* Flow Accumulation grid (`flow_accumulation.tif`) from **Step 3**.
     
     *   *Output:* Binary stream channel grid (`stream_network_binary.tif` where stream = 1, land = 0).
     
-    *   *Logic:* Thresholds the flow accumulation raster (e.g., all cells where accumulation $> 500\text{ pixels}$) to isolate the stream network.
-    
-    *   *How to fill the QGIS Form:*
+    *   *How to Fill the SAGA Form in QGIS:*
         
-        *   **Raster Calculator (QGIS Native):**
-            
-            *   *Expression:* Type `"flow_accumulation@1" >= 500`.
-            
-            *   *Output layer:* Save as `stream_network_binary.tif`.
+        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **SAGA** > **Terrain Analysis - Channels** > **Channel Subnetwork**.
         
-        *   **WhiteboxTools ExtractStreams:**
-            
-            *   *Input D8 flow accumulation file:* Select `flow_accumulation.tif` (from Step 3).
-            
-            *   *Threshold:* Type `500.0`.
-            
-            *   *Output stream file:* Save as `stream_network_binary.tif`.
+        *   **Elevation:** Select `filled_dem.tif`.
+        
+        *   **Initiation Threshold:** Set to `1000` (meaning streams will start where flow accumulation $\ge 1000$ pixels).
+        
+        *   **Channel Network:** Save as `stream_network_binary.tif`.
+        
+        *   *Alternative (QGIS Native Raster Calculator):* Write `"flow_accumulation@1" >= 1000` and save the result as `stream_network_binary.tif`.
 
 5.  **Watershed Delineation:**
     
-    *   *Input:* Flow Direction grid (`flow_direction.tif` from **Step 2**) and target outlet/pour point coordinates.
+    *   **What We Are Doing:** Tracing all upstream pixels that drain into a specific outlet (pour point).
     
-    *   *Output:* Catchment basin boundary grid (`watershed_basin.tif`).
+    *   **Why This Step is Needed:** Hydrologists must calculate water budgets, peak runoffs, and sediment loads for specific drainage areas. Watershed delineation outlines the catchment boundary uphill of a chosen outlet (e.g. a river gauge station or dam site), separating the contributing runoff area from the surrounding basins.
     
-    *   *Logic:* Traces all upstream cells draining to a specified pour point cell (outlet) based on the D8 flow direction grid, generating a boundary polygon.
+    *   *Input:* Conditioned DEM (`filled_dem.tif` from **Step 1**).
     
-    *   *How to fill the QGIS Form:*
+    *   *Output:* Catchment boundary grid (`watershed_basin.tif`).
+    
+    *   *How to Fill the SAGA Form in QGIS:*
         
-        *   **SAGA Upslope Area:**
-            
-            *   *Elevation:* Select `filled_dem.tif` (from Step 1).
-            
-            *   *Target X Coordinate / Target Y Coordinate:* Use the coordinate selection picker to click on the stream network (`stream_network_binary.tif`) where your outlet sits.
-            
-            *   *Flow Method:* Select `[0] Deterministic 8 (D8)`.
-            
-            *   *Upslope Area:* Save as `watershed_basin.tif`.
+        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **SAGA** > **Terrain Analysis - Hydrology** > **Upslope Area**.
         
-        *   **WhiteboxTools Watershed:**
-            
-            *   *Input D8 pointer file:* Select `flow_direction.tif` (from Step 2).
-            
-            *   *Input pour points file:* Select your snapped outlet point vector layer (`snapped_outlet.gpkg`).
-            
-            *   *Output watershed file:* Save as `watershed_basin.tif`.
+        *   **Elevation:** Select `filled_dem.tif`.
+        
+        *   **Target X Coordinate / Target Y Coordinate:** Click the coordinate picker button, then click on the active stream centerline on the map where your outlet sits.
+        
+        *   **Flow Method:** Select `[0] Deterministic 8 (D8)`.
+        
+        *   **Upslope Area:** Save as `watershed_basin.tif`.
 
 ---
 
