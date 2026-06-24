@@ -99,3 +99,16 @@ Satellite grids provide continuous global coverage but contain grid cell offsets
 *   **Design Storm Isohyetal Maps:** Isohyetal contours generated from interpolated rainfall surfaces outline zones of maximum flood vulnerability, which are critical for sizing spillways, drainage canals, and bridges.
 
 *   **Runoff Hydrographs:** Semi-distributed models (like SWAT) run calculations for each sub-basin using the zonal average rainfall extracted via GIS.
+
+
+## 6. Data Sources & Acquisition
+
+For hydrological analysis without in-situ weather station records, utilize these free global gridded precipitation repositories:
+
+*   **CHIRPS Precipitation (Daily/Monthly, 0.05° resolution):** Specifically developed for agricultural drought and watershed monitoring. Download raw GeoTIFF grids directly from the [UCSB Climate Hazards Center CHIRPS Directory](https://www.chc.ucsb.edu/data/chirps) or access it dynamically through [Climate Engine](https://climateengine.com/).
+
+*   **GPM IMERG (Half-hourly/Daily, 0.1° resolution):** High-precision satellite precipitation estimates from NASA. Download in NetCDF or HDF5 format from [NASA Earthdata Search](https://search.earthdata.nasa.gov/) by filtering for "GPM IMERG".
+
+*   **ERA5-Land Reanalysis (Hourly/Monthly, 9km resolution):** Long-term historical weather reanalysis grids back to 1950. Download from the [Copernicus Climate Data Store (CDS)](https://cds.climate.copernicus.eu/).
+
+*   **Global Historical Weather Stations (GHCN):** Ground rain gauge observations. Download historical station summaries for free from the [NOAA National Centers for Environmental Information (NCEI)](https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network).

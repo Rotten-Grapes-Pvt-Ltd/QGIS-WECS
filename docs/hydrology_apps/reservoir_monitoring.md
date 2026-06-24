@@ -84,3 +84,14 @@ EAV curves are the mathematical foundation of reservoir operations, showing the 
 *   **Hydropower Planning:** Knowing the available water volume and hydraulic head (water level) allows managers to schedule turbine operations and forecast power output.
 
 *   **Watershed Management Feedback:** High reservoir sedimentation rates indicate severe upstream soil erosion, prompting soil conservation works (forestation, contour farming) in the upper catchment.
+
+
+## 7. Data Sources & Acquisition
+
+If you do not have reservoir bathymetry or water level records:
+
+*   **Reservoir Surface Imagery:** Download Sentinel-2 and Landsat imagery from the [Copernicus Browser](https://dataspace.copernicus.eu/) and [USGS EarthExplorer](https://earthexplorer.usgs.gov/) to map water surface area variations using the MNDWI index.
+
+*   **Global Reservoirs and Lakes Databases:** Download dam location attributes, volumes, and catchment areas from the [Global Reservoir and Dam (GRanD) database](https://globaldamwatch.org/grand/) or download lake geometry polygons from the [HydroLAKES Database](https://www.hydrosheds.org/products/hydrolakes).
+
+*   **Satellite Altimetry Water Levels:** Obtain satellite-derived reservoir water level timeseries (derived from radar altimeters) for major global reservoirs from the [Hydroweb Portal](https://hydroweb.theia-land.fr/) or the [USDA G-REALM Portal](https://glam1.gsfc.nasa.gov/).

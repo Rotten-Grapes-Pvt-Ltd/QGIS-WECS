@@ -93,3 +93,14 @@ Where:
 *   **Land Use Impact Simulation:** By modifying the LULC raster in QGIS (e.g., converting $50\%$ of a forest catchment to urban space) and re-running the SWAT model, hydrologists can quantify how future urbanization increases peak flood discharge and reduces groundwater baseflow.
 
 *   **Climate Change Adaptation:** Model parameters extracted via GIS help simulate catchment runoffs under future IPCC precipitation scenario projections, assisting in reservoir sizing audits.
+
+
+## 6. Data Sources & Acquisition
+
+For hydrological modeling inputs when local catchment databases are unavailable:
+
+*   **Harmonized World Soil Database (HWSD):** Provides global soil textures, bulk densities, and hydrological soil groups (A, B, C, D) required to parameterize runoff Curve Numbers in SWAT and HEC-HMS. Download from the [IIASA HWSD Portal](https://gryphon.iiasa.ac.at/index.php/HWSD) or the [FAO Soil Portal](https://www.fao.org/soils-portal/data-hub/soil-maps-and-databases/).
+
+*   **Global Land Cover maps:** Download LULC grids from the [ESA WorldCover Portal](https://esa-worldcover.org/) or [Copernicus Land Monitoring Service (CLMS)](https://land.copernicus.eu/global/).
+
+*   **Meteorological Model Inputs (NASA POWER):** Download historical daily temperature, solar radiation, humidity, and wind speed statistics (required to drive continuous models like SWAT) for your coordinate centroid using the [NASA POWER API & Viewer](https://power.larc.nasa.gov/).

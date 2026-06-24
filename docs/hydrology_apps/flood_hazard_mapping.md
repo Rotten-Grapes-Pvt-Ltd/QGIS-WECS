@@ -94,3 +94,12 @@ The **Height Above Nearest Drainage (HAND)** model is a static topographic index
 *   **Flood Risk Assessment:** Intersect `active_flood_extent` polygons with building footprint points and agricultural land cover polygons to identify structural damage zones and crops lost.
 
 *   **Hydraulic Calibration:** Delineated flood boundaries are compared against simulated 1D/2D hydraulic model extents (from HEC-RAS or LISFLOOD-FP) to calibrate Manning's roughness coefficients ($n$) and discharge predictions.
+
+
+## 6. Data Sources & Acquisition
+
+For active flood mapping or hazard modeling with no existing datasets:
+
+*   **Sentinel-1 SAR Imagery (Radar):** Essential for penetrating cloud cover during flood storm events. Download free Level-1 GRD imagery from the [Copernicus Browser](https://dataspace.copernicus.eu/) or the [Alaska Satellite Facility (ASF) Vertex Portal](https://vertex.daac.asf.alaska.edu/). Search for your AOI, filter by "Sentinel-1" and "IW" (Interferometric Wide) sensor mode, and select VV/VH polarization acquisitions during the flood date.
+
+*   **Infrastructure Vector Data (Buildings & Roads):** To calculate asset vulnerability, download OpenStreetMap (OSM) vector layers. Geofabrik provides pre-extracted country-level shapefiles for free at the [Geofabrik Download Server](https://download.geofabrik.de/). Alternatively, use the QGIS **QuickOSM** plugin to query and download features directly into your project.
