@@ -13,16 +13,16 @@ The following flowchart shows how spatial datasets and analysis workflows feed i
 ```mermaid
 flowchart TD
     A["1. Watershed Characterization<br/>(DEM Delineation & Drainage)"] --> B["2. Rainfall Analysis<br/>(Spatial Interpolation & Grids)"]
-    A --> C["6. River Morphology<br/>(Channel Migration & Sinuosity)"]
+    A --> C["7. River Morphology<br/>(Channel Migration & Sinuosity)"]
     A --> J["10. Hydrological Modeling<br/>(HEC-HMS / SWAT Inputs)"]
     
     B --> J
-    B --> D["3. Flood Hazard Mapping<br/>(Inundation Modeling)"]
-    B --> E["4. Drought Assessment<br/>(Spectral Index Monitoring)"]
+    B --> D["4. Flood Hazard Mapping<br/>(Inundation Modeling)"]
+    B --> E["5. Drought Assessment<br/>(Spectral Index Monitoring)"]
     
-    A --> F["5. Groundwater Potential<br/>(Recharge Mapping & AHP)"]
+    A --> F["6. Groundwater Potential<br/>(Recharge Mapping & AHP)"]
     
-    A --> G["7. Reservoir Monitoring<br/>(MNDWI Water Surface Area)"]
+    A --> G["3. Reservoir Monitoring<br/>(MNDWI Water Surface Area)"]
     G --> H["8. Water Quality Assessment<br/>(Turbidity & Algae Blooms)"]
     
     J --> I["9. Water Accounting (WA+)<br/>(Catchment Water Balances)"]
@@ -55,25 +55,25 @@ Select a theme below to explore the physical principles, GIS datasets, and geopr
     
     *   Interpolate point rain gauges using IDW and Kriging methods. Process gridded satellite precipitation datasets (such as CHIRPS and IMERG) using zonal statistics to compute catchment rainfall.
 
-3.  **[Flood Hazard Mapping](flood_hazard_mapping.md)**
+3.  **[Reservoir Monitoring](reservoir_monitoring.md)**
+    
+    *   Extract water boundaries using MNDWI thresholding, develop elevation-area-volume curves, and calculate reservoir storage depletion and sedimentation rates.
+
+4.  **[Flood Hazard Mapping](flood_hazard_mapping.md)**
     
     *   Establish river cross-sections, estimate terrain buffers, and threshold active synthetic aperture radar (SAR) backscatter to delineate active flood inundation zones.
 
-4.  **[Drought Assessment](drought_assessment.md)**
+5.  **[Drought Assessment](drought_assessment.md)**
     
     *   Evaluate agricultural and meteorological drought intensity using multi-spectral indices like NDVI, NDWI, and the Vegetation Condition Index (VCI).
 
-5.  **[Groundwater Potential Mapping](groundwater_potential.md)**
+6.  **[Groundwater Potential Mapping](groundwater_potential.md)**
     
     *   Deploy Multi-Criteria Decision Analysis (MCDA) and the Analytical Hierarchy Process (AHP) to weight slope, lithology, lineaments, and land cover to map recharge zones.
 
-6.  **[River Morphology & Erosion](river_morphology.md)**
+7.  **[River Morphology & Erosion](river_morphology.md)**
     
     *   Track historical channel migration using multi-temporal satellite imagery, calculate river sinuosity indexes, and map bank erosion susceptibility.
-
-7.  **[Reservoir Monitoring](reservoir_monitoring.md)**
-    
-    *   Extract water boundaries using MNDWI thresholding, develop elevation-area-volume curves, and calculate reservoir storage depletion and sedimentation rates.
 
 8.  **[Water Quality Assessment](water_quality.md)**
     
