@@ -14,7 +14,7 @@ The following flowchart shows how spatial datasets and analysis workflows feed i
 flowchart TD
     A["1. Watershed Characterization<br/>(DEM Delineation & Drainage)"] --> B["2. Rainfall Analysis<br/>(Spatial Interpolation & Grids)"]
     A --> C["8. River Morphology<br/>(Channel Migration & Sinuosity)"]
-    A --> J["11. Hydrological Modeling<br/>(HEC-HMS / SWAT Inputs)"]
+    A --> J["12. Hydrological Modeling<br/>(HEC-HMS / SWAT Inputs)"]
     
     B --> J
     B --> D["5. Flood Hazard Mapping<br/>(Inundation Modeling)"]
@@ -31,6 +31,10 @@ flowchart TD
     A --> K["4. Land Use Area Calculation<br/>(LULC & Zonal Histogram)"]
     K --> J
     K --> I
+    
+    A --> L["11. Basin Water Balance<br/>(P-ET Grids & Runoff)"]
+    B --> L
+    L --> J
 
     %% Styling
     style A fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
@@ -44,6 +48,7 @@ flowchart TD
     style I fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
     style J fill:#efebe9,stroke:#4e342e,stroke-width:2px
     style K fill:#f1f8e9,stroke:#558b2f,stroke-width:2px
+    style L fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
 ```
 
 ---
@@ -92,6 +97,10 @@ Select a theme below to explore the physical principles, GIS datasets, and geopr
     
     *   Apply remote sensing models to calculate the components of a watershed water balance, tracking precipitation, evapotranspiration fluxes, storage change, and runoff.
 
-11. **[Hydrological Modeling with HEC-HMS / SWAT](hydrological_modeling.md)**
+11. **[Basin Water Balance in QGIS](basin_water_balance.md)**
+    
+    *   Align multi-source satellite rasters (Precipitation and Evapotranspiration), calculate grid-cell surplus/deficit maps using QGIS Raster Calculator, and tabulate volumetric water budgets per sub-catchment.
+
+12. **[Hydrological Modeling with HEC-HMS / SWAT](hydrological_modeling.md)**
     
     *   Extract and format spatial parameter inputs (such as SCS Curve Number layers, average slope, and sub-basin splits) required to initialize HEC-HMS and SWAT models.

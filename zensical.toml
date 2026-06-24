@@ -90,6 +90,7 @@ nav = [
         "hydrology_apps/river_morphology.md",
         "hydrology_apps/water_quality.md",
         "hydrology_apps/water_accounting.md",
+        "hydrology_apps/basin_water_balance.md",
         "hydrology_apps/hydrological_modeling.md"
     ]}
 ]
