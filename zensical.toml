@@ -83,14 +83,14 @@ nav = [
         "hydrology_apps/watershed_characterization.md",
         "hydrology_apps/rainfall_analysis.md",
         "hydrology_apps/reservoir_monitoring.md",
+        "hydrology_apps/landuse_percentage.md",
         "hydrology_apps/flood_hazard_mapping.md",
         "hydrology_apps/drought_assessment.md",
         "hydrology_apps/groundwater_potential.md",
         "hydrology_apps/river_morphology.md",
         "hydrology_apps/water_quality.md",
         "hydrology_apps/water_accounting.md",
-        "hydrology_apps/hydrological_modeling.md",
-        "hydrology_apps/landuse_percentage.md"
+        "hydrology_apps/hydrological_modeling.md"
     ]}
 ]
 

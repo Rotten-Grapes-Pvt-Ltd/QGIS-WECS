@@ -13,22 +13,22 @@ The following flowchart shows how spatial datasets and analysis workflows feed i
 ```mermaid
 flowchart TD
     A["1. Watershed Characterization<br/>(DEM Delineation & Drainage)"] --> B["2. Rainfall Analysis<br/>(Spatial Interpolation & Grids)"]
-    A --> C["7. River Morphology<br/>(Channel Migration & Sinuosity)"]
-    A --> J["10. Hydrological Modeling<br/>(HEC-HMS / SWAT Inputs)"]
+    A --> C["8. River Morphology<br/>(Channel Migration & Sinuosity)"]
+    A --> J["11. Hydrological Modeling<br/>(HEC-HMS / SWAT Inputs)"]
     
     B --> J
-    B --> D["4. Flood Hazard Mapping<br/>(Inundation Modeling)"]
-    B --> E["5. Drought Assessment<br/>(Spectral Index Monitoring)"]
+    B --> D["5. Flood Hazard Mapping<br/>(Inundation Modeling)"]
+    B --> E["6. Drought Assessment<br/>(Spectral Index Monitoring)"]
     
-    A --> F["6. Groundwater Potential<br/>(Recharge Mapping & AHP)"]
+    A --> F["7. Groundwater Potential<br/>(Recharge Mapping & AHP)"]
     
     A --> G["3. Reservoir Monitoring<br/>(MNDWI Water Surface Area)"]
-    G --> H["8. Water Quality Assessment<br/>(Turbidity & Algae Blooms)"]
+    G --> H["9. Water Quality Assessment<br/>(Turbidity & Algae Blooms)"]
     
-    J --> I["9. Water Accounting (WA+)<br/>(Catchment Water Balances)"]
+    J --> I["10. Water Accounting (WA+)<br/>(Catchment Water Balances)"]
     G --> I
     
-    A --> K["11. Land Use Area Calculation<br/>(LULC & Zonal Histogram)"]
+    A --> K["4. Land Use Area Calculation<br/>(LULC & Zonal Histogram)"]
     K --> J
     K --> I
 
@@ -64,34 +64,34 @@ Select a theme below to explore the physical principles, GIS datasets, and geopr
     
     *   Extract water boundaries using MNDWI thresholding, develop elevation-area-volume curves, and calculate reservoir storage depletion and sedimentation rates.
 
-4.  **[Flood Hazard Mapping](flood_hazard_mapping.md)**
+4.  **[Land Use Area Calculation per Sub-catchment](landuse_percentage.md)**
+    
+    *   Reproject categorical LULC grids (like the ESA WorldCover 10m product) using Nearest Neighbor, extract pixel counts using Zonal Histogram, and calculate class area percentages to analyze environmental and hydrological impacts.
+
+5.  **[Flood Hazard Mapping](flood_hazard_mapping.md)**
     
     *   Establish river cross-sections, estimate terrain buffers, and threshold active synthetic aperture radar (SAR) backscatter to delineate active flood inundation zones.
 
-5.  **[Drought Assessment](drought_assessment.md)**
+6.  **[Drought Assessment](drought_assessment.md)**
     
     *   Evaluate agricultural and meteorological drought intensity using multi-spectral indices like NDVI, NDWI, and the Vegetation Condition Index (VCI).
 
-6.  **[Groundwater Potential Mapping](groundwater_potential.md)**
+7.  **[Groundwater Potential Mapping](groundwater_potential.md)**
     
     *   Deploy Multi-Criteria Decision Analysis (MCDA) and the Analytical Hierarchy Process (AHP) to weight slope, lithology, lineaments, and land cover to map recharge zones.
 
-7.  **[River Morphology & Erosion](river_morphology.md)**
+8.  **[River Morphology & Erosion](river_morphology.md)**
     
     *   Track historical channel migration using multi-temporal satellite imagery, calculate river sinuosity indexes, and map bank erosion susceptibility.
 
-8.  **[Water Quality Assessment](water_quality.md)**
+9.  **[Water Quality Assessment](water_quality.md)**
     
     *   Estimate suspended sediment concentrations, turbidity, and chlorophyll-a algal blooms using multi-spectral band ratios from Landsat and Sentinel-2.
 
-9.  **[Water Accounting (WA+ style)](water_accounting.md)**
+10. **[Water Accounting (WA+ style)](water_accounting.md)**
     
     *   Apply remote sensing models to calculate the components of a watershed water balance, tracking precipitation, evapotranspiration fluxes, storage change, and runoff.
 
-10. **[Hydrological Modeling with HEC-HMS / SWAT](hydrological_modeling.md)**
+11. **[Hydrological Modeling with HEC-HMS / SWAT](hydrological_modeling.md)**
     
     *   Extract and format spatial parameter inputs (such as SCS Curve Number layers, average slope, and sub-basin splits) required to initialize HEC-HMS and SWAT models.
-
-11. **[Land Use Area Calculation per Sub-catchment](landuse_percentage.md)**
-    
-    *   Reproject categorical LULC grids (like the ESA WorldCover 10m product) using Nearest Neighbor, extract pixel counts using Zonal Histogram, and calculate class area percentages to analyze environmental and hydrological impacts.
