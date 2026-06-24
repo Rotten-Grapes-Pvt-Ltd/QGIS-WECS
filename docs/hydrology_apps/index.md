@@ -27,6 +27,10 @@ flowchart TD
     
     J --> I["9. Water Accounting (WA+)<br/>(Catchment Water Balances)"]
     G --> I
+    
+    A --> K["11. Land Use Area Calculation<br/>(LULC & Zonal Histogram)"]
+    K --> J
+    K --> I
 
     %% Styling
     style A fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
@@ -39,6 +43,7 @@ flowchart TD
     style H fill:#e0f2f1,stroke:#00695c,stroke-width:2px
     style I fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
     style J fill:#efebe9,stroke:#4e342e,stroke-width:2px
+    style K fill:#f1f8e9,stroke:#558b2f,stroke-width:2px
 ```
 
 ---
@@ -86,3 +91,7 @@ Select a theme below to explore the physical principles, GIS datasets, and geopr
 10. **[Hydrological Modeling with HEC-HMS / SWAT](hydrological_modeling.md)**
     
     *   Extract and format spatial parameter inputs (such as SCS Curve Number layers, average slope, and sub-basin splits) required to initialize HEC-HMS and SWAT models.
+
+11. **[Land Use Area Calculation per Sub-catchment](landuse_percentage.md)**
+    
+    *   Reproject categorical LULC grids (like the ESA WorldCover 10m product) using Nearest Neighbor, extract pixel counts using Zonal Histogram, and calculate class area percentages to analyze environmental and hydrological impacts.
