@@ -18,113 +18,164 @@ Rainfall is the primary input driving watershed hydrological cycles. Because pre
 
 ## 1. Core Objectives
 
-*   **Interpolate** point rain gauge measurements to create a continuous rainfall surface.
+*   **Plot** rain gauge station locations from coordinates and attribute data.
 
-*   **Extract** catchment-wide average precipitation values from gridded satellite sensors.
+*   **Interpolate** discrete point rain gauge measurements to create a continuous rainfall surface.
 
-*   **Analyze** historical rainfall trends and return periods for engineering designs.
+*   **Delineate** gauge influence zones to allocate representative weights to stations.
+
+*   **Extract** catchment-wide Mean Areal Precipitation (MAP) values from grids.
 
 ---
 
 ## 2. Key GIS Inputs
 
-*   **Point Gauges Layer:** Vector point features containing latitude, longitude, and historical precipitation values (mm).
+*   **Precipitation Tables:** Spreadsheet/CSV containing station names, coordinates (Lat/Lon), and rainfall measurements (mm).
 
-*   **Gridded Precipitation Products:** Satellite/model rasters such as CHIRPS (0.05° resolution), GPM IMERG (0.1° resolution), or ERA5-Land reanalysis.
+*   **Catchment Boundary:** Watershed polygon layer (`watershed.gpkg`).
 
-*   **Catchment Boundaries:** Watershed vector polygon layer.
-
----
-
-## 3. Spatial Interpolation Methods
-
-Point observations must be interpolated across space to estimate rainfall in unmonitored zones:
-
-```text
-    SPATIAL INTERPOLATION COMPARISON
-    +--------------------------------+
-    |   o [45mm]      . (Estimate)   |
-    |                 [50mm]         |
-    |       o [60mm]                 |
-    +--------------------------------+
-     - IDW: Calculates simple inverse-distance weights.
-     - Kriging: Geostatistical semivariogram modeling.
-     - Spline: Fits a smooth mathematical surface.
-```
-
-### Inverse Distance Weighting (IDW)
-
-Estimates cell values by averaging neighboring gauge values weighted by the inverse of their distance:
-
-$$P_x = \frac{\sum_{i=1}^{n} \frac{P_i}{d_i^p}}{\sum_{i=1}^{n} \frac{1}{d_i^p}}$$
-
-Where:
-
-*   $P_x$ = Estimated precipitation at target cell $x$ (mm).
-
-*   $P_i$ = Precipitation at gauge $i$ (mm).
-
-*   $d_i$ = Distance from gauge $i$ to cell $x$.
-
-*   $p$ = Power parameter (usually $2$, governing distance decay rate).
-
-*   *Limitations:* Sensitive to clustered gauges; prone to "bull's eye" artifacts around isolated stations.
-
-*   *GIS Toolpaths:*
-    
-    *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Interpolation** > **Inverse Distance Weighted**.
-    
-    *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Image Interpolation** > **IdwInterpolation**.
-
-### Kriging
-
-A geostatistical method that uses a semivariogram to capture spatial autocorrelation structures:
-
-$$P_x = \sum_{i=1}^{n} w_i P_i$$
-
-*   *Significance:* Unlike IDW, Kriging calculates the statistical probability of error along with the interpolation surface, making it valuable for scientific confidence evaluation.
-
-*   *Co-Kriging:* Incorporates auxiliary rasters (such as elevation DEMs) to model topographically induced (orographic) rainfall in mountainous zones.
-
-*   *GIS Toolpaths:*
-    
-    *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Interpolation** > **Ordinary Kriging** (or **Universal Kriging**).
-    
-    *   **WhiteboxTools:** *Note: Kriging is not natively implemented in standard WBT; SAGA is the preferred high-performance engine for geostatistical interpolation.*
+*   **Gridded Precipitation Products:** (Optional alternative) Coarse satellite rasters (CHIRPS, GPM IMERG).
 
 ---
 
-## 4. Processing Gridded Satellite Precipitation (Zonal Statistics)
+## 3. Step-by-Step Rainfall Analysis Workflow
 
-Satellite grids provide continuous global coverage but contain grid cell offsets. GIS is used to query these grids:
+Catchment-wide rainfall assessment requires converting tabular point gauge records into spatial zones and grids using sequential geoprocessing steps:
 
-1.  **Import Multi-Dimensional Grids:** Load GPM IMERG or CHIRPS NetCDF/HDF5 files using QGIS's **Add Raster Layer** panel. Select the specific precipitation variable band.
+![flow_chart](images/rainfall_analysis/flow_chart.png)
 
-2.  **Reproject & Clip:** Run **Warp (Reproject)** to align the coarse satellite coordinate reference system (usually EPSG:4326) with the projected metric coordinate system of the catchment (e.g., UTM Zone 45N).
-
-3.  **Run Zonal Statistics:**
+1.  **Import and Plot Rain Gauge Station Data (CSV to Points):**
     
-    *   *Input Vector:* Catchment boundary polygon.
+    *   **What We Are Doing:** Importing a text file (CSV/Excel) containing rain gauge coordinates and rainfall values, and converting it into a GIS vector point layer.
     
-    *   *Input Raster:* Satellite precipitation grid.
+    *   **Why This Step is Needed:** Ground measurements are recorded in tabular spreadsheets. Before QGIS can perform spatial interpolations, these coordinates must be plotted on a map as vector geometry points.
     
-    *   *Calculation:* Choose **Mean** and **Sum**.
+    *   *Input:* CSV table with station metadata and rainfall records (e.g., `gauge_data.csv`).
     
-    *   *GIS Toolpaths:*
+    *   *Output:* Vector point layer (e.g., `gauges_wgs84.gpkg`).
+    
+    *   *How to Fill the Form in QGIS:*
         
-        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Tools** > **Raster Statistics for Polygons**.
+        *   **Tool Path:** Go to the main QGIS menu and select **Layer** > **Add Layer** > **Add Delimited Text Layer...**.
         
-        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **ZonalStatistics**.
+        *   **File Name:** Select your CSV file (`gauge_data.csv`).
         
-        *   **QGIS Native:** **Processing Toolbox** > **Raster Analysis** > **Zonal Statistics**.
+        *   **File Format:** Check **CSV (comma separated values)**.
+        
+        *   **Geometry Definition:** Check **Point coordinates**. Set **X field** to the longitude column (e.g., `Longitude`) and **Y field** to the latitude column (e.g., `Latitude`).
+        
+        *   **Geometry CRS:** Select `EPSG:4326` (WGS 84).
+        
+        *   **Output:** Click Add, then right-click the loaded layer > **Export** > **Save Features As...** to save it as `gauges_wgs84.gpkg`.
+
+2.  **Reproject Points to Metric CRS:**
     
-    *   *Result:* The tool appends the average rainfall depth (mm) and total volume ($\text{m}^3$) directly to the catchment polygon's attribute table.
+    *   **What We Are Doing:** Transforming the coordinate reference system (CRS) of the rain gauges from degrees (geographic) to meters (projected).
+    
+    *   **Why This Step is Needed:** Distance-decay interpolation formulas (like IDW) calculate weights using horizontal distances. If the layer is in geographic degrees, QGIS will calculate distance in degrees, resulting in distorted interpolations and circular "bull's-eyes". Reprojecting to a metric system (e.g., UTM) ensures that distances are calculated accurately in meters.
+    
+    *   *Input:* Geographic point layer (`gauges_wgs84.gpkg`) from **Step 1**.
+    
+    *   *Output:* Projected metric point layer (`gauges_utm.gpkg`).
+    
+    *   *How to Fill the Form in QGIS:*
+        
+        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **Vector General** > **Reproject Layer**.
+        
+        *   **Input Layer:** Select `gauges_wgs84.gpkg`.
+        
+        *   **Target CRS:** Select your local UTM zone (e.g., `EPSG:32645` for UTM Zone 45N).
+        
+        *   **Reprojected:** Save the output as `gauges_utm.gpkg`.
+
+3.  **Interpolate Rainfall Surface (SAGA Inverse Distance Weighted or Kriging):**
+    
+    *   **What We Are Doing:** Generating a continuous raster grid of rainfall values from the discrete gauges using spatial interpolation.
+    
+    *   **Why This Step is Needed:** Rain gauges only measure rainfall at specific points. We need to estimate rainfall values in the unsampled areas between the stations to represent the spatial distribution of rainfall across the entire catchment.
+    
+    *   *Input:* Projected point layer (`gauges_utm.gpkg`) from **Step 2**.
+    
+    *   *Output:* Continuous interpolated rainfall raster (`rainfall_surface.tif`).
+    
+    *   *How to Fill the SAGA Form in QGIS:*
+        
+        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **SAGA** > **Grid - Interpolation** > **Inverse Distance Weighted**.
+        
+        *   **Points:** Select `gauges_utm.gpkg`.
+        
+        *   **Attribute:** Select the field representing precipitation depth (e.g., `Rain_mm`).
+        
+        *   **Target Grid System:** Select `[0] user defined`.
+        
+        *   **Cellsize:** Enter a cell size in meters (e.g., `100` for a 100-meter grid resolution).
+        
+        *   **Grid:** Click and save the output grid as `rainfall_surface.tif`.
+        
+        *   *Alternative Ordinary Kriging Path:* If geostatistical autocorrelation modeling is preferred, navigate to **SAGA** > **Grid - Interpolation** > **Ordinary Kriging**. Fill in points, attribute, and target cellsize as above.
+
+4.  **Delineate Rain Gauge Influence Zones (SAGA Thiessen Polygons):**
+    
+    *   **What We Are Doing:** Delineating boundaries around each rain gauge to partition the catchment into polygons of influence (Voronoi cells).
+    
+    *   **Why This Step is Needed:** The Thiessen Polygon method is the traditional hydrological standard for computing areal precipitation. Every location inside a Thiessen polygon is closer to that polygon's rain gauge than to any other, meaning the gauge's value is assumed to represent that entire polygon zone.
+    
+    *   *Input:* Projected point layer (`gauges_utm.gpkg`) from **Step 2**.
+    
+    *   *Output:* Thiessen polygon vector layer (`thiessen_zones.gpkg`).
+    
+    *   *How to Fill the SAGA Form in QGIS:*
+        
+        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **SAGA** > **Vector - Point Tools** > **Thiessen Polygons**.
+        
+        *   **Points:** Select `gauges_utm.gpkg`.
+        
+        *   **Frame:** Select **buffer** or select the bounding box of your study area.
+        
+        *   **Polygons:** Click and save as `thiessen_zones.gpkg`.
+        
+        *   *Post-Processing:* Use **Vector** > **Geoprocessing Tools** > **Clip** to crop `thiessen_zones.gpkg` with your watershed boundary.
+
+5.  **Extract Mean Areal Precipitation (SAGA Raster Statistics for Polygons):**
+    
+    *   **What We Are Doing:** Calculating the spatial average precipitation (Mean Areal Precipitation or MAP) over the catchment boundary from the interpolated raster surface or a satellite product.
+    
+    *   **Why This Step is Needed:** Hydrological models require a single representative precipitation input (in mm) for the catchment to compute runoff. Running zonal statistics extracts this spatial average by summing the cell values within the catchment boundary and dividing by the cell count.
+    
+    *   *Input:* Watershed polygon boundary and the interpolated raster (`rainfall_surface.tif` from **Step 3**) or a satellite grid (like CHIRPS).
+    
+    *   *Output:* Attribute table populated with mean rainfall depth (mm) and total volume (m³).
+    
+    *   *How to Fill the SAGA Form in QGIS:*
+        
+        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **SAGA** > **Grid - Tools** > **Raster Statistics for Polygons**.
+        
+        *   **Grid:** Select `rainfall_surface.tif` (or your reprojected CHIRPS/GPM raster).
+        
+        *   **Polygons:** Select your catchment boundary layer.
+        
+        *   **Method:** Check the **mean** and **sum** statistic boxes.
+        
+        *   **Result:** Save the output layer as `catchment_precipitation.gpkg`. The mean rainfall value will be appended directly to the polygon's attribute table.
+
+---
+
+## 4. Analytical Methods Comparison
+
+Hydrologists choose different methods depending on rain gauge density and topographic complexity:
+
+| Method | Best Suited For | Advantages | Limitations |
+| :--- | :--- | :--- | :--- |
+| **Thiessen Polygons** | Flat terrain, sparse gauge networks | Simple to calculate; assigns objective weights based on geometry | Abrupt transitions at boundaries; ignores elevation effects |
+| **Inverse Distance Weighting (IDW)** | Flat to moderate terrain, dense networks | Smooth transitions; easy to compute grid surfaces | Prone to "bull's eye" artifacts; does not account for topography |
+| **Kriging (Geostatistical)** | Dense gauge networks, complex terrains | Provides statistical error maps; models spatial trends | Computationally intensive; requires statistical validation |
+| **Orographic/Co-Kriging** | Mountainous zones with high relief | Integrates elevation (DEM) to estimate rain increases on slopes | Requires dense historical data to build accurate correlations |
 
 ---
 
 ## 5. Hydrological Significance
 
-*   **Areal Rain Depth:** Provides the $P$ value for water balance calculations ($P - ET - Q = \Delta S$).
+*   **Water Balance Modeling:** Mean Areal Precipitation is the foundational input for water balance equations ($P - ET - Q = \Delta S$, where $P$ is precipitation, $ET$ is evapotranspiration, $Q$ is runoff, and $\Delta S$ is storage change).
 
 *   **Design Storm Isohyetal Maps:** Isohyetal contours generated from interpolated rainfall surfaces outline zones of maximum flood vulnerability, which are critical for sizing spillways, drainage canals, and bridges.
 
