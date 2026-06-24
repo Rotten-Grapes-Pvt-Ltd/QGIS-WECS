@@ -36,15 +36,112 @@ Reservoirs are critical infrastructure for water supply, irrigation, flood contr
 
 ---
 
-## 3. Water Surface Area Extraction (MNDWI)
+## 3. Step-by-Step Reservoir Monitoring Workflow
 
-To map the water extent, we use the **Modified Normalized Difference Water Index (MNDWI)**, which isolates water while suppressing noise from built-up urban zones:
+Catchment reservoir storage and area monitoring requires extracting surface water from spectral imagery and intersecting it with volumetric bathymetric capacity grids:
 
-$$MNDWI = \frac{\text{Green} - \text{SWIR}}{\text{Green} + \text{SWIR}}$$
+![flow_chart](images/reservoir_monitoring/flow_chart.png)
 
-*   *MNDWI Logic:* Water absorbs SWIR light and reflects green light, yielding high positive MNDWI values ($>0.1$). Soil and vegetation yield negative values.
+1.  **Compute Water Surface Index (MNDWI or NDWI):**
+    
+    *   **What We Are Doing:** Calculating a normalized difference water index (like MNDWI) on multi-spectral satellite bands to distinguish water from terrestrial land cover.
+    
+    *   **Why This Step is Needed:** Standard satellite images show mixed colors. Computing MNDWI uses green and SWIR bands to exploit water's strong reflection of green light and near-complete absorption of shortwave infrared light, yielding high values ($>0.1$) for water and negative values for soil/vegetation.
+    
+    *   *Input:* Sentinel-2 or Landsat bands (Green and SWIR).
+    
+    *   *Output:* MNDWI continuous raster grid (`reservoir_mndwi.tif`).
+    
+    *   *How to Fill the Form in QGIS:*
+        
+        *   **Tool Path:** Go to main menu **Raster** > **Raster Calculator...**.
+        
+        *   **Expression:** Enter the formula:
+            `(Green_band - SWIR_band) / (Green_band + SWIR_band)`
+            *(e.g., `("Sentinel2_Green@1" - "Sentinel2_SWIR@1") / ("Sentinel2_Green@1" + "Sentinel2_SWIR@1")`)*
+        
+        *   **Output Layer:** Save as `reservoir_mndwi.tif`.
 
-*   *GIS Extraction:* Apply the index in the Raster Calculator, threshold values $> 0.2$, vectorize the result, and calculate polygon area (`$area`).
+2.  **Threshold Index into Binary Water Mask:**
+    
+    *   **What We Are Doing:** Segmenting the continuous MNDWI image into a binary raster where water is 1 and land is 0.
+    
+    *   **Why This Step is Needed:** MNDWI outputs a range of decimals. To map the actual pool boundary, a threshold (typically between `0.1` and `0.2`) must be applied to isolate pure water pixels from soil and dry vegetation.
+    
+    *   *Input:* MNDWI raster (`reservoir_mndwi.tif`) from **Step 1**.
+    
+    *   *Output:* Binary water grid (`water_mask.tif`).
+    
+    *   *How to Fill the Form in QGIS:*
+        
+        *   **Tool Path:** Go to main menu **Raster** > **Raster Calculator...**.
+        
+        *   **Expression:** Enter the threshold expression:
+            `"reservoir_mndwi@1" >= 0.1`
+        
+        *   **Output Layer:** Save as `water_mask.tif`.
+
+3.  **Convert Raster Mask to Vector Polygon (Vectorization):**
+    
+    *   **What We Are Doing:** Transforming the raster water pixels into a vector polygon layer and calculating its surface area.
+    
+    *   **Why This Step is Needed:** To filter out small puddles and compute the exact surface area of the main reservoir pool, the raster water cells must be grouped and polygonized. QGIS can then calculate the geometry area attribute.
+    
+    *   *Input:* Binary water grid (`water_mask.tif`) from **Step 2**.
+    
+    *   *Output:* Cleaned vector polygon layer (`reservoir_boundary.gpkg`).
+    
+    *   *How to Fill the Form in QGIS:*
+        
+        *   **Tool Path:** Go to main menu **Vector** > **Conversion** > **Polygonize (Raster to Vector)...**.
+        
+        *   **Input Layer:** Select `water_mask.tif`.
+        
+        *   **Output Field Name:** Keep the default `DN` (Digital Number).
+        
+        *   **Vectorized:** Save as `water_polygons.gpkg`.
+        
+        *   *Post-Processing:* Select the main reservoir polygon, delete peripheral sliver polygons, and run the Field Calculator with `$area` to calculate the reservoir surface area in square meters. Export the cleaned result as `reservoir_boundary.gpkg`.
+
+4.  **Calculate Basin Volume from Elevation levels (SAGA Grid Volume):**
+    
+    *   **What We Are Doing:** Running a volumetric analysis on a pre-impoundment DEM (digital elevation model) to calculate basin capacity below target elevation levels.
+    
+    *   **Why This Step is Needed:** To build the Elevation-Area-Volume (EAV) capacity table, we must compute the cumulative storage volume and surface area inside the empty reservoir basin at incremental heights (e.g., in 1-meter intervals).
+    
+    *   *Input:* Projected pre-impoundment DEM (e.g., `basin_dem_utm.tif`).
+    
+    *   *Output:* Surface area and volume results printed in the log panel.
+    
+    *   *How to Fill the SAGA Form in QGIS:*
+        
+        *   **Tool Path:** Open the **Processing Toolbox** and navigate to **SAGA** > **Grid - Analysis** > **Grid Volume**.
+        
+        *   **Grid:** Select `basin_dem_utm.tif` (must be in a projected metric CRS like UTM so volume is computed in cubic meters, not degrees).
+        
+        *   **Method:** Select `[1] Count Only Below Base Level`.
+        
+        *   **Base Level:** Enter a target elevation value (e.g., `250` for 250m pool height).
+        
+        *   **Results:** Click Run, then open the **Log** tab in the tool dialog to copy the calculated volume (m³) and surface area (m²). Repeat this for multiple water elevations to build the reservoir capacity table.
+
+5.  **Estimate Reservoir Storage via Curve Matching:**
+    
+    *   **What We Are Doing:** Intersecting the current satellite-derived water area (from Step 3) with the EAV curve (from Step 4) to determine the active water storage volume.
+    
+    *   **Why This Step is Needed:** Many remote reservoirs lack operational water level sensors or telemetry. Estimating the surface area from remote sensing and matching it to the EAV curve provides a highly reliable, remote-sensing estimation of active storage.
+    
+    *   *Input:* Satellite-derived water area ($A_{sat}$ in m²) and the compiled EAV capacity table.
+    
+    *   *Output:* Current reservoir water depth level (m) and storage volume (m³).
+    
+    *   *Procedural Steps:*
+        
+        *   Plot the EAV values in a spreadsheet or database.
+        
+        *   Interpolate the water level and storage volume associated with the satellite-derived surface area ($A_{sat}$).
+        
+        *   Track these storage volumes over historical satellite scenes to plot the reservoir's fill-and-drain seasonal variations.
 
 ---
 
@@ -61,33 +158,13 @@ EAV curves are the mathematical foundation of reservoir operations, showing the 
         /___/_________________________\___\ Basin Bed
 ```
 
-1.  **Extract Area at Incremental Elevations:**
+*   **Incremental Calculation:**
     
-    *   Using the pre-impoundment DEM raster, run a reclassification tool at incremental vertical intervals (e.g., every $1\text{m}$).
+    If the automated SAGA Grid Volume tool is not used, you can calculate the incremental volume between two elevation steps ($H_1$ and $H_2$) using the trapezoidal formula:
     
-    *   *GIS Toolpaths (Reclassify):*
-        
-        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Tools** > **Reclassify by Table** (or **Reclassify Grid Values**).
-        
-        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **Reclassify**.
+    $$\Delta V = \frac{H_2 - H_1}{3} \times \left( A_1 + A_2 + \sqrt{A_1 \times A_2} \right)$$
     
-    *   Count the cumulative pixels below each elevation threshold and multiply by cell area to calculate surface area ($A$).
-
-2.  **Calculate Volume ($V$):**
-    
-    *   Calculate incremental volume between two elevation steps ($H_1$ and $H_2$) using the trapezoidal formula:
-        
-        $$\Delta V = \frac{H_2 - H_1}{3} \times \left( A_1 + A_2 + \sqrt{A_1 \times A_2} \right)$$
-        
-    *   Accumulate $\Delta V$ from the lowest bed elevation up to the maximum operating pool level to generate the total volume curve.
-    
-    *   *GIS Toolpaths (Automated Basin Volume):*
-        
-        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Analysis** > **Grid Volume** (calculates both surface area and volume below a user-defined threshold elevation directly).
-        
-        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Hydrological Analysis** > **LakeVolume** (computes the volume and area of a lake or reservoir basin below a specified height).
-
-3.  **Plot EAV Curves:** Plot elevation on the Y-axis against Surface Area and Storage Volume on the X-axis.
+    Accumulating $\Delta V$ from the lowest bed elevation up to the maximum operating pool level generates the total volume curve.
 
 ---
 
