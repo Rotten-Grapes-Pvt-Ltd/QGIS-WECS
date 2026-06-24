@@ -24,7 +24,7 @@ Watershed characterization involves extracting the topographic and drainage prop
 
 ## 3. Step-by-Step Delineation Workflow
 
-In desktop GIS (QGIS with SAGA or WhiteboxTools), catchment delineation follows a sequential raster processing chain:
+In desktop GIS (QGIS with SAGA or WhiteboxTools), catchment delineation follows a sequential raster processing chain where the output of each geoprocessing tool becomes the mandatory input for the next:
 
 ```text
     +-----------+     +-----------------+     +-----------------+
@@ -40,33 +40,129 @@ In desktop GIS (QGIS with SAGA or WhiteboxTools), catchment delineation follows 
 
 1.  **Fill Sinks / Pits:**
     
-    *   *Tool:* SAGA **Fill Sinks (Wang & Liu)** or WBT **Fill Depressions**.
+    *   *Input:* Raw DEM raster (`output_hh_utm.tif`).
+    
+    *   *Output:* Conditioned, depressionless elevation grid (`filled_dem.tif`).
     
     *   *Logic:* Identifies and raises artificial elevation depressions (sinks) in the DEM to ensure water can flow continuously toward the outer boundary.
+    
+    *   *How to fill the QGIS Form:*
+        
+        *   **SAGA Fill Sinks (Wang & Liu):**
+            
+            *   *DEM:* Select `output_hh_utm.tif`.
+            
+            *   *Minimum Slope:* Set to `0.01` (injects a micro-gradient to force downstream flow).
+            
+            *   *Filled DEM:* Click the file dialog button and save as `filled_dem.tif`.
+        
+        *   **WhiteboxTools FillDepressions:**
+            
+            *   *Input DEM file:* Select `output_hh_utm.tif`.
+            
+            *   *Flat increment:* Set to `0.001` (to prevent completely flat surfaces).
+            
+            *   *Output DEM file:* Save as `filled_dem.tif`.
 
 2.  **Flow Direction:**
     
-    *   *Tool:* SAGA **Flow Direction (D8)**.
+    *   *Input:* Conditioned DEM (`filled_dem.tif`) from **Step 1**.
+    
+    *   *Output:* Flow Direction grid (`flow_direction.tif`), encoding flow paths.
     
     *   *Logic:* Calculates the direction of steepest descent from each cell to one of its eight neighboring cells. Output is encoded as grid directions (e.g., $1, 2, 4, 8, 16, 32, 64, 128$).
+    
+    *   *How to fill the QGIS Form:*
+        
+        *   **SAGA Flow Accumulation (Top-Down):**
+            
+            *   *Elevation:* Select `filled_dem.tif` (the output from Step 1).
+            
+            *   *Method:* Select `[0] Deterministic 8 (D8)`.
+            
+            *   *Flow Directions:* Save as `flow_direction.tif`. (Uncheck other outputs if only direction is needed).
+        
+        *   **WhiteboxTools D8Pointer:**
+            
+            *   *Input DEM file:* Select `filled_dem.tif`.
+            
+            *   *Output pointer file:* Save as `flow_direction.tif`.
 
 3.  **Flow Accumulation:**
     
-    *   *Tool:* SAGA **Flow Accumulation (Top-Down)**.
+    *   *Input:* Conditioned DEM (`filled_dem.tif` from **Step 1**) and/or Flow Direction grid (`flow_direction.tif` from **Step 2**).
+    
+    *   *Output:* Contributing drainage area grid (`flow_accumulation.tif`).
     
     *   *Logic:* Counts the cumulative number of upstream cells draining into each downstream cell. High flow accumulation cells represent natural drainage channels (streams).
+    
+    *   *How to fill the QGIS Form:*
+        
+        *   **SAGA Flow Accumulation (Top-Down):**
+            
+            *   *Elevation:* Select `filled_dem.tif` (from Step 1).
+            
+            *   *Method:* Select `[0] Deterministic 8 (D8)`.
+            
+            *   *Flow Accumulation:* Save as `flow_accumulation.tif`.
+        
+        *   **WhiteboxTools D8FlowAccumulation:**
+            
+            *   *Input D8 pointer file:* Select `flow_direction.tif` (from Step 2).
+            
+            *   *Output flow accumulation file:* Save as `flow_accumulation.tif`.
 
 4.  **Stream Network Extraction:**
     
-    *   *Tool:* Raster Calculator or SAGA **Channel Subnetwork**.
+    *   *Input:* Flow Accumulation grid (`flow_accumulation.tif`) from **Step 3**.
+    
+    *   *Output:* Binary stream channel grid (`stream_network_binary.tif` where stream = 1, land = 0).
     
     *   *Logic:* Thresholds the flow accumulation raster (e.g., all cells where accumulation $> 500\text{ pixels}$) to isolate the stream network.
+    
+    *   *How to fill the QGIS Form:*
+        
+        *   **Raster Calculator (QGIS Native):**
+            
+            *   *Expression:* Type `"flow_accumulation@1" >= 500`.
+            
+            *   *Output layer:* Save as `stream_network_binary.tif`.
+        
+        *   **WhiteboxTools ExtractStreams:**
+            
+            *   *Input D8 flow accumulation file:* Select `flow_accumulation.tif` (from Step 3).
+            
+            *   *Threshold:* Type `500.0`.
+            
+            *   *Output stream file:* Save as `stream_network_binary.tif`.
 
 5.  **Watershed Delineation:**
     
-    *   *Tool:* SAGA **Upslope Area** or WBT **Watershed**.
+    *   *Input:* Flow Direction grid (`flow_direction.tif` from **Step 2**) and target outlet/pour point coordinates.
+    
+    *   *Output:* Catchment basin boundary grid (`watershed_basin.tif`).
     
     *   *Logic:* Traces all upstream cells draining to a specified pour point cell (outlet) based on the D8 flow direction grid, generating a boundary polygon.
+    
+    *   *How to fill the QGIS Form:*
+        
+        *   **SAGA Upslope Area:**
+            
+            *   *Elevation:* Select `filled_dem.tif` (from Step 1).
+            
+            *   *Target X Coordinate / Target Y Coordinate:* Use the coordinate selection picker to click on the stream network (`stream_network_binary.tif`) where your outlet sits.
+            
+            *   *Flow Method:* Select `[0] Deterministic 8 (D8)`.
+            
+            *   *Upslope Area:* Save as `watershed_basin.tif`.
+        
+        *   **WhiteboxTools Watershed:**
+            
+            *   *Input D8 pointer file:* Select `flow_direction.tif` (from Step 2).
+            
+            *   *Input pour points file:* Select your snapped outlet point vector layer (`snapped_outlet.gpkg`).
+            
+            *   *Output watershed file:* Save as `watershed_basin.tif`.
 
 ---
 
