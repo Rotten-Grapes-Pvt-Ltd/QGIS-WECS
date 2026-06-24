@@ -41,7 +41,7 @@ We will construct a graphical model that takes a raw DEM, performs sink filling,
   [ Input: DEM Raster ]
            |
            v
-    (WhiteboxTools: Fill Depressions) -> [ Filled DEM (Intermediate) ]
+    (SAGA: Fill Sinks) -> [ Filled DEM (Intermediate) ]
                                  |
                                  v
                           (GDAL: Slope) -> [ Slope Raster (Intermediate) ]
@@ -66,7 +66,7 @@ We will construct a graphical model that takes a raw DEM, performs sink filling,
     
     Click the **Algorithms** tab.
     
-    Search for **Fill Depressions (WhiteboxTools)**. Drag it onto the canvas.
+    Search for **Fill Sinks (SAGA)**. Drag it onto the canvas.
     
     Set the input DEM parameter to use **Model Input** > `Raw DEM`.
     

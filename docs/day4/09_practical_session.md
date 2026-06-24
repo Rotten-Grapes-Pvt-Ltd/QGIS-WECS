@@ -26,19 +26,22 @@ Ensure the DEM coordinates are in meters and remove sinks to establish continuou
 
 1.  **Reproject DEM:** Go to **Raster** > **Projections** > **Warp (Reproject)...**. Set Input to `output_hh.tif`, Target CRS to `EPSG:32645`, Resampling to **Bilinear**, and save as `data/processed/output_hh_utm.tif`.
 
-2.  **Fill Sinks:** Go to **Processing Toolbox** > **WhiteboxTools** > **Hydrological Analysis** > **Fill Depressions** (or **GRASS** > **Raster (r.*)** > **r.fill.dir**).
+2.  **Fill Sinks:** Go to **Processing Toolbox** > **SAGA** > **Terrain Analysis - Hydrology** > **Fill Sinks (Wang & Liu)**.
     *   **DEM:** `data/processed/output_hh_utm.tif`.
+    *   **Minimum Slope (Degree):** `0.01`.
     *   **Filled DEM:** Save as `data/processed/filled_dem.tif`.
     *   Click **Run**.
 
 ### 3. Flow Direction and Accumulation
 Compute flow direction paths and cumulative upstream drainage areas:
 
-1.  Navigate to **Processing Toolbox** > **WhiteboxTools** > **Hydrological Analysis** > **D8 Flow Accumulation** (or **GRASS** > **Raster (r.*)** > **r.watershed**).
+1.  Navigate to **Processing Toolbox** > **SAGA** > **Terrain Analysis - Hydrology** > **Flow Accumulation (Top-Down)**.
 
 2.  Configure parameters:
     *   **Elevation:** `data/processed/filled_dem.tif`.
+    *   **Method:** Select **\[0\] Deterministic 8 (D8)**.
     *   **Flow Accumulation:** Save as `data/processed/flow_accumulation.tif`.
+    *   **Flow Directions:** Save as `data/processed/flow_direction.tif`.
 
 3.  Click **Run**. Style `flow_accumulation.tif` using a logarithmic color scale to visualize stream paths.
 
@@ -52,7 +55,7 @@ Isolate cells representing major streams and convert them into vector lines:
 
 3.  Save output as `data/processed/stream_network_binary.tif`. Click **OK**.
 
-4.  Vectorize the stream grid: Navigate to **Processing Toolbox** > **GDAL** > **Raster Conversion** > **Polygonize (Raster to Vector)...** (or use **WhiteboxTools** > **Stream Network Analysis** > **Raster Streams To Vector**).
+4.  Vectorize the stream grid: Navigate to **Processing Toolbox** > **SAGA** > **Vector <-> Raster** > **Vectorising Grid Classes**.
     *   **Grid:** `stream_network_binary.tif`.
     *   **Class Selection:** Set to **each class** or filter for class `1`.
     *   Save output as a vector layer `data/processed/vector_streams.gpkg`.
@@ -60,10 +63,11 @@ Isolate cells representing major streams and convert them into vector lines:
 ### 5. Catchment Delineation
 Delineate the watershed boundary draining to a selected outlet coordinate:
 
-1.  Navigate to **Processing Toolbox** > **WhiteboxTools** > **Hydrological Analysis** > **Watershed** (or **GRASS** > **Raster (r.*)** > **r.water.outlet**).
+1.  Navigate to **Processing Toolbox** > **SAGA** > **Terrain Analysis - Hydrology** > **Upslope Area**.
 
 2.  Configure parameters:
-    *   **Elevation / Flow Direction:** Select the flow direction grid.
+    *   **Elevation:** `data/processed/filled_dem.tif`.
+    *   **Flow Method:** Select **Deterministic 8 (D8)**.
     *   **Target X / Target Y:** Click the map tool button (`...`) and click a point on your stream network representing the basin outlet.
     *   **Upslope Area:** Save output as a raster `data/processed/basin_boundary_raster.tif`.
 
@@ -74,9 +78,10 @@ Delineate the watershed boundary draining to a selected outlet coordinate:
 ### 6. Soil Erosion Susceptibility (RUSLE)
 Calculate the topographic LS factor and compile the annual soil loss grid:
 
-1.  **Calculate LS Factor:** Navigate to **Processing Toolbox** > **WhiteboxTools** > **Hydrological Analysis** > **Lsf Factor** (or **GRASS** > **Raster (r.*)** > **r.uslek**).
+1.  **Calculate SAGA LS Factor:** Navigate to **Processing Toolbox** > **SAGA** > **Terrain Analysis - Hydrology** > **LS Factor**.
     *   **Elevation:** `data/processed/filled_dem.tif`.
     *   **Flow Accumulation:** `data/processed/flow_accumulation.tif`.
+    *   **Method:** Select **\[0\] Moore et al. (1991)**.
     *   **LS Factor:** Save output as `data/processed/ls_factor.tif`.
     *   Click **Run**.
 
@@ -110,7 +115,7 @@ Interpolate point weather station records and compute volumetric catchment rainf
 ### 8. Height Above Nearest Drainage (HAND) Mapping
 Delineate relative topography above stream channels to locate low-lying flood inundation hazard zones:
 
-1.  Navigate to **Processing Toolbox** > **WhiteboxTools** > **Hydrological Analysis** > **Elevation Above Stream** (or use **r.stream.distance** in GRASS).
+1.  Navigate to **Processing Toolbox** > **SAGA** > **Terrain Analysis - Hydrology** > **Relative Heights**.
     *   **Elevation:** `data/processed/filled_dem.tif`.
     *   **Streams:** `data/processed/stream_network_binary.tif`.
     *   **Relative Heights:** Save output as `data/processed/hand_model.tif`.
@@ -142,7 +147,7 @@ Using the layers created in Part A, execute the following steps:
 
 1.  **Delineate a Sub-basin:**
     *   Identify a downstream confluence point on `vector_streams.gpkg`.
-    *   Run GRASS **r.water.outlet** or WBT **Watershed** using that coordinate to delineate the upstream catchment boundary.
+    *   Run SAGA **Upslope Area** using that coordinate to delineate the upstream catchment boundary.
     *   Convert the output raster to a vector polygon layer named `catchment_boundary.gpkg`.
 
 2.  **Calculate Topographic Statistics (Zonal Statistics):**
@@ -151,8 +156,8 @@ Using the layers created in Part A, execute the following steps:
     *   Open the attribute table of `catchment_boundary.gpkg` and calculate the total catchment surface area in square kilometers: `$area / 1000000`.
 
 3.  **Generate Stream Ordering:**
-    *   Open WhiteboxTools **Strahler Stream Order**. Select the filled DEM and your stream network. Set Method to **Strahler** and output `strahler_order.tif`.
-    *   Run the QGIS **Polygonize (Raster to Vector)** tool to convert the Strahler raster to vector lines named `ordered_streams.gpkg`.
+    *   Open SAGA **Stream Order**. Select the filled DEM and your stream network. Set Method to **Strahler** and output `strahler_order.tif`.
+    *   Run the SAGA **Vectorising Grid Classes** tool to convert the Strahler raster to vector lines named `ordered_streams.gpkg`.
 
 4.  **Compose Print Layout Map:**
     *   Create an A4 landscape Print Layout in QGIS.

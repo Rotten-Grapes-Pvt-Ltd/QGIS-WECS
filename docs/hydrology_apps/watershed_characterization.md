@@ -24,7 +24,7 @@ Watershed characterization involves extracting the topographic and drainage prop
 
 ## 3. Step-by-Step Delineation Workflow
 
-In desktop GIS (QGIS with GRASS GIS or WhiteboxTools), catchment delineation follows a sequential raster processing chain:
+In desktop GIS (QGIS with SAGA or WhiteboxTools), catchment delineation follows a sequential raster processing chain:
 
 ```text
     +-----------+     +-----------------+     +-----------------+
@@ -40,33 +40,33 @@ In desktop GIS (QGIS with GRASS GIS or WhiteboxTools), catchment delineation fol
 
 1.  **Fill Sinks / Pits:**
     
-    *   *Tool:* GRASS **r.fill.dir** or WBT **Fill Depressions**.
+    *   *Tool:* SAGA **Fill Sinks (Wang & Liu)** or WBT **Fill Depressions**.
     
     *   *Logic:* Identifies and raises artificial elevation depressions (sinks) in the DEM to ensure water can flow continuously toward the outer boundary.
 
 2.  **Flow Direction:**
     
-    *   *Tool:* GRASS **r.watershed** or WBT **D8 Pointer**.
+    *   *Tool:* SAGA **Flow Direction (D8)**.
     
-    *   *Logic:* Calculates the direction of steepest descent from each cell to one of its eight neighboring cells. Output is encoded as grid directions (represented as directions/angles or powers of 2).
+    *   *Logic:* Calculates the direction of steepest descent from each cell to one of its eight neighboring cells. Output is encoded as grid directions (e.g., $1, 2, 4, 8, 16, 32, 64, 128$).
 
 3.  **Flow Accumulation:**
     
-    *   *Tool:* GRASS **r.watershed** or WBT **D8 Flow Accumulation**.
+    *   *Tool:* SAGA **Flow Accumulation (Top-Down)**.
     
     *   *Logic:* Counts the cumulative number of upstream cells draining into each downstream cell. High flow accumulation cells represent natural drainage channels (streams).
 
 4.  **Stream Network Extraction:**
     
-    *   *Tool:* Raster Calculator or WBT **Extract Streams**.
+    *   *Tool:* Raster Calculator or SAGA **Channel Subnetwork**.
     
     *   *Logic:* Thresholds the flow accumulation raster (e.g., all cells where accumulation $> 500\text{ pixels}$) to isolate the stream network.
 
 5.  **Watershed Delineation:**
     
-    *   *Tool:* GRASS **r.water.outlet** or WBT **Watershed**.
+    *   *Tool:* SAGA **Upslope Area** or WBT **Watershed**.
     
-    *   *Logic:* Traces all upstream cells draining to a specified pour point cell (outlet) based on the flow direction grid, generating a boundary polygon.
+    *   *Logic:* Traces all upstream cells draining to a specified pour point cell (outlet) based on the D8 flow direction grid, generating a boundary polygon.
 
 ---
 

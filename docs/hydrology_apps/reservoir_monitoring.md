@@ -53,7 +53,7 @@ EAV curves are the mathematical foundation of reservoir operations, showing the 
 
 1.  **Extract Area at Incremental Elevations:**
     
-    *   Using the pre-impoundment DEM raster, run QGIS Native **Reclassify by Table** (or GDAL equivalent) at incremental vertical intervals (e.g., every $1\text{m}$).
+    *   Using the pre-impoundment DEM raster, run SAGA **Reclassify by Table** at incremental vertical intervals (e.g., every $1\text{m}$).
     
     *   Count the cumulative pixels below each elevation threshold and multiply by cell area to calculate surface area ($A$).
 

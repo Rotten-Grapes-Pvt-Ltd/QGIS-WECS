@@ -212,7 +212,7 @@ hide:
   </div>
   <div class="card">
     <h3>Processing Engines</h3>
-    <p>GRASS and WhiteboxTools integrated within QGIS to compute terrain derivatives, fill depressions, and extract stream networks.</p>
+    <p>SAGA, GRASS, and WhiteboxTools integrated within QGIS to compute terrain derivatives, fill depressions, and extract stream networks.</p>
   </div>
   <div class="card">
     <h3>SWAT+ / QSWAT+</h3>

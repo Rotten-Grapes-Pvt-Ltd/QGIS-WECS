@@ -75,7 +75,7 @@ Where $s_i$ is the slope to neighbor $i$ and $p$ is a weighting exponent (typica
 
 *   **QGIS Analysis Steps:**
     
-    *   Go to WhiteboxTools' **D8 Flow Accumulation** tool.
+    *   Go to SAGA's **Flow Accumulation (Top-Down)** tool.
     
     *   **Elevation:** Select `filled_dem_wang_liu.tif`.
     
@@ -95,7 +95,7 @@ The D-Infinity algorithm models flow direction as a continuous angle between $0$
 
 *   **QGIS Analysis Steps:**
     
-    *   Go to WhiteboxTools' **D8 Flow Accumulation** tool.
+    *   Go to SAGA's **Flow Accumulation (Top-Down)** tool.
     
     *   **Elevation:** Select `filled_dem_wang_liu.tif`.
     
