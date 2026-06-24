@@ -58,13 +58,17 @@ Where:
 
 1.  Delineate water indices (e.g. MNDWI) and threshold to create waterbody polygons.
 
-2.  Convert water polygons to centerlines: Use the Processing Toolbox **Thinning (Skeletons)** tool or WBT **Stream Vectorization** to extract a single-line vector representation of the channel.
+2.  Convert water polygons to centerlines:
+    *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Filter** > **Skeleton/Thinning** (on raster masks).
+    *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Hydrological Analysis** > **StreamVectorization** (or **Thinning**).
 
 3.  Split centerlines into study reach segments.
 
 4.  Calculate $L_{\text{channel}}$ by using the Field Calculator on the line segment geometries (`$length`).
 
 5.  Draw a straight vector line representing the valley trend and calculate its length ($L_{\text{valley}}$). Divide the channel length by the valley length to compute the Sinuosity Index.
+    *   *Automated Sinuosity Calculation:*
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Shapes - Polygons** (or **Shapes - Lines**) > **Sinuosity** (calculates sinuosity indices directly on vector line layers).
 
 ---
 
@@ -76,7 +80,10 @@ To visualize where the river has migrated over time:
 
 2.  Vectorize each water mask into polygon boundaries: `water_1990`, `water_2005`, and `water_2020`.
 
-3.  Run **Symmetric Difference** or **Union** between the layers. The non-overlapping areas highlight zones of lateral migration, meander cutoff loops, and island deposition.
+3.  Run **Symmetric Difference** or **Union** between the layers to highlight lateral migration and meander cutoffs.
+    *   *GIS Toolpaths:*
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Shapes - Polygons** > **Symmetric Difference** (or **Union**).
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **GIS Analysis** > **SymmetricDifference** (or **Union**).
 
 4.  Calculate the lateral migration rate (meters/year) by measuring the distance between centerlines divided by the time interval.
 

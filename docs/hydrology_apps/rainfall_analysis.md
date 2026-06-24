@@ -58,6 +58,12 @@ Where:
 
 *   *Limitations:* Sensitive to clustered gauges; prone to "bull's eye" artifacts around isolated stations.
 
+*   *GIS Toolpaths:*
+    
+    *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Interpolation** > **Inverse Distance Weighted**.
+    
+    *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Image Interpolation** > **IdwInterpolation**.
+
 ### Kriging
 
 A geostatistical method that uses a semivariogram to capture spatial autocorrelation structures:
@@ -67,6 +73,12 @@ $$P_x = \sum_{i=1}^{n} w_i P_i$$
 *   *Significance:* Unlike IDW, Kriging calculates the statistical probability of error along with the interpolation surface, making it valuable for scientific confidence evaluation.
 
 *   *Co-Kriging:* Incorporates auxiliary rasters (such as elevation DEMs) to model topographically induced (orographic) rainfall in mountainous zones.
+
+*   *GIS Toolpaths:*
+    
+    *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Interpolation** > **Ordinary Kriging** (or **Universal Kriging**).
+    
+    *   **WhiteboxTools:** *Note: Kriging is not natively implemented in standard WBT; SAGA is the preferred high-performance engine for geostatistical interpolation.*
 
 ---
 
@@ -80,13 +92,19 @@ Satellite grids provide continuous global coverage but contain grid cell offsets
 
 3.  **Run Zonal Statistics:**
     
-    *   *Tool:* Processing Toolbox > **Zonal Statistics**.
-    
     *   *Input Vector:* Catchment boundary polygon.
     
     *   *Input Raster:* Satellite precipitation grid.
     
     *   *Calculation:* Choose **Mean** and **Sum**.
+    
+    *   *GIS Toolpaths:*
+        
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Tools** > **Raster Statistics for Polygons**.
+        
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **ZonalStatistics**.
+        
+        *   **QGIS Native:** **Processing Toolbox** > **Raster Analysis** > **Zonal Statistics**.
     
     *   *Result:* The tool appends the average rainfall depth (mm) and total volume ($\text{m}^3$) directly to the catchment polygon's attribute table.
 

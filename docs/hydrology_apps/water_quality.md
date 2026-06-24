@@ -66,11 +66,24 @@ $$NDCI = \frac{\text{Band 5} - \text{Band 4}}{\text{Band 5} + \text{Band 4}}$$
 
 1.  **Mask Land and Clouds:** Apply a water mask (e.g., NDWI $> 0.15$) to set all land, forest, and urban pixels to NoData.
 
-2.  **Run Index Calculators:** Run the NDCI or TSS index formula in the **Raster Calculator** on the water-only pixels.
+2.  **Run Index Calculators:** Run the NDCI or TSS index formula on the water-only pixels.
+    *   *GIS Toolpaths (Index Calculators):*
+        
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Calculus** > **Grid Calculator**.
+        
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **RasterCalculator**.
 
 3.  **Perform Empirical Calibration:**
     
-    *   Use the **Sample Raster Values** tool to extract satellite index values at the exact coordinate locations of in-situ sampling stations.
+    *   Extract satellite index values at the exact coordinate locations of in-situ sampling stations.
+    
+    *   *GIS Toolpaths (Extracting Pixel Values):*
+        
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Shapes - Grid** > **Add Grid Values to Points**.
+        
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **ExtractRasterValuesAtPoints**.
+        
+        *   **QGIS Native:** **Processing Toolbox** > **Raster Analysis** > **Sample Raster Values**.
     
     *   Plot a scatterplot in Excel or Python comparing the extracted index values (X-axis) with laboratory-tested TSS or Chlorophyll concentrations (Y-axis).
     

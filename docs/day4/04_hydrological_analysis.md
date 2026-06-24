@@ -61,6 +61,9 @@ The D8 algorithm assumes that water from a grid cell drains to exactly one of it
     
     *   Uncheck other outputs and click **Run**.
 
+*   **WhiteboxTools Alternative:**
+    *   Navigate to **WhiteboxTools** > **Hydrological Analysis** > **D8Pointer** (generates the D8 flow direction pointer grid) and **D8FlowAccumulation** (generates the flow accumulation grid from a DEM).
+
 ### Multiple Flow Direction (MFD)
 
 The MFD algorithm distributes downslope runoff across all neighboring cells that are lower in elevation than the target cell. The flow fraction ($f_i$) allocated to neighbor $i$ is proportional to the local slope gradient:
@@ -85,6 +88,9 @@ Where $s_i$ is the slope to neighbor $i$ and $p$ is a weighting exponent (typica
     
     *   Click **Run**.
 
+*   **WhiteboxTools Alternative:**
+    *   Navigate to **WhiteboxTools** > **Hydrological Analysis** > **MfdFlowAccumulation**. Set the input DEM and specify the output flow accumulation file path.
+
 ### D-Infinity ($\text{D}_{\infty}$) Flow Model
 
 The D-Infinity algorithm models flow direction as a continuous angle between $0$ and $2\pi$ radians. The algorithm computes slope vectors across triangular facets formed by the center pixel and its neighbors, routing water along the direction of the steepest facet and allocating flow proportionally between the two adjacent downhill pixels.
@@ -104,6 +110,9 @@ The D-Infinity algorithm models flow direction as a continuous angle between $0$
     *   **Flow Directions:** Save as `flow_direction_dinf.tif`.
     
     *   Click **Run**.
+
+*   **WhiteboxTools Alternative:**
+    *   Navigate to **WhiteboxTools** > **Hydrological Analysis** > **DInfPointer** (generates D-Infinity flow direction angles) and **DInfFlowAccumulation** (generates D-Infinity flow accumulation).
 
 ---
 
@@ -150,6 +159,9 @@ Each cell is assigned a weight of $1.0$. The resulting accumulation raster value
     
     *   Click **Run**.
 
+*   **WhiteboxTools Alternative:**
+    *   Navigate to **WhiteboxTools** > **Hydrological Analysis** > **D8FlowAccumulation**.
+
 ### Weighted Accumulation (Runoff Discharge Modeling)
 
 Each cell is multiplied by a secondary raster value (e.g. a spatial rainfall grid or run-off coefficient). The resulting accumulation raster represents actual runoff volumes ($m^3$) rather than cell counts, allowing for spatial discharge modeling.
@@ -171,6 +183,9 @@ Each cell is multiplied by a secondary raster value (e.g. a spatial rainfall gri
     *   **Flow Accumulation:** Save as `flow_accumulation_weighted.tif`.
     
     *   Click **Run**.
+
+*   **WhiteboxTools Alternative:**
+    *   Navigate to **WhiteboxTools** > **Hydrological Analysis** > **D8FlowAccumulation**. Set the input DEM, and select the optional **Input Weight Raster** as `runoff_weight.tif`.
 
 ---
 
@@ -199,6 +214,12 @@ Converts a continuous accumulation raster into a binary stream raster representi
     *   Save output as `stream_network_1000.tif`.
     
     *   Click **OK**. Style the output to show only values of $1$ in blue, leaving $0$ transparent.
+
+*   **WhiteboxTools Alternative:**
+    *   Navigate to **WhiteboxTools** > **Hydrological Analysis** > **ExtractStreams**. Set the **Flow Accumulation Grid** to `flow_accumulation_unweighted.tif`, and set the **Threshold Value** to `1000.0`.
+    *   *Stream Ordering Toolpaths:*
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Terrain Analysis - Channels** > **Stream Order** (select Strahler or Shreve methods).
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Hydrological Analysis** > **StrahlerStreamOrder** (or **ShreveStreamMagnitude**).
 
 ## 4. Watershed Delineation and Pour Point Snapping
 
@@ -237,6 +258,9 @@ Stream lines in a flow accumulation grid are only one pixel wide. If a pour poin
     
     *   **Snapped Output:** Save as `snapped_outlet.gpkg` and click **Run**.
 
+*   **WhiteboxTools Alternative:**
+    *   Navigate to **WhiteboxTools** > **Hydrological Analysis** > **SnapPourPoints**. Set the input vector pour points and the D8 flow accumulation, and select the search tolerance.
+
 ### Upslope Catchment Delineation
 
 Extracts the watershed basin boundary upslope of the snapped pour point.
@@ -252,5 +276,8 @@ Extracts the watershed basin boundary upslope of the snapped pour point.
     *   **Flow Method:** Select **Deterministic 8 (D8)**.
     
     *   **Upslope Area:** Save the output as `watershed_basin.tif` and click **Run**.
+
+*   **WhiteboxTools Alternative:**
+    *   Navigate to **WhiteboxTools** > **Hydrological Analysis** > **Watershed**. Set the input **D8 Pointer** (from the D8 pointer step) and target **Pour Points** (use your snapped outlet vector), and define the output **Dem** path.
     
     *   *Interpretation:* The resulting raster contains values of $100$ inside your delineated catchment basin boundary, and NoData elsewhere. Convert this to a vector polygon layer using **Polygonize (Raster to Vector)** for layout design.

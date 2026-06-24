@@ -53,7 +53,13 @@ EAV curves are the mathematical foundation of reservoir operations, showing the 
 
 1.  **Extract Area at Incremental Elevations:**
     
-    *   Using the pre-impoundment DEM raster, run SAGA **Reclassify by Table** at incremental vertical intervals (e.g., every $1\text{m}$).
+    *   Using the pre-impoundment DEM raster, run a reclassification tool at incremental vertical intervals (e.g., every $1\text{m}$).
+    
+    *   *GIS Toolpaths (Reclassify):*
+        
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Tools** > **Reclassify by Table** (or **Reclassify Grid Values**).
+        
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **Reclassify**.
     
     *   Count the cumulative pixels below each elevation threshold and multiply by cell area to calculate surface area ($A$).
 
@@ -64,6 +70,12 @@ EAV curves are the mathematical foundation of reservoir operations, showing the 
         $$\Delta V = \frac{H_2 - H_1}{3} \times \left( A_1 + A_2 + \sqrt{A_1 \times A_2} \right)$$
         
     *   Accumulate $\Delta V$ from the lowest bed elevation up to the maximum operating pool level to generate the total volume curve.
+    
+    *   *GIS Toolpaths (Automated Basin Volume):*
+        
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Analysis** > **Grid Volume** (calculates both surface area and volume below a user-defined threshold elevation directly).
+        
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Hydrological Analysis** > **LakeVolume** (computes the volume and area of a lake or reservoir basin below a specified height).
 
 3.  **Plot EAV Curves:** Plot elevation on the Y-axis against Surface Area and Storage Volume on the X-axis.
 

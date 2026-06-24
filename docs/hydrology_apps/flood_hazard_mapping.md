@@ -66,10 +66,22 @@ Since optical satellites cannot capture the ground through storm cloud cover, Sy
 4.  **Eliminate False Positives:**
     
     *   Himalayan mountain slopes cast radar shadows that mimic low backscatter. Use the terrain Slope raster calculated from your DEM to mask out all pixels where slope $> 5^\circ$, isolating calm water in flat valleys.
+    
+    *   *GIS Toolpaths (Slope):*
+        
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Terrain Analysis - Morphometry** > **Slope, Aspect, Curvature**.
+        
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Geomorphometric Analysis** > **Slope**.
 
 5.  **Vectorize Inundation:**
     
     *   Run **Polygonize** on the binary mask, select class $1$ polygons, and save the result as `active_flood_extent.gpkg`.
+    
+    *   *GIS Toolpaths (Vectorization):*
+        
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Vector <-> Raster** > **Vectorising Grid Classes**.
+        
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Data Tools** > **RasterToVectorPolygons** (or QGIS-native **Polygonize**).
 
 ---
 
@@ -86,6 +98,12 @@ The **Height Above Nearest Drainage (HAND)** model is a static topographic index
     3.  HAND maps land relative vertical height above the drainage channel.
     
     4.  *Interpretation:* A pixel with a HAND value $< 2\text{ meters}$ is highly vulnerable to a $2\text{m}$ river rise during bank overflow events, regardless of its distance from the river centerline.
+
+*   **GIS Toolpaths:**
+    
+    *   **SAGA GIS:** Open the **Processing Toolbox** and navigate to **SAGA** > **Terrain Analysis - Channels** > **Vertical Distance to Channel Network**.
+    
+    *   **WhiteboxTools:** Open the **Processing Toolbox** and navigate to **WhiteboxTools** > **Hydrological Analysis** > **Hand**.
 
 ---
 

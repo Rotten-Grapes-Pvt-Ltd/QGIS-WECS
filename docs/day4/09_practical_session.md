@@ -31,6 +31,8 @@ Ensure the DEM coordinates are in meters and remove sinks to establish continuou
     *   **Minimum Slope (Degree):** `0.01`.
     *   **Filled DEM:** Save as `data/processed/filled_dem.tif`.
     *   Click **Run**.
+    
+    *   *WhiteboxTools Alternative:* Run **WhiteboxTools** > **Hydrological Analysis** > **FillDepressions**. Set **Dem** to `output_hh_utm.tif` and save as `data/processed/filled_dem.tif`. Click **Run**.
 
 ### 3. Flow Direction and Accumulation
 Compute flow direction paths and cumulative upstream drainage areas:
@@ -44,6 +46,8 @@ Compute flow direction paths and cumulative upstream drainage areas:
     *   **Flow Directions:** Save as `data/processed/flow_direction.tif`.
 
 3.  Click **Run**. Style `flow_accumulation.tif` using a logarithmic color scale to visualize stream paths.
+
+    *   *WhiteboxTools Alternative:* Run **WhiteboxTools** > **Hydrological Analysis** > **D8Pointer** (saving output as `data/processed/flow_direction.tif`) and then **D8FlowAccumulation** (saving output as `data/processed/flow_accumulation.tif`).
 
 ### 4. Stream Network Extraction
 Isolate cells representing major streams and convert them into vector lines:
@@ -60,6 +64,8 @@ Isolate cells representing major streams and convert them into vector lines:
     *   **Class Selection:** Set to **each class** or filter for class `1`.
     *   Save output as a vector layer `data/processed/vector_streams.gpkg`.
 
+    *   *WhiteboxTools Alternative (Stream Extraction):* Run **WhiteboxTools** > **Hydrological Analysis** > **ExtractStreams**. Set **Flow Accumulation Grid** to `flow_accumulation.tif` and **Threshold Value** to `1000.0`, saving output as `stream_network_binary.tif`. Run **WhiteboxTools** > **Hydrological Analysis** > **RasterStreamsToVector** to generate `vector_streams.gpkg` directly.
+
 ### 5. Catchment Delineation
 Delineate the watershed boundary draining to a selected outlet coordinate:
 
@@ -74,6 +80,8 @@ Delineate the watershed boundary draining to a selected outlet coordinate:
 3.  Click **Run**. Convert this to a vector layer: Go to **Raster** > **Conversion** > **Polygonize (Raster to Vector)...**. Select `basin_boundary_raster.tif` and save as a vector polygon `data/processed/basin_boundary_polygon.gpkg`.
 
 4.  Style the polygon with a transparent fill and a thick black outline.
+
+    *   *WhiteboxTools Alternative:* Run **WhiteboxTools** > **Hydrological Analysis** > **Watershed**. Set **D8 Pointer** to `flow_direction.tif` and **Pour Points** to your snapped vector outlet layer. Save as `data/processed/basin_boundary_raster.tif`.
 
 ### 6. Soil Erosion Susceptibility (RUSLE)
 Calculate the topographic LS factor and compile the annual soil loss grid:
@@ -121,6 +129,8 @@ Delineate relative topography above stream channels to locate low-lying flood in
     *   **Relative Heights:** Save output as `data/processed/hand_model.tif`.
     *   Click **Run**.
 
+    *   *WhiteboxTools Alternative:* Run **WhiteboxTools** > **Hydrological Analysis** > **Hand**. Set **DEM** to `filled_dem.tif` and **Drainage (Streams)** to `stream_network_binary.tif`. Save as `data/processed/hand_model.tif`. Click **Run**.
+
 2.  Style `hand_model.tif` in the **Layer Styling Panel** using a classified color ramp. Highlight cells between $0\text{ m}$ and $2\text{ m}$ in red to map regions susceptible to local flood inundation.
 
 ### 9. Reservoir Stage-Volume Capacity Curve Analysis
@@ -134,6 +144,10 @@ Calculate reservoir storage capacities and surface areas at varying water levels
     *   **Method:** Select **Count Only Below**.
     *   **Volume / Area Output:** Save as a table `data/processed/stage_volume_480.html`.
     *   Click **Run**. Open the HTML report to extract pool area ($m^2$) and storage volume ($m^3$).
+
+    *   *SAGA/WBT Automated Alternatives:*
+        *   **SAGA GIS:** Run **SAGA** > **Grid - Analysis** > **Grid Volume**. Set elevation grid to `reservoir_dem.tif` and height threshold to `480`.
+        *   **WhiteboxTools:** Run **WhiteboxTools** > **Hydrological Analysis** > **LakeVolume**. Set input DEM to `reservoir_dem.tif` and specify the height threshold.
 
 ---
 

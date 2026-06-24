@@ -44,7 +44,10 @@ The **Soil & Water Assessment Tool (SWAT / QSWAT+)** is a continuous, semi-distr
     
     1.  Load the LULC and Soil vector/raster layers in QSWAT.
     
-    2.  Run SAGA Slope on the DEM and group slopes into classes (e.g. $0-5\%$, $5-15\%$, $>15\%$).
+    2.  Run Slope calculation on the DEM and group slopes into classes (e.g. $0-5\%$, $5-15\%$, $>15\%$).
+        *   *GIS Toolpaths (Slope):*
+            *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Terrain Analysis - Morphometry** > **Slope, Aspect, Curvature**.
+            *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Geomorphometric Analysis** > **Slope**.
     
     3.  Run the **HRU Definition** overlay tool. QSWAT intersects these three layers, eliminates fractional sliver polygons below a user threshold (e.g. $<5\%$ area), and generates a database file parameterizing the hydrology of each HRU.
 
@@ -79,10 +82,15 @@ Where:
 3.  Load a lookup matrix table linking LULC classes and HSG letters to their respective CN values.
 
 4.  Use **Union** or **Vector Overlay** to combine the LULC and Soil layers.
+    *   *GIS Toolpaths (Union):*
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **GIS Analysis** > **Union** (or standard QGIS-native **Union**).
 
 5.  Join the lookup table to append the correct CN attribute based on the combined land/soil code.
 
-6.  Rasterize the polygon layer to generate a continuous $30\text{ m}$ CN grid. Run **Zonal Statistics** to compute the area-weighted average CN for each delineated sub-basin in the model.
+6.  Rasterize the polygon layer to generate a continuous $30\text{ m}$ CN grid. Run zonal statistics to compute the area-weighted average CN for each delineated sub-basin in the model.
+    *   *GIS Toolpaths (Rasterization & Zonal Statistics):*
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Gridding** > **Shapes to Grid** (for rasterizing), and **SAGA** > **Grid - Tools** > **Raster Statistics for Polygons** (for zonal statistics).
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Data Tools** > **VectorPolygonsToRaster** (for rasterizing), and **WhiteboxTools** > **Math and Stats Tools** > **ZonalStatistics** (for zonal statistics).
 
 ---
 

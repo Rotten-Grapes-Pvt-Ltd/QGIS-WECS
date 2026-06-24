@@ -46,6 +46,12 @@ Where:
 
 *   $\epsilon$ = Water balance closure error (due to satellite measurement noise).
 
+*   *GIS Toolpaths (Grid Math):*
+    
+    *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Calculus** > **Grid Calculator**.
+    
+    *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **RasterCalculator**.
+
 ---
 
 ## 4. The Evapotranspiration Split ($ET_a$)
@@ -65,6 +71,12 @@ Where:
 *   *GIS Calculation:* WaPOR provides separate $T$ and $E$ grids. Using zonal statistics, water managers can calculate the **agricultural water productivity**:
     
     $$\text{Crop Water Productivity} = \frac{\text{Harvested Yield (kg)}}{\text{Transpiration } T \text{ (m}^3)}$$
+
+*   *GIS Toolpaths (Zonal Statistics):*
+    
+    *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Tools** > **Raster Statistics for Polygons**.
+    
+    *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **ZonalStatistics**.
 
 ---
 

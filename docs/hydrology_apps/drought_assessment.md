@@ -48,6 +48,12 @@ $$NDWI_{\text{canopy}} = \frac{\text{NIR} - \text{SWIR}}{\text{NIR} + \text{SWIR
 
 *   *Drought Interpretation:* Because SWIR is highly absorbed by leaf water, a water-stressed canopy reflects more SWIR, causing the NDWI value to decrease.
 
+*   *GIS Toolpaths (Core Indices):*
+    
+    *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Analysis** > **Vegetation Index (Slope Based)**.
+    
+    *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Image Processing Tools** > **Ndvi**.
+
 ---
 
 ## 4. Advanced Drought Monitoring Indices
@@ -85,6 +91,12 @@ $$VHI = \alpha \cdot VCI + (1 - \alpha) \cdot TCI$$
 Where:
 
 *   $\alpha$ = Weight parameter (typically set to $0.5$ representing equal influence of greenness and temperature).
+
+*   *GIS Toolpaths (Algebraic Normalization):*
+    
+    *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Calculus** > **Grid Calculator**.
+    
+    *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **RasterCalculator** (or native mathematical tools).
 
 ---
 

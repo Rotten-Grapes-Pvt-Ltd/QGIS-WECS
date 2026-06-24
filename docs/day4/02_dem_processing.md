@@ -88,6 +88,10 @@ The SAGA **Fill Sinks (Wang & Liu)** algorithm is the standard tool for resolvin
     
     *   **Filled DEM:** Define the output path for the filled raster layer.
 
+*   **WhiteboxTools Alternative:** 
+    *   **Tool Path:** Navigate to **WhiteboxTools** > **Hydrological Analysis** > **FillDepressions**.
+    *   **Key Parameters:** Select the input DEM, set the **Flat Increment** to a small value (e.g., `0.001`), and define the output **Dem** path.
+
 ![wang_liu](images/wang_liu.png)
 
 ### Planchon and Darboux Sink Filling (GDAL / GRASS)
@@ -135,6 +139,10 @@ In flat floodplains or low-slope valley floors, sink filling can create massive,
     *   **Maximum Search Radius:** Specify the search distance in cells (default is `100`). A larger radius allows carving channels through wider barriers.
     
     *   **Breached DEM:** Define the output path for the carved raster layer.
+
+*   **WhiteboxTools Alternative:**
+    *   **Tool Path:** Navigate to **WhiteboxTools** > **Hydrological Analysis** > **BreachDepressions**.
+    *   **Key Parameters:** Select the input DEM, set the **Maximum Breach Depth** (optional, or leave default), and specify the output **Dem** path. (WBT uses an advanced least-cost pathway breaching algorithm).
 
 ### Comparison Matrix: Filling vs. Breaching
 
@@ -203,6 +211,10 @@ Developed at the University of Texas at Austin, the AGREE algorithm processes th
     *   **Burn-in Depth:** Set the trench depth (e.g., `$10\text{ meters}$` or `$15\text{ meters}$`).
     
     *   **Burnt DEM:** Define the output path for the stream-burned raster layer.
+
+*   **WhiteboxTools Alternative:**
+    *   **Tool Path:** Navigate to **WhiteboxTools** > **Hydrological Analysis** > **BurnStreams**.
+    *   **Key Parameters:** Select the input **Dem**, the input vector **Streams**, set the **Decrease** value (e.g. `15.0`), and set the output **Dem** path.
 
 ---
 

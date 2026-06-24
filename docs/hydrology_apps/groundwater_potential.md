@@ -21,14 +21,17 @@ Groundwater potential depends on surface runoff potential and sub-surface porosi
 *   **Lithology / Geology:** Permeable rocks (e.g., weathered sandstone, fractured limestone) permit infiltration, while crystalline granite blocks it.
 
 *   **Slope:** Flat plains ($<2^\circ$) retain water, permitting high infiltration. Steep slopes ($>20^\circ$) encourage rapid surface runoff.
+    *   *GIS Toolpaths:* **SAGA** > **Terrain Analysis - Morphometry** > **Slope, Aspect, Curvature** OR **WhiteboxTools** > **Geomorphometric Analysis** > **Slope**.
 
 *   **Lineament Density:** Fault lines, fractures, and joints increase secondary porosity, creating storage pathways for groundwater.
+    *   *GIS Toolpaths:* **SAGA** > **Grid - Tools** > **Kernel Density Estimation** OR **WhiteboxTools** > **Math and Stats Tools** > **LineDensity**.
 
 *   **Soil Texture:** Coarse sandy soils have high hydraulic conductivity compared to tight clay soils.
 
 *   **Land Use / Land Cover (LULC):** Vegetation (forests) slows runoff, increasing infiltration. Impervious urban concrete blocks recharge.
 
 *   **Drainage Density:** High drainage densities represent high surface runoff, leaving less water for sub-surface recharge.
+    *   *GIS Toolpaths:* **SAGA** > **Terrain Analysis - Channels** > **Drainage Density** OR **WhiteboxTools** > **Hydrological Analysis** > **DrainageDensity**.
 
 ---
 
@@ -77,19 +80,29 @@ Once weights are established, GIS is used to compile the final potential map:
 
 2.  **Reclassify Factors:**
     
-    *   Run **Reclassify by Table** to convert raw values into a standardized scale of $1$ (Very Low Recharge) to $5$ (Very High Recharge).
+    *   Run **Reclassify** to convert raw values into a standardized scale of $1$ (Very Low Recharge) to $5$ (Very High Recharge).
         
         *   *Slope reclassification:* $0-2^\circ \rightarrow 5$; $2-5^\circ \rightarrow 4$; $5-10^\circ \rightarrow 3$; $10-20^\circ \rightarrow 2$; $>20^\circ \rightarrow 1$.
+        
+    *   *GIS Toolpaths (Reclassify):*
+        
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Tools** > **Reclassify Grid Values** (or **Reclassify by Table**).
+        
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **Reclassify**.
 
 3.  **Execute Weighted Overlay:**
-    
-    *   *Tool:* **Raster Calculator**.
     
     *   *Equation:*
         
         $$GWPZ = \sum_{i=1}^{n} (W_i \times C_i)$$
         
         $$\text{GWPZ} = (0.35 \times \text{Lithology}) + (0.25 \times \text{Slope}) + (0.20 \times \text{Lineament}) + (0.15 \times \text{Soil}) + (0.05 \times \text{LULC})$$
+        
+    *   *GIS Toolpaths (Weighted Overlay):*
+        
+        *   **SAGA GIS:** **Processing Toolbox** > **SAGA** > **Grid - Calculus** > **Grid Calculator** (best for complex customized overlay formulas).
+        
+        *   **WhiteboxTools:** **Processing Toolbox** > **WhiteboxTools** > **Math and Stats Tools** > **WeightedOverlay** (or **RasterCalculator**).
 
 ---
 
