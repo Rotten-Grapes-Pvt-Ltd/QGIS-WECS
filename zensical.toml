@@ -92,6 +92,7 @@ nav = [
         "hydrology_apps/water_accounting.md",
         "hydrology_apps/basin_water_balance.md",
         "hydrology_apps/evapotranspiration_accounting.md",
+        "hydrology_apps/reservoir_evaporation_losses.md",
         "hydrology_apps/hydrological_modeling.md"
     ]}
 ]
