@@ -47,7 +47,7 @@ Catchment reservoir storage and area monitoring requires extracting surface wate
                [ MNDWI Raster ]                               │
                      │                                        │
                      ▼ (Raster Calculator Threshold)          │
-              [ Binary Water Mask ]                           ▼ (SAGA Grid Volume)
+              [ Binary Water Mask ]                           ▼ (Raster Surface Volume)
                      │                             [ Elevation-Area-Volume Table ]
                      ▼ (Polygonize & Area Calc)               │
            [ Satellite Surface Area (Asat) ]                  │
@@ -118,7 +118,7 @@ Catchment reservoir storage and area monitoring requires extracting surface wate
         
         *   *Post-Processing:* Select the main reservoir polygon, delete peripheral sliver polygons, and run the Field Calculator with `$area` to calculate the reservoir surface area in square meters. Export the cleaned result as `reservoir_boundary.gpkg`.
 
-4.  **Calculate Basin Volume from Elevation levels (SAGA Grid Volume):**
+4.  **Calculate Basin Volume from Elevation levels (QGIS Raster Surface Volume):**
     
     *   **What We Are Doing:** Running a volumetric analysis on a pre-impoundment DEM (digital elevation model) to calculate basin capacity below target elevation levels.
     
@@ -126,19 +126,23 @@ Catchment reservoir storage and area monitoring requires extracting surface wate
     
     *   *Input:* Projected pre-impoundment DEM (e.g., `basin_dem_utm.tif`).
     
-    *   *Output:* Surface area and volume results printed in the log panel.
+    *   *Output:* An HTML report file containing the calculated pixel count, surface area (m²), and volume (m³).
     
-    *   *How to Fill the SAGA Form in QGIS:*
+    *   *How to Fill the Form in QGIS:*
         
-        *   **Tool Path:** Open the **Processing Toolbox**, search for "Grid volume", or navigate to **SAGA** > **Raster analysis** > **Grid volume** (or **SAGA** > **Grid - Analysis** / **Grid - Calculus** > **Grid Volume** depending on your QGIS SAGA provider version).
+        *   **Tool Path:** Open the **Processing Toolbox**, search for "Raster surface volume", or navigate to **Raster analysis** > **Raster surface volume**.
         
-        *   **Grid:** Select `basin_dem_utm.tif` (must be in a projected metric CRS like UTM so volume is computed in cubic meters, not degrees).
+        *   **Input Layer:** Select `basin_dem_utm.tif` (must be in a projected metric CRS like UTM so volume is computed in cubic meters, not degrees).
         
-        *   **Method:** Select `[1] Count Only Below Base Level`.
+        *   **Band Number:** Select `Band 1`.
         
-        *   **Base Level:** Enter a target elevation value (e.g., `250` for 250m pool height).
+        *   **Base Level:** Enter a target elevation base level value (e.g., `250` for 250m pool height).
         
-        *   **Results:** Click Run, then open the **Log** tab in the tool dialog to copy the calculated volume (m³) and surface area (m²). Repeat this for multiple water elevations to build the reservoir capacity table.
+        *   **Method:** Select `Count only below base level`.
+        
+        *   **Volume Table:** Save the output HTML report (e.g., `volume_report_250m.html`).
+        
+        *   *Results:* Click Run, open the generated HTML report file in a web browser, and copy the calculated volume (m³) and surface area (m²). Repeat this for multiple water elevations to build the reservoir capacity table.
 
 5.  **Estimate Reservoir Storage via Curve Matching:**
     
@@ -175,7 +179,7 @@ EAV curves are the mathematical foundation of reservoir operations, showing the 
 
 *   **Incremental Calculation:**
     
-    If the automated SAGA Grid Volume tool is not used, you can calculate the incremental volume between two elevation steps ($H_1$ and $H_2$) using the trapezoidal formula:
+    If the automated QGIS Raster Surface Volume tool is not used, you can calculate the incremental volume between two elevation steps ($H_1$ and $H_2$) using the trapezoidal formula:
     
     $$\Delta V = \frac{H_2 - H_1}{3} \times \left( A_1 + A_2 + \sqrt{A_1 \times A_2} \right)$$
     
