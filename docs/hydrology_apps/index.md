@@ -14,7 +14,7 @@ The following flowchart shows how spatial datasets and analysis workflows feed i
 flowchart TD
     A["1. Watershed Characterization<br/>(DEM Delineation & Drainage)"] --> B["2. Rainfall Analysis<br/>(Spatial Interpolation & Grids)"]
     A --> C["8. River Morphology<br/>(Channel Migration & Sinuosity)"]
-    A --> J["12. Hydrological Modeling<br/>(HEC-HMS / SWAT Inputs)"]
+    A --> J["13. Hydrological Modeling<br/>(HEC-HMS / SWAT Inputs)"]
     
     B --> J
     B --> D["5. Flood Hazard Mapping<br/>(Inundation Modeling)"]
@@ -36,6 +36,10 @@ flowchart TD
     B --> L
     L --> J
 
+    A --> M["12. Evapotranspiration Accounting<br/>(Rainfall vs ET per LULC)"]
+    B --> M
+    M --> I
+
     %% Styling
     style A fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
     style B fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
@@ -49,6 +53,7 @@ flowchart TD
     style J fill:#efebe9,stroke:#4e342e,stroke-width:2px
     style K fill:#f1f8e9,stroke:#558b2f,stroke-width:2px
     style L fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
+    style M fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px
 ```
 
 ---
@@ -101,6 +106,10 @@ Select a theme below to explore the physical principles, GIS datasets, and geopr
     
     *   Align multi-source satellite rasters (Precipitation and Evapotranspiration), calculate grid-cell surplus/deficit maps using QGIS Raster Calculator, and tabulate volumetric water budgets per sub-catchment.
 
-12. **[Hydrological Modeling with HEC-HMS / SWAT](hydrological_modeling.md)**
+12. **[Evapotranspiration Accounting](evapotranspiration_accounting.md)**
+    
+    *   Quantify volumetric actual ET water loss per sub-basin, mask evapotranspiration grids by land cover classes using QGIS Raster Calculator, and compare water consumption ratios to rank watershed performance.
+
+13. **[Hydrological Modeling with HEC-HMS / SWAT](hydrological_modeling.md)**
     
     *   Extract and format spatial parameter inputs (such as SCS Curve Number layers, average slope, and sub-basin splits) required to initialize HEC-HMS and SWAT models.
