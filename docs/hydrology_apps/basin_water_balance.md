@@ -96,6 +96,21 @@ Calculating a catchment water budget requires grid alignment, cell-by-cell raste
         $$\text{Infiltration} = (1 - C) \times \text{Surplus}$$
         
     *   *Input:* Net water surplus grid (`water_surplus.tif`) and spatial runoff coefficient grid (`runoff_coeff.tif`).
+        
+        > [!NOTE]
+        > **Deriving the Runoff Coefficient ($C$) Grid if Unknown:**
+        > If local measurements of the runoff coefficient are unavailable, you can generate a spatial $C$ raster in QGIS by assigning standard Rational Method runoff coefficients to your **Land Use (LULC)** classes:
+        > 
+        > | LULC Class | Slope < 2% (Flat) | Slope 2%–7% (Moderate) | Slope > 7% (Steep) |
+        > | :--- | :--- | :--- | :--- |
+        > | **Trees / Forest (ESA Class 10)** | 0.05 - 0.10 | 0.10 - 0.15 | 0.15 - 0.25 |
+        > | **Cropland (ESA Class 40)** | 0.10 - 0.15 | 0.15 - 0.20 | 0.20 - 0.40 |
+        > | **Built-up / Urban (ESA Class 50)** | 0.70 - 0.75 | 0.75 - 0.85 | 0.85 - 0.95 |
+        > 
+        > *GIS Derivation Steps:*
+        > 1. Run **SAGA** > **Grid - Tools** > **Reclassify Grid Values** on your projected LULC raster (e.g. `lulc_utm.tif`).
+        > 2. Define simple ranges to map class codes to their respective runoff coefficient values (e.g. mapping urban code `50` to `0.80`, forest code `10` to `0.10`).
+        > 3. Save the resulting decimal raster grid as `runoff_coeff.tif` to use in the step below.
     
     *   *Output:* Estimated runoff grid (`runoff_depth.tif`) and infiltration grid (`recharge_depth.tif`).
     
