@@ -42,7 +42,25 @@ Rainfall is the primary input driving watershed hydrological cycles. Because pre
 
 Catchment-wide rainfall assessment requires converting tabular point gauge records into spatial zones and grids using sequential geoprocessing steps:
 
-![flow_chart](images/rainfall_analysis/flow_chart.png)
+```text
+     [ Tabular CSV Rain Gauge Data ]
+                   │
+                   ▼ (Add Delimited Text Layer)
+           [ Point Vector Layer ]
+                   │
+                   ▼ (Reproject Layer to Metric CRS)
+       [ Projected Station Points ]  +  [ Catchment Boundary ]
+               │             │                     │
+               │             ├──────────┬──────────┘
+               │             │          ▼ (SAGA Thiessen Polygons & Clip)
+               │             │     [ Representative Area Polygons ]
+               │             │                     │
+               ▼             ▼                     ▼
+        (SAGA IDW / Kriging) ──────────────────────┼ (SAGA Raster Stats / Area weights)
+               │                                   │
+               ▼                                   ▼
+       [ Rainfall Raster Grid ]          [ Mean Areal Precipitation (MAP) ]
+```
 
 1.  **Import and Plot Rain Gauge Station Data (CSV to Points):**
     

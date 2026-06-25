@@ -40,7 +40,22 @@ Reservoirs are critical infrastructure for water supply, irrigation, flood contr
 
 Catchment reservoir storage and area monitoring requires extracting surface water from spectral imagery and intersecting it with volumetric bathymetric capacity grids:
 
-![flow_chart](images/reservoir_monitoring/flow_chart.png)
+```text
+      [ Sentinel-2 / Landsat Bands ]              [ Pre-impoundment DEM ]
+                     │                                        │
+                     ▼ (Raster Calculator)                    │
+               [ MNDWI Raster ]                               │
+                     │                                        │
+                     ▼ (Raster Calculator Threshold)          │
+              [ Binary Water Mask ]                           ▼ (SAGA Grid Volume)
+                     │                             [ Elevation-Area-Volume Table ]
+                     ▼ (Polygonize & Area Calc)               │
+           [ Satellite Surface Area (Asat) ]                  │
+                     │                                        │
+                     └───────────────┬────────────────────────┘
+                                     ▼ (Curve Matching)
+                     [ Current Active Storage Volume ]
+```
 
 1.  **Compute Water Surface Index (MNDWI or NDWI):**
     

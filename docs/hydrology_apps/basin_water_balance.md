@@ -40,7 +40,25 @@ A basin water balance calculates the inputs, outputs, and storage changes of wat
 
 Calculating a catchment water budget requires grid alignment, cell-by-cell raster subtraction, runoff/infiltration partitioning, and zonal polygon summarization:
 
-![flow_chart](images/basin_water_balance/flow_chart.png)
+```text
+     [ Precipitation Grid ]  +  [ Evapotranspiration Grid ]
+               │                          │
+               └────────────┬─────────────┘
+                            ▼ (Align Rasters)
+                    [ Aligned Climate Grids ]
+                            │
+                            ▼ (Raster Calculator Subtraction)
+                     [ Water Surplus Grid ]
+                            │
+                            ▼ (SAGA Grid Calculator with Runoff Coeff)
+                     [ Runoff & Recharge Grids ]
+                            │
+                            ▼ (SAGA Raster Statistics for Polygons)
+                [ Catchment Mean & Sum Statistics ]
+                            │
+                            ▼ (QGIS Field Calculator: Depth to Vol)
+                [ Volumetric Catchment Water Budget ]
+```
 
 1.  **Align Raster Grids (Precipitation and Evapotranspiration):**
     

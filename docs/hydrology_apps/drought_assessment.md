@@ -38,7 +38,22 @@ Drought is a slow-onset natural hazard characterized by a deficit of moisture ov
 
 Agricultural drought monitoring requires computing spectral indicators, comparing them to historical extremes, and reclassifying them into vulnerability alert classes:
 
-![flow_chart](images/drought_assessment/flow_chart.png)
+```text
+      [ Current Imagery Bands ]             [ Historical NDVI Grid Stack ]
+             │         │                                   │
+             │         ▼ (Raster Calc)                     │
+             │     [ NDWI Grid ]                           │
+             ▼ (Raster Calc)                               │
+        [ NDVI Grid ]                                      ▼ (SAGA Stats for Grids)
+             │                                   [ NDVI Min & Max Grids ]
+             │                                             │
+             └──────────────────────┬──────────────────────┘
+                                    ▼ (SAGA Grid Calculator Normalization)
+                               [ VCI Grid ]
+                                    │
+                                    ▼ (SAGA Reclassify Grid Values)
+                        [ Drought Severity Map ]
+```
 
 1.  **Calculate Vegetation Greenness Index (NDVI):**
     

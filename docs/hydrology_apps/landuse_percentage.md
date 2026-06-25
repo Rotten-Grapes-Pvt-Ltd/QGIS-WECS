@@ -38,7 +38,19 @@ Land Use and Land Cover (LULC) determines the partition of precipitation into in
 
 Calculating land use percentages per sub-catchment requires reprojecting categorical grids, extracting class histograms, and computing area percentages:
 
-![flow_chart](images/landuse_percentage/flow_chart.png)
+```text
+     [ Raw LULC Grid ]
+             │
+             ▼ (Warp Reproject - Nearest Neighbor)
+     [ Projected LULC Grid ]  +  [ Sub-catchment Polygons ]
+             │                             │
+             └──────────────┬──────────────┘
+                            ▼ (Zonal Histogram)
+               [ Pixel Counts per Class Table ]
+                            │
+                            ▼ (Field Calculator: Real Decimal Area %)
+              [ Land Use Percentage Results ]
+```
 
 1.  **Reproject LULC Grid to Match Sub-catchments projected CRS:**
     
